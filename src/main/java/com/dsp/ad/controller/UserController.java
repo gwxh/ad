@@ -22,7 +22,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired PageController pageController;
+    @Autowired
+    PageController pageController;
 
     @PostMapping("/login")
     public String login(Model model, @RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
@@ -50,5 +51,11 @@ public class UserController {
 
         session.setAttribute("user", user);
         return "redirect:/";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.setAttribute("user", null);
+        return pageController.login();
     }
 }
