@@ -904,6 +904,7 @@ h5.left-nav-title {
 }
 
 .page-heading {
+    height: 100px;
     padding: 15px;
     position: relative;
 }
@@ -1111,13 +1112,16 @@ footer.sticky-footer {
 
 .state-info {
     position: absolute;
-    right: 15px;
     top: 20px;
 }
 
 .state-info .panel {
-    float: right;
-    margin-left: 15px;
+    float: left;
+    margin-left: 50px;
+}
+
+.state-info .panel .panel-body{
+    padding: 20px;
 }
 
 .state-info .panel .summary {
