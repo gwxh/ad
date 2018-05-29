@@ -900,7 +900,7 @@ h5.left-nav-title {
 .main-content {
     margin-left: 240px;
     background: #eff0f4;
-    min-height: 1000px;
+    min-height: 600px;
 }
 
 .page-heading {
@@ -1117,7 +1117,7 @@ footer.sticky-footer {
 
 .state-info .panel {
     float: left;
-    margin-left: 50px;
+    margin-right: 135px;
 }
 
 .state-info .panel .panel-body{
