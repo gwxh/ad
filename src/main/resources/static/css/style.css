@@ -68,7 +68,7 @@ hr {
 
 .form-signin .form-signin-heading {
     margin: 0;
-    padding: 25px 15px;
+    padding: 10px 15px;
     text-align: center;
     color: #fff;
     position: relative;
@@ -195,7 +195,7 @@ hr {
 }
 
 .sticky-left-side .custom-nav {
-    margin-top: 50px;
+    margin-top: 80px;
 }
 
 .left-side-collapsed .sticky-left-side {
@@ -204,13 +204,12 @@ hr {
 
 .logo {
     padding-top: 5px;
-    height: 50px;
+    height: 80px;
 }
 
 .logo a {
     font-size: 28px;
     color: #fff;
-    margin: 0 0 0 20px;
     text-decoration: none;
     display: inline-block;
 }

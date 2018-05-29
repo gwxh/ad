@@ -23,7 +23,7 @@
 
     <form th:action="@{/user/login}"  th:method="post" class="form-signin">
         <div class="form-signin-heading text-center">
-            <img src="/images/login-logo.png"/>
+            <h1 class="sign-title">广告商登录</h1>
         </div>
         <div class="login-wrap">
             <p th:if="${msg!=null}" th:text="|${msg}!|" style="color:#FF6C60;">登录错误</p>

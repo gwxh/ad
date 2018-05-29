@@ -35,26 +35,32 @@
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
             <li th:class="${flag=='user'?'active':''}">
-                <a href="/"><i class="fa fa-user"></i> <span>会员管理</span></a>
+                <a href="/"><i class="fa fa-user"></i> <span>我的概况</span></a>
             </li>
-            <li class="menu-list" th:class="${flag=='planList'||flag=='auditPlan'?'nav-active':''}">
-                <a href=""><i class="fa fa-book"></i> <span>计划管理</span></a>
-                <ul class="sub-menu-list">
-                    <li th:class="${flag=='planList'?'active':''}">
-                        <a href="blank_page.html">计划列表</a>
-                    </li>
-                    <li th:class="${flag=='auditPlan'?'active':''}">
-                        <a href="boxed_view.html">待审核计划</a>
-                    </li>
-                </ul>
+            <li th:class="${flag=='plan'?'active':''}">
+                <a href="/"><i class="fa fa-book"></i> <span>计划管理</span></a>
             </li>
-            <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>广告管理</span></a>
-                <ul class="sub-menu-list">
-                    <li><a href="general.html">广告管理</a></li>
-                    <li><a href="buttons.html">待审核广告</a></li>
-                </ul>
+            <li th:class="${flag=='ad'?'active':''}">
+                <a href="/"><i class="fa fa-bookmark"></i> <span>广告管理</span></a>
             </li>
-            <li><a href="login.html"><i class="fa fa-sign-in"></i> <span>退出登录</span></a></li>
+            <li th:class="${flag=='data'?'active':''}">
+                <a href="/"><i class="fa fa-calendar"></i> <span>效果报表</span></a>
+            </li>
+            <li th:class="${flag=='setting'?'active':''}">
+                <a href="/"><i class="fa fa-gear"></i> <span>我的设置</span></a>
+            </li>
+            <!--<li class="menu-list" th:class="${flag=='planList'||flag=='auditPlan'?'nav-active':''}">-->
+                <!--<a href=""><i class="fa fa-book"></i> <span>计划管理</span></a>-->
+                <!--<ul class="sub-menu-list">-->
+                    <!--<li th:class="${flag=='planList'?'active':''}">-->
+                        <!--<a href="blank_page.html">计划列表</a>-->
+                    <!--</li>-->
+                    <!--<li th:class="${flag=='auditPlan'?'active':''}">-->
+                        <!--<a href="boxed_view.html">待审核计划</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+            <li><a href="login.html"><i class="fa fa-sign-in"></i><span>退出登录</span></a></li>
         </ul>
         <!--sidebar nav end-->
 
