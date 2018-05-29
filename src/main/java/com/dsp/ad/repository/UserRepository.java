@@ -1,13 +1,13 @@
 package com.dsp.ad.repository;
 
-import com.dsp.ad.entity.Admin;
+import com.dsp.ad.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("from Admin a where a.username = ?1")
-    Admin selectAdminByName(String username);
+    @Query("from User u where u.username = ?1")
+    User selectUserByName(String username);
 }

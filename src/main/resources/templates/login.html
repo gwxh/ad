@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <link rel="shortcut icon" href="#" type="image/png">
 
-    <title>八方传播-后台登录</title>
+    <title>登录-八方传播</title>
 
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
@@ -21,9 +21,9 @@
 
 <div class="container">
 
-    <form th:action="@{/admin/login}"  th:method="post" class="form-signin">
+    <form th:action="@{/user/login}"  th:method="post" class="form-signin">
         <div class="form-signin-heading text-center">
-            <img src="/images/login-logo.png" alt=""/>
+            <img src="/images/login-logo.png"/>
         </div>
         <div class="login-wrap">
             <p th:if="${msg!=null}" th:text="|${msg}!|" style="color:#FF6C60;">登录错误</p>

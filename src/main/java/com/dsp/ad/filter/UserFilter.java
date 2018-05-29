@@ -12,10 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @WebFilter(urlPatterns = "/*")
-public class AdminFilter implements Filter {
+public class UserFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList("/css/.*", "/images/.*", "/fonts/.*", "/js/.*", ".*/login", "/logout")));
+            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout")));
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -37,10 +37,10 @@ public class AdminFilter implements Filter {
 
         if (allowedPath) {
             chain.doFilter(req, res);
-        } else if (session.getAttribute("admin") != null) {
+        } else if (session.getAttribute("user") != null) {
             chain.doFilter(req, res);
         } else {
-            response.sendRedirect(request.getContextPath() + "/login");
+            response.sendRedirect(request.getContextPath() + "/user/login");
         }
     }
 
