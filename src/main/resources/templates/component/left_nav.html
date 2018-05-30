@@ -6,11 +6,11 @@
 
     <!--logo and iconic logo start-->
     <div class="logo">
-        <a href="/"><img src="images/logo.png" alt=""></a>
+        <a href="/"><img src="/images/logo.png" alt=""></a>
     </div>
 
     <div class="logo-icon text-center">
-        <a href="/"><img src="images/logo_icon.png" alt=""></a>
+        <a href="/"><img src="/images/logo_icon.png" alt=""></a>
     </div>
     <!--logo and iconic logo end-->
 
@@ -38,16 +38,16 @@
                 <a href="/"><i class="fa fa-user"></i> <span>我的概况</span></a>
             </li>
             <li th:class="${flag=='plan'?'active':''}">
-                <a href="/"><i class="fa fa-book"></i> <span>计划管理</span></a>
+                <a href="/user/plan"><i class="fa fa-book"></i> <span>计划管理</span></a>
             </li>
             <li th:class="${flag=='ad'?'active':''}">
-                <a href="/"><i class="fa fa-bookmark"></i> <span>广告管理</span></a>
+                <a href="/user/ad"><i class="fa fa-bookmark"></i> <span>广告管理</span></a>
             </li>
             <li th:class="${flag=='data'?'active':''}">
-                <a href="/"><i class="fa fa-calendar"></i> <span>效果报表</span></a>
+                <a href="/user/data"><i class="fa fa-calendar"></i> <span>效果报表</span></a>
             </li>
             <li th:class="${flag=='setting'?'active':''}">
-                <a href="/"><i class="fa fa-gear"></i> <span>我的设置</span></a>
+                <a href="/user/setting"><i class="fa fa-gear"></i> <span>账户设置</span></a>
             </li>
             <!--<li class="menu-list" th:class="${flag=='planList'||flag=='auditPlan'?'nav-active':''}">-->
                 <!--<a href=""><i class="fa fa-book"></i> <span>计划管理</span></a>-->

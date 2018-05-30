@@ -15,4 +15,24 @@ public class PageController {
     public String login(){
         return "login";
     }
+
+    @RequestMapping("/user/plan")
+    public String plan(){
+        return "plan";
+    }
+
+    @RequestMapping("/user/ad")
+    public String ad(){
+        return "ad";
+    }
+
+    @RequestMapping("/user/data")
+    public String data(){
+        return "data";
+    }
+
+    @RequestMapping("/user/setting")
+    public String setting(){
+        return "setting";
+    }
 }
