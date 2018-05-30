@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>八方传播-广告商后台</title>
+
+    <!--common-->
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/js/html5shiv.js"></script>
+    <script src="/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="sticky-header">
+
+<section>
+    <div th:replace="component/left_nav::left-nav('plan')"></div>
+
+    <!-- main content start-->
+    <div class="main-content" >
+        <div th:replace="component/header::header"></div>
+
+        <!--body wrapper start-->
+        <section class="wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            新建计划
+                        </header>
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="name" class="col-lg-3 col-sm-3 control-label">计划名称</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="unitPrice" class="col-lg-3 col-sm-3 control-label">计划单价</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="unitPrice">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="totalPrice" class="col-lg-3 col-sm-3 control-label">计划限额</label>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control" id="totalPrice">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label col-lg-3">投放设备</label>
+                                    <div class="col-lg-9">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="pc" value="1">电脑桌面
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="ios" value="2">苹果IOS
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="android" value="3">Android
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="wp" value="4">微软WP
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label col-lg-3" >投放地区</label>
+                                    <div class="col-lg-9">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="ah4" value="4">安徽
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="bj10" value="10">北京
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="cq20" value="20">重庆
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="fj7" value="7">福建
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="gz21" value="21">贵州
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="gd6" value="6">广东
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="gx8" value="8">广西
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="gs28" value="28">甘肃
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="am34" value="34">澳门
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="gw0" value="0">国外
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="hb17" value="17">湖北
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="hn18" value="18">湖南
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="hb12" value="12">河北
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="hn14" value="14">河南
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="hn9" value="9">海南
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="js2" value="2">江苏
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="jl25" value="25">吉林
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="jx5" value="5">江西
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="hlj26" value="26">黑龙江
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="ln24" value="24">辽宁
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="nx29" value="29">宁夏
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="qh30" value="30">青海
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="sd13" value="13">山东
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="sh1" value="1">上海
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="sx15" value="15">山西
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="sx27" value="27">陕西
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="sc19" value="19">四川
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="nmg16" value="16">内蒙古
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="tj11" value="11">天津
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="nx22" value="22">云南
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="zj3" value="3">浙江
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="tw32" value="32">台湾
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="xg33" value="33">香港
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-lg-offset-3 col-lg-10">
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </section>
+        <!--body wrapper end-->
+
+        <div th:replace="component/footer::footer"></div>
+    </div>
+    <!-- main content end-->
+
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/js/jquery-1.10.2.min.js"></script>
+<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/modernizr.min.js"></script>
+<script src="/js/jquery.nicescroll.js"></script>
+
+
+<!--common scripts for all pages-->
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>

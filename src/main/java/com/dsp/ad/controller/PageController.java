@@ -35,4 +35,9 @@ public class PageController {
     public String setting(){
         return "setting";
     }
+
+    @RequestMapping("/user/createPlan")
+    public String createPlan(){
+        return "create_plan";
+    }
 }
