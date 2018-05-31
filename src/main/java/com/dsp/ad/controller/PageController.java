@@ -40,4 +40,9 @@ public class PageController {
     public String createPlan(){
         return "create_plan";
     }
+
+    @RequestMapping("/user/createAd")
+    public String createAd(){
+        return "create_ad";
+    }
 }
