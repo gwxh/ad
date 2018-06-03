@@ -13,8 +13,8 @@ public class User {
     private Integer money;
     private Integer status;
     private String email;
-    private Integer qq;
-    private Integer mobile;
+    private String qq;
+    private String mobile;
     private Integer loginTime;
     @Column(name = "login_ip")
     private Integer loginIP;
@@ -67,19 +67,19 @@ public class User {
         this.email = email;
     }
 
-    public Integer getQq() {
+    public String getQq() {
         return qq;
     }
 
-    public void setQq(Integer qq) {
+    public void setQq(String qq) {
         this.qq = qq;
     }
 
-    public Integer getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(Integer mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 

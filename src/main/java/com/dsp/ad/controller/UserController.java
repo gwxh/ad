@@ -58,4 +58,14 @@ public class UserController {
         session.setAttribute("user", null);
         return pageController.login();
     }
+
+    @PostMapping("/saveUserInfo")
+    public String saveUserInfo(Model model, User userInfo, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        user.setMobile(userInfo.getMobile());
+        user.setEmail(userInfo.getEmail());
+        user.setQq(userInfo.getQq());
+        userService.saveUserInfo(user);
+        return pageController.setting(model, session);
+    }
 }

@@ -36,27 +36,27 @@
                     <section class="panel">
                         <header class="panel-heading">基本信息</header>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form">
+                            <form th:action="@{/user/saveUserInfo}" th:method="post" th:object="${user}"  class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label class="col-lg-3 col-sm-3 control-label">用户名</label>
-                                    <div class="col-lg-6" style="margin-top: 7px;">王大锤</div>
+                                    <div class="col-lg-6" style="margin-top: 7px;" th:text="${session.user.username}"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="mobile" class="col-lg-3 col-sm-3 control-label">手机号码</label>
                                     <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="mobile">
+                                        <input class="form-control" th:field="*{mobile}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="col-lg-3 col-sm-3 control-label">电子邮箱</label>
                                     <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="email">
+                                        <input class="form-control" th:field="*{email}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="qq" class="col-lg-3 col-sm-3 control-label">QQ</label>
                                     <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="qq">
+                                        <input class="form-control" th:field="*{qq}">
                                     </div>
                                 </div>
                                 <div class="form-group">
