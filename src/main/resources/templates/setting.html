@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <link rel="shortcut icon" href="#" type="image/png">
+    <link rel="shortcut icon" type="image/png">
 
     <title>八方传播-广告商后台</title>
 
@@ -25,7 +25,7 @@
     <div th:replace="component/left_nav::left-nav('setting')"></div>
 
     <!-- main content start-->
-    <div class="main-content" >
+    <div class="main-content">
         <div th:replace="component/header::header"></div>
 
         <!--body wrapper start-->
@@ -36,10 +36,12 @@
                     <section class="panel">
                         <header class="panel-heading">基本信息</header>
                         <div class="panel-body">
-                            <form th:action="@{/user/saveUserInfo}" th:method="post" th:object="${user}"  class="form-horizontal" role="form">
+                            <form th:action="@{/user/saveUserInfo}" th:method="post" th:object="${user}"
+                                  class="form-horizontal" role="form">
                                 <div class="form-group">
                                     <label class="col-lg-3 col-sm-3 control-label">用户名</label>
-                                    <div class="col-lg-6" style="margin-top: 7px;" th:text="${session.user.username}"></div>
+                                    <div class="col-lg-6" style="margin-top: 7px;"
+                                         th:text="${session.user.username}"></div>
                                 </div>
                                 <div class="form-group">
                                     <label for="mobile" class="col-lg-3 col-sm-3 control-label">手机号码</label>
@@ -76,23 +78,29 @@
                     <section class="panel">
                         <header class="panel-heading">修改密码</header>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form">
+                            <form id="passwordForm" th:action="@{/user/editPassword}" th:method="post"
+                                  class="cmxform form-horizontal" role="form">
                                 <div class="form-group">
                                     <label for="oldPassword" class="col-lg-3 col-sm-3 control-label">旧密码</label>
                                     <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="oldPassword">
+                                        <input type="password" id="oldPassword" name="oldPassword"
+                                               th:class="${msg!=null?'form-control error':'form-control'}">
+                                        <label th:if="${msg!=null}" th:text="${msg}" for="oldPassword"
+                                               class="error"></label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password" class="col-lg-3 col-sm-3 control-label">新密码</label>
+                                    <label for="newPassword1" class="col-lg-3 col-sm-3 control-label">新密码</label>
                                     <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="password">
+                                        <input type="password" class="form-control" id="newPassword1"
+                                               name="newPassword1">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password2" class="col-lg-3 col-sm-3 control-label">确认新密码</label>
+                                    <label for="newPassword2" class="col-lg-3 col-sm-3 control-label">确认新密码</label>
                                     <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="password2">
+                                        <input type="password" class="form-control" id="newPassword2"
+                                               name="newPassword2">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -123,9 +131,13 @@
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
 
-
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
+
+<!--validate-->
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/messages_zh.min.js"></script>
+<script src="/js/validate.js"></script>
 
 </body>
 </html>
