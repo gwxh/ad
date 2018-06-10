@@ -44,19 +44,19 @@
                                          th:text="${session.user.username}"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mobile" class="col-lg-3 col-sm-3 control-label">手机号码</label>
+                                    <label th:for="mobile" class="col-lg-3 col-sm-3 control-label">手机号码</label>
                                     <div class="col-lg-6">
                                         <input class="form-control" th:field="*{mobile}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email" class="col-lg-3 col-sm-3 control-label">电子邮箱</label>
+                                    <label th:for="email" class="col-lg-3 col-sm-3 control-label">电子邮箱</label>
                                     <div class="col-lg-6">
                                         <input class="form-control" th:field="*{email}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="qq" class="col-lg-3 col-sm-3 control-label">QQ</label>
+                                    <label th:for="qq" class="col-lg-3 col-sm-3 control-label">QQ</label>
                                     <div class="col-lg-6">
                                         <input class="form-control" th:field="*{qq}">
                                     </div>
@@ -134,10 +134,10 @@
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
 
-<!--validate-->
+<!--form-->
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/messages_zh.min.js"></script>
-<script src="/js/validate.js"></script>
+<script src="/js/form.js"></script>
 
 </body>
 </html>

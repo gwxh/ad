@@ -1,6 +1,7 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtPlan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class PageController {
     }
 
     @RequestMapping("/user/login")
-    public String toLoginPage(){
+    public String toLoginPage() {
         return "login";
     }
 
@@ -43,7 +44,8 @@ public class PageController {
     }
 
     @RequestMapping("/user/createPlan")
-    public String toCreatePlanPage() {
+    public String toCreatePlanPage(Model model) {
+        model.addAttribute("plan", new ExtPlan());
         return "create_plan";
     }
 

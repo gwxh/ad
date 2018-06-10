@@ -1,6 +1,7 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.enums.UserEnum;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.MD5Util;
@@ -77,5 +78,11 @@ public class UserController {
         user.setPassword(MD5Util.md5(newPassword2));
         userService.saveUserInfo(user);
         return PageController.REDIRECT + pageController.toSettingPage(model, user);
+    }
+
+    @PostMapping("/createPlan")
+    public String createPlan(ExtPlan plan) {
+        userService.createPlan(plan);
+        return PageController.REDIRECT + pageController.toPlanPage();
     }
 }
