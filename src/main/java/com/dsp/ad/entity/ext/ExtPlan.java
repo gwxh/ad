@@ -4,19 +4,18 @@ import com.dsp.ad.entity.subentity.PlanParam;
 
 public class ExtPlan {
 
-    private Integer id;
+    private int id;
     private String name;
     private double unitPrice;
     private double totalPrice;
     private PlanParam param = new PlanParam();
-    private Integer status;
-    private Integer createTime;
+    private int status;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,19 +51,11 @@ public class ExtPlan {
         this.param = param;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
-    }
-
-    public Integer getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Integer createTime) {
-        this.createTime = createTime;
     }
 }

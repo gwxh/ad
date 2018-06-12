@@ -45,7 +45,7 @@ public class UserController {
             model.addAttribute("msg", "密码错误");
             return pageController.toLoginPage();
         }
-        if (user.getStatus() != UserEnum.Status.enable.value) {
+        if (user.getStatus() != UserEnum.Status.ENABLE.value) {
             model.addAttribute("msg", "此账号已被禁用");
             return pageController.toLoginPage();
         }
@@ -81,8 +81,14 @@ public class UserController {
     }
 
     @PostMapping("/createPlan")
-    public String createPlan(ExtPlan plan) {
-        userService.createPlan(plan);
-        return PageController.REDIRECT + pageController.toPlanPage();
+    public String createPlan(ExtPlan plan, Model model, @SessionAttribute User user) {
+        userService.createPlan(user, plan);
+        return PageController.REDIRECT + pageController.toPlanPage(model, user);
+    }
+
+    @PostMapping("/editPlan")
+    public String editPlan(ExtPlan plan, Model model, @SessionAttribute User user) {
+        userService.editPlan(user, plan);
+        return PageController.REDIRECT + pageController.toPlanPage(model, user);
     }
 }

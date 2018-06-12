@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+<html lang="en">
+<body xmlns:th="http://www.thymeleaf.org" th:fragment="format(value)">
+[[${'￥'+#numbers.formatDecimal(value,1,'COMMA',2,'POINT')}]]
+</body>
+</html>

@@ -1,29 +1,36 @@
 package com.dsp.ad.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Plan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
+    private int userId;
     private String name;
-    private Integer unitPrice;
-    private Integer totalPrice;
+    private int unitPrice;
+    private int totalPrice;
     private String param;
-    private Integer status;
-    private Integer createTime;
+    private int status;
+    private int createTime;
+    private int updateTime;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -34,19 +41,19 @@ public class Plan {
         this.name = name;
     }
 
-    public Integer getUnitPrice() {
+    public int getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Integer unitPrice) {
+    public void setUnitPrice(int unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public Integer getTotalPrice() {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -58,19 +65,27 @@ public class Plan {
         this.param = param;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public Integer getCreateTime() {
+    public int getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Integer createTime) {
+    public void setCreateTime(int createTime) {
         this.createTime = createTime;
+    }
+
+    public int getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(int updateTime) {
+        this.updateTime = updateTime;
     }
 }

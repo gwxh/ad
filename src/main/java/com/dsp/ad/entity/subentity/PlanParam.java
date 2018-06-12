@@ -5,12 +5,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.thymeleaf.util.StringUtils;
+
+import java.io.IOException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PlanParam {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanParam.class);
 
     private String device;
@@ -24,6 +26,18 @@ public class PlanParam {
             LOGGER.error(e.getMessage(), e);
         }
         return "";
+    }
+
+    public static PlanParam fromJson(String json) {
+        if (!StringUtils.isEmpty(json)) {
+            try {
+                PlanParam planParam = OBJECT_MAPPER.readValue(json, PlanParam.class);
+                return planParam;
+            } catch (IOException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+        return new PlanParam();
     }
 
     public String getDevice() {
