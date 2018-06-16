@@ -1,6 +1,7 @@
 package com.dsp.ad.service;
 
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface UserService {
     ExtPlan selectPlan(int planId, int userId);
 
     void editPlan(User user, ExtPlan extPlan);
+
+    void createAd(User user, ExtAd ad);
 }

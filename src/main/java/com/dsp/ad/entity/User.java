@@ -7,23 +7,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String username;
     private String password;
-    private Integer money;
-    private Integer status;
+    private int money;
+    private int status;
     private String email;
     private String qq;
     private String mobile;
-    private Integer loginTime;
+    private int loginTime;
     @Column(name = "login_ip")
-    private Integer loginIP;
+    private int loginIP;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,19 +43,19 @@ public class User {
         this.password = password;
     }
 
-    public Integer getMoney() {
+    public int getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(int money) {
         this.money = money;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -83,19 +83,19 @@ public class User {
         this.mobile = mobile;
     }
 
-    public Integer getLoginTime() {
+    public int getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Integer loginTime) {
+    public void setLoginTime(int loginTime) {
         this.loginTime = loginTime;
     }
 
-    public Integer getLoginIP() {
+    public int getLoginIP() {
         return loginIP;
     }
 
-    public void setLoginIP(Integer loginIP) {
+    public void setLoginIP(int loginIP) {
         this.loginIP = loginIP;
     }
 }

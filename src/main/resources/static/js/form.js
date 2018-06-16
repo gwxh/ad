@@ -42,7 +42,30 @@ $(function () {
                 area += $(this).val() + ",";
             });
             $("#area").val(area);
-            from.submit();
+            form.submit();
+        }
+    });
+
+    $("#adForm").validate({
+        rules: {
+            name: {
+                required: true
+            },
+            url: {
+                required: true
+            },
+            "param.image": {
+                required: true,
+                accept: "JPEG|PNG"
+            }
+        },
+        messages:{
+            "param.image": {
+                required: "请上传广告图片",
+                accept: "请上传jpg/png格式的图片"
+            }
+        }, submitHandler: function (form) {
+            form.submit();
         }
     });
 });

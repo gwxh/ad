@@ -1,7 +1,9 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
+import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PageController {
@@ -76,7 +80,15 @@ public class PageController {
     }
 
     @RequestMapping("/user/createAd")
-    public String toCreateAd() {
+    public String toCreateAd(Model model, @SessionAttribute User user) {
+        List<ExtPlan> extPlans = userService.selectPlans(user);
+        Map<Integer, String> types = new HashMap<>();
+        for (AdEnum.Type type : AdEnum.Type.values()) {
+            types.put(type.value, type.text);
+        }
+        model.addAttribute("plans", extPlans);
+        model.addAttribute("ad", new ExtAd());
+        model.addAttribute("types",types);
         return "create_ad";
     }
 }

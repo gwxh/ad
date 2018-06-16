@@ -8,20 +8,20 @@ public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String username;
     private String password;
-    private Integer status;
-    private Integer roleId;
-    private Integer loginTime;
+    private int status;
+    private int roleId;
+    private int loginTime;
     @Column(name = "login_ip")
-    private Integer loginIP;
+    private int loginIP;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,35 +41,35 @@ public class Admin {
         this.password = password;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public Integer getRoleId() {
+    public int getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
 
-    public Integer getLoginTime() {
+    public int getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Integer loginTime) {
+    public void setLoginTime(int loginTime) {
         this.loginTime = loginTime;
     }
 
-    public Integer getLoginIP() {
+    public int getLoginIP() {
         return loginIP;
     }
 
-    public void setLoginIP(Integer loginIP) {
+    public void setLoginIP(int loginIP) {
         this.loginIP = loginIP;
     }
 }

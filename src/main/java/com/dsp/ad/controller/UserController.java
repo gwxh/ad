@@ -1,19 +1,25 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.enums.UserEnum;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.MD5Util;
+import com.dsp.ad.util.UploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Objects;
 
 @Controller
@@ -25,6 +31,9 @@ public class UserController {
 
     @Autowired
     PageController pageController;
+
+    @Resource
+    UploadUtil uploadUtil;
 
     @PostMapping("/login")
     public String login(Model model, String username, String password, HttpSession session) {
@@ -90,5 +99,13 @@ public class UserController {
     public String editPlan(ExtPlan plan, Model model, @SessionAttribute User user) {
         userService.editPlan(user, plan);
         return PageController.REDIRECT + pageController.toPlanPage(model, user);
+    }
+
+    @PostMapping("/createAd")
+    public String createAd(ExtAd ad, Model model, @SessionAttribute User user,
+                           @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+        ad.getParam().setImage(uploadUtil.uploadImage(imageFile));
+
+        return PageController.REDIRECT + pageController.toAdPage();
     }
 }

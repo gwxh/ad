@@ -2,6 +2,7 @@ package com.dsp.ad.service.impl;
 
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.subentity.PlanParam;
 import com.dsp.ad.enums.PlanEnum;
@@ -86,5 +87,10 @@ public class UserServiceImpl implements UserService {
         plan.setUpdateTime(TimeUtil.now());
         plan.setStatus(PlanEnum.Status.EDIT_CHECK.value);
         planRepository.save(plan);
+    }
+
+    @Override
+    public void createAd(User user, ExtAd ad) {
+
     }
 }
