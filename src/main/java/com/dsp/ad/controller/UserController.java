@@ -13,9 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -102,10 +100,18 @@ public class UserController {
     }
 
     @PostMapping("/createAd")
-    public String createAd(ExtAd ad, Model model, @SessionAttribute User user,
-                           @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        ad.getParam().setImage(uploadUtil.uploadImage(imageFile));
+    public String createAd(ExtAd ad, Model model, @SessionAttribute User user) throws IOException {
+        ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
+        userService.createAd(user, ad);
+        return PageController.REDIRECT + pageController.toAdPage(model, user);
+    }
 
-        return PageController.REDIRECT + pageController.toAdPage();
+    @PostMapping("/editAd")
+    public String editAd(ExtAd ad, Model model, @SessionAttribute User user) throws IOException {
+        if (!StringUtils.isEmpty(ad.getImageFile().getOriginalFilename())) {
+            ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
+        }
+        userService.editAd(user, ad);
+        return PageController.REDIRECT + pageController.toAdPage(model, user);
     }
 }

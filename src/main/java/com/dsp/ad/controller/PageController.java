@@ -9,12 +9,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,9 @@ public class PageController {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Logger LOGGER = LoggerFactory.getLogger(PageController.class);
+
+    @Value("${upload-image-path}")
+    private String uploadImagePath;
 
     @Autowired
     private UserService userService;
@@ -48,7 +53,9 @@ public class PageController {
     }
 
     @RequestMapping("/user/ad")
-    public String toAdPage() {
+    public String toAdPage(Model model, @SessionAttribute User user) {
+        List<ExtAd> extAds = userService.selectAds(user);
+        model.addAttribute("ads", extAds);
         return "ad";
     }
 
@@ -81,14 +88,29 @@ public class PageController {
 
     @RequestMapping("/user/createAd")
     public String toCreateAd(Model model, @SessionAttribute User user) {
+        initAdPage(model, user);
+        model.addAttribute("ad", new ExtAd());
+        return "create_ad";
+    }
+
+    @RequestMapping("/user/editAd/{adId}")
+    public String toEditAdPage(Model model, @PathVariable int adId, @SessionAttribute User user) throws FileNotFoundException {
+        ExtAd extAd = userService.selectAd(adId, user.getId());
+        if (extAd == null) {
+            return REDIRECT + toPlanPage(model, user);
+        }
+        initAdPage(model, user);
+        model.addAttribute("ad", extAd);
+        return "create_ad";
+    }
+
+    private void initAdPage(Model model, User user) {
         List<ExtPlan> extPlans = userService.selectPlans(user);
+        model.addAttribute("plans", extPlans);
         Map<Integer, String> types = new HashMap<>();
         for (AdEnum.Type type : AdEnum.Type.values()) {
             types.put(type.value, type.text);
         }
-        model.addAttribute("plans", extPlans);
-        model.addAttribute("ad", new ExtAd());
-        model.addAttribute("types",types);
-        return "create_ad";
+        model.addAttribute("types", types);
     }
 }

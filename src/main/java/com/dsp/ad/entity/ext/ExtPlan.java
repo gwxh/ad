@@ -1,5 +1,6 @@
 package com.dsp.ad.entity.ext;
 
+import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.subentity.PlanParam;
 
 public class ExtPlan {
@@ -10,6 +11,18 @@ public class ExtPlan {
     private double totalPrice;
     private PlanParam param = new PlanParam();
     private int status;
+
+    public ExtPlan() {
+    }
+
+    public ExtPlan(Plan plan) {
+        this.id = plan.getId();
+        this.name = plan.getName();
+        this.unitPrice = plan.getUnitPrice() / 100d;
+        this.totalPrice = plan.getTotalPrice() /100d;
+        this.status = plan.getStatus();
+        this.param = PlanParam.fromJson(plan.getParam());
+    }
 
     public int getId() {
         return id;

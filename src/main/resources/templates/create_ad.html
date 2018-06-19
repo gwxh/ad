@@ -41,6 +41,7 @@
                                   th:action="${ad.id}?'/user/editAd':'/user/createAd'"
                                   th:method="post" th:object="${ad}"
                                   class="cmxform form-horizontal" role="form">
+                                <input type="hidden" th:field="*{id}">
                                 <div class="form-group">
                                     <label class="col-lg-3 col-sm-3 control-label">所属广告计划</label>
                                     <div class="col-lg-6">
@@ -74,7 +75,8 @@
                                 <div class="form-group">
                                     <label class="col-lg-3 col-sm-3 control-label">上传图片</label>
                                     <div class="col-lg-6">
-                                        <input name="imageFile" type="file" class="default"/>
+                                        <input type="file" th:field="*{imageFile}"/>
+                                        <input id="imageName" type="hidden" th:field="*{param.image}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -8,6 +8,7 @@ public interface AdEnum {
         RUNNING(2, "开启"),
         EDIT_CHECK(3, "修改待审"),
         DISABLE(4, "禁用"),
+        DELETE(5, "删除"),
         //
         ;
 
@@ -36,6 +37,15 @@ public interface AdEnum {
         Type(int value, String text) {
             this.value = value;
             this.text = text;
+        }
+
+        public static Type valueOf(int value) {
+            for (Type type : values()) {
+                if (type.value == value) {
+                    return type;
+                }
+            }
+            return null;
         }
     }
 }

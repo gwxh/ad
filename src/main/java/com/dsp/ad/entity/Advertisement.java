@@ -18,7 +18,7 @@ public class Advertisement {
     private String url;
     private String param;
     private int status;
-    private int crateTime;
+    private int createTime;
     private int updateTime;
 
     public int getId() {
@@ -85,12 +85,12 @@ public class Advertisement {
         this.status = status;
     }
 
-    public int getCrateTime() {
-        return crateTime;
+    public int getCreateTime() {
+        return createTime;
     }
 
-    public void setCrateTime(int crateTime) {
-        this.crateTime = crateTime;
+    public void setCreateTime(int createTime) {
+        this.createTime = createTime;
     }
 
     public int getUpdateTime() {

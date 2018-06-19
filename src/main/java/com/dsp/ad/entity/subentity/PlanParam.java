@@ -31,8 +31,7 @@ public class PlanParam {
     public static PlanParam fromJson(String json) {
         if (!StringUtils.isEmpty(json)) {
             try {
-                PlanParam planParam = OBJECT_MAPPER.readValue(json, PlanParam.class);
-                return planParam;
+                return OBJECT_MAPPER.readValue(json, PlanParam.class);
             } catch (IOException e) {
                 LOGGER.error(e.getMessage(), e);
             }

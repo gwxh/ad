@@ -46,7 +46,13 @@ $(function () {
         }
     });
 
+    $("#imageFile").change(function () {
+        var filePath = $(this).val();
+        $("#imageName").val(getFileName(filePath));
+    });
+
     $("#adForm").validate({
+        ignore: [],
         rules: {
             name: {
                 required: true
@@ -54,18 +60,29 @@ $(function () {
             url: {
                 required: true
             },
-            "param.image": {
-                required: true,
-                accept: "JPEG|PNG"
+            "param.image":{
+                required: true
             }
         },
         messages:{
             "param.image": {
-                required: "请上传广告图片",
-                accept: "请上传jpg/png格式的图片"
+                required: "请上传广告图片"
             }
-        }, submitHandler: function (form) {
+        },
+        submitHandler: function (form) {
             form.submit();
         }
     });
 });
+
+function getFileName(path) {
+    var pos1 = path.lastIndexOf('/');
+    var pos2 = path.lastIndexOf('\\');
+    var pos = Math.max(pos1, pos2);
+    if (pos < 0) {
+        return path;
+    }
+    else {
+        return path.substring(pos + 1);
+    }
+}

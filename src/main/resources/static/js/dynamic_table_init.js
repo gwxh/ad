@@ -60,23 +60,9 @@ var dataTablesSettings = {
     }
 };
 
-// function planData(plans) {
-//     var data = [];
-//     var operate = "操作";
-//     $.each(plans, function (i, plan) {
-//         var unitPrice = plan.unitPrice;
-//         data.totalPrice = plan.totalPrice;
-//         data.status = plan.status;
-//         data.push([plan.name, plan.unitPrice, plan.totalPrice, plan.status, operate]);
-//     });
-//     return data;
-// }
-
 $(function () {
-    // var plans = JSON.parse($("#plans").val());
-    // var data = planData(plans);
-    // dataTablesSettings.data = data;
     $('#planList').dataTable(dataTablesSettings);
+    $('#adList').dataTable(dataTablesSettings);
 });
 
 

@@ -1,11 +1,13 @@
 package com.dsp.ad.service.impl;
 
+import com.dsp.ad.entity.Advertisement;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
-import com.dsp.ad.entity.subentity.PlanParam;
+import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
+import com.dsp.ad.repository.AdRepository;
 import com.dsp.ad.repository.PlanRepository;
 import com.dsp.ad.repository.UserRepository;
 import com.dsp.ad.service.UserService;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +26,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PlanRepository planRepository;
+    @Autowired
+    private AdRepository adRepository;
 
     @Override
     public User selectUserByName(String username) {
@@ -50,31 +55,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<ExtPlan> selectPlans(User user) {
         List<Plan> plans = planRepository.selectPlans(user.getId());
-        List<ExtPlan> extPlans = new ArrayList<>();
-        for (Plan plan : plans) {
-            ExtPlan extPlan = new ExtPlan();
-            extPlan.setId(plan.getId());
-            extPlan.setName(plan.getName());
-            extPlan.setUnitPrice(plan.getUnitPrice() / 100d);
-            extPlan.setTotalPrice(plan.getTotalPrice() / 100d);
-            extPlan.setStatus(plan.getStatus());
-            extPlan.setParam(PlanParam.fromJson(plan.getParam()));
-            extPlans.add(extPlan);
-        }
-        return extPlans;
+        return plans.stream().map(ExtPlan::new).collect(Collectors.toList());
     }
 
     @Override
     public ExtPlan selectPlan(int planId, int userId) {
         Plan plan = planRepository.selectPlan(planId, userId);
-        ExtPlan extPlan = new ExtPlan();
-        extPlan.setId(plan.getId());
-        extPlan.setName(plan.getName());
-        extPlan.setUnitPrice(plan.getUnitPrice() / 100d);
-        extPlan.setTotalPrice(plan.getTotalPrice() / 100d);
-        extPlan.setStatus(plan.getStatus());
-        extPlan.setParam(PlanParam.fromJson(plan.getParam()));
-        return extPlan;
+        return new ExtPlan(plan);
     }
 
     @Override
@@ -90,7 +77,59 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createAd(User user, ExtAd ad) {
+    public void updatePlanStatus(User user, int planId, PlanEnum.Status status) {
+        planRepository.updateStatus(planId, user.getId(), status.value, TimeUtil.now());
+    }
 
+    @Override
+    public void createAd(User user, ExtAd extAd) {
+        Advertisement ad = new Advertisement();
+        ad.setUserId(user.getId());
+        ad.setPlanId(extAd.getPlanId());
+        ad.setName(extAd.getName());
+        ad.setType(extAd.getType());
+        ad.setUrl(extAd.getUrl());
+        ad.setParam(extAd.getParam().toJson());
+        ad.setCreateTime(TimeUtil.now());
+        ad.setStatus(AdEnum.Status.CREATE_CHECK.value);
+        adRepository.save(ad);
+    }
+
+    @Override
+    public void editAd(User user, ExtAd extAd) {
+        Advertisement ad = adRepository.selectAd(extAd.getId(), user.getId());
+        ad.setName(ad.getName());
+        ad.setPlanId(extAd.getPlanId());
+        ad.setName(extAd.getName());
+        ad.setType(extAd.getType());
+        ad.setUrl(extAd.getUrl());
+        ad.setParam(extAd.getParam().toJson());
+        ad.setUpdateTime(TimeUtil.now());
+        ad.setStatus(AdEnum.Status.EDIT_CHECK.value);
+        adRepository.save(ad);
+    }
+
+    @Override
+    public void updateAdStatus(User user, int adId, AdEnum.Status status) {
+        adRepository.updateStatus(adId, user.getId(), status.value, TimeUtil.now());
+    }
+
+    @Override
+    public List<ExtAd> selectAds(User user) {
+        List<Advertisement> ads = adRepository.selectAds(user.getId());
+        List<ExtAd> list = new ArrayList<>();
+        for (Advertisement ad : ads) {
+            ExtAd extAd = new ExtAd(ad);
+            Plan plan = planRepository.selectPlan(ad.getPlanId(), ad.getUserId());
+            extAd.setPlanName(plan.getName());
+            list.add(extAd);
+        }
+        return list;
+    }
+
+    @Override
+    public ExtAd selectAd(int adId, int userId) {
+        Advertisement ad = adRepository.selectAd(adId, userId);
+        return new ExtAd(ad);
     }
 }
