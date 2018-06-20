@@ -1,5 +1,7 @@
 package com.dsp.ad.filter;
 
+import org.springframework.core.annotation.Order;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +14,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @WebFilter(urlPatterns = "/*")
+@Order(value = 1)
 public class UserFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout")));
+            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout","/mgr.*")));
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

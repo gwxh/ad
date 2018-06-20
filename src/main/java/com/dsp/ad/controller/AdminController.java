@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/mgr")
 public class AdminController {
 
     @Autowired

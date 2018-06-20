@@ -6,6 +6,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
+
 public class AdApplication {
 
     public static void main(String[] args) {

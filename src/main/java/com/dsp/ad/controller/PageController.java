@@ -113,4 +113,10 @@ public class PageController {
         }
         model.addAttribute("types", types);
     }
+
+
+    @RequestMapping("/mgr/")
+    public String toMgrIndexPage() {
+        return "mgr/index";
+    }
 }
