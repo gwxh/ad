@@ -28,45 +28,89 @@
     <div th:replace="component/left_nav::left-nav('user')"></div>
 
     <!-- main content start-->
-    <div class="main-content" >
+    <div class="main-content">
         <div th:replace="component/header::header"></div>
 
         <!-- page heading start-->
         <div class="page-heading">
-            <div class="state-info">
-                <section class="panel">
-                    <div class="panel-body">
-                        <div class="summary">
-                            <span>账户余额</span>
-                            <h3 class="red-txt">$ 11,600</h3>
+            <div class="row state-info">
+                <div class="col-sm-3">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div class="summary">
+                                <span>账户余额</span>
+                                <h3 class="red-txt">
+                                    <span th:replace="util/currency::format(${session.user.money/100})"></span>
+                                </h3>
+                            </div>
                         </div>
-                    </div>
-                </section>
-                <section class="panel">
-                    <div class="panel-body">
-                        <div class="summary">
-                            <span>当月支付</span>
-                            <h3 class="green-txt">$ 45,600</h3>
+                    </section>
+                </div>
+                <div class="col-sm-3">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div class="summary">
+                                <span>当日支付</span>
+                                <h3 class="green-txt">11,600 元</h3>
+                            </div>
                         </div>
-                    </div>
-                </section>
-                <section class="panel">
-                    <div class="panel-body">
-                        <div class="summary">
-                            <span>昨日支付</span>
-                            <h3 class="green-txt">$ 45,600</h3>
+                    </section>
+                </div>
+                <div class="col-sm-3">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div class="summary">
+                                <span>昨日支付</span>
+                                <h3 class="green-txt">45,600 元</h3>
+                            </div>
                         </div>
-                    </div>
-                </section>
-                <section class="panel">
-                    <div class="panel-body">
-                        <div class="summary">
-                            <span>当日支付</span>
-                            <h3 class="green-txt">$ 45,600</h3>
+                    </section>
+                </div>
+                <div class="col-sm-3">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <div class="summary">
+                                <span>当月支付</span>
+                                <h3 class="green-txt">45,600 元</h3>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
+            <!--<div class="state-info">-->
+            <!--<section class="panel">-->
+            <!--<div class="panel-body">-->
+            <!--<div class="summary">-->
+            <!--<span>账户余额</span>-->
+            <!--<h3 class="red-txt">$ 11,600</h3>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</section>-->
+            <!--<section class="panel">-->
+            <!--<div class="panel-body">-->
+            <!--<div class="summary">-->
+            <!--<span>当月支付</span>-->
+            <!--<h3 class="green-txt">$ 45,600</h3>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</section>-->
+            <!--<section class="panel">-->
+            <!--<div class="panel-body">-->
+            <!--<div class="summary">-->
+            <!--<span>昨日支付</span>-->
+            <!--<h3 class="green-txt">$ 45,600</h3>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</section>-->
+            <!--<section class="panel">-->
+            <!--<div class="panel-body">-->
+            <!--<div class="summary">-->
+            <!--<span>当日支付</span>-->
+            <!--<h3 class="green-txt">$ 45,600</h3>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</section>-->
+            <!--</div>-->
         </div>
         <!-- page heading end-->
 

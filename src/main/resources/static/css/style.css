@@ -1105,16 +1105,6 @@ footer.sticky-footer {
      HEADER STATISTICS STYLES
 -------------------------------------*/
 
-.state-info {
-    position: absolute;
-    top: 20px;
-}
-
-.state-info .panel {
-    float: left;
-    margin-right: 135px;
-}
-
 .state-info .panel .panel-body {
     padding: 20px;
 }
