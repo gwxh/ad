@@ -4,6 +4,7 @@ import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.enums.AdEnum;
+import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -34,6 +35,8 @@ public class PageController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AdminService adminService;
 
     @RequestMapping("/user/")
     public String toIndexPage() {
@@ -116,7 +119,15 @@ public class PageController {
 
 
     @RequestMapping("/mgr/")
-    public String toMgrIndexPage() {
+    public String toMgrIndexPage(Model model) {
+        List<User> users = adminService.selectAllUser();
+        model.addAttribute("users", users);
+        model.addAttribute("user", new User());
         return "mgr/index";
+    }
+
+    @RequestMapping("/mgr/login")
+    public String toMgrLoginPage() {
+        return "mgr/login";
     }
 }

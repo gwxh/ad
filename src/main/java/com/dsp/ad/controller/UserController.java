@@ -64,7 +64,7 @@ public class UserController {
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.setAttribute("user", null);
-        return pageController.toLoginPage();
+        return PageController.REDIRECT + pageController.toLoginPage();
     }
 
     @PostMapping("/saveUserInfo")

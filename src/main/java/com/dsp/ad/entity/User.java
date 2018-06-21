@@ -8,16 +8,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private int money;
+    @Column(nullable = false)
     private int status;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String qq;
+    @Column(nullable = false)
     private String mobile;
+    @Column(nullable = false)
+    private String note;
+    @Column(nullable = false)
     private int loginTime;
     @Column(name = "login_ip")
     private int loginIP;
+    @Column(nullable = false)
+    private int createTime;
 
     public int getId() {
         return id;
@@ -97,5 +109,21 @@ public class User {
 
     public void setLoginIP(int loginIP) {
         this.loginIP = loginIP;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public int getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(int createTime) {
+        this.createTime = createTime;
     }
 }
