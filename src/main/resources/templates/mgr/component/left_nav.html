@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body th:fragment="left-nav(flag)">
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="left-side sidebar-offcanvas">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li th:class="${flag=='user'?'active':''}">
+                <a href="/mgr/">
+                    <i class="fa fa-user"></i>
+                    <span>会员管理</span>
+                </a>
+            </li>
+            <li th:class="${flag=='planList'||flag=='auditPlan'?'treeview active':'treeview'}">
+                <a href="">
+                    <i class="fa fa-book"></i>
+                    <span>计划管理</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li th:class="${flag=='planList'?'active':''}">
+                        <a href=""><i class="fa fa-angle-double-right"></i> 计划列表</a>
+                    </li>
+                    <li th:class="${flag=='auditPlan'?'active':''}">
+                        <a href=""><i class="fa fa-angle-double-right"></i> 待审计划</a>
+                    </li>
+                </ul>
+            </li>
+            <li th:class="${flag=='adList'||flag=='auditAd'?'treeview active':'treeview'}">
+                <a href="">
+                    <i class="fa fa-bookmark"></i>
+                    <span>广告管理</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li th:class="${flag=='adList'?'active':''}">
+                        <a href=""><i class="fa fa-angle-double-right"></i> 广告列表</a>
+                    </li>
+                    <li th:class="${flag=='auditAd'?'active':''}">
+                        <a href=""><i class="fa fa-angle-double-right"></i> 待审广告</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+</body>
+</html>
