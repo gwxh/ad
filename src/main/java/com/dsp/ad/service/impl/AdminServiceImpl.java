@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -38,6 +39,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public User selectUserById(int userId) {
+        Optional<User> user = userRepository.findById(userId);
+        return user.orElse(null);
+    }
+
+    @Override
     public void createUser(User user) {
         String encryptPwd = MD5Util.md5(user.getPassword());
         int money = user.getMoney() * 100;
@@ -46,5 +53,39 @@ public class AdminServiceImpl implements AdminService {
         user.setStatus(UserEnum.Status.ENABLE.value);
         user.setCreateTime(TimeUtil.now());
         userRepository.save(user);
+    }
+
+    @Override
+    public void editUser(User userInfo) {
+        User user = selectUserById(userInfo.getId());
+        if (user != null) {
+            String encryptPwd = MD5Util.md5(user.getPassword());
+            user.setPassword(encryptPwd);
+            user.setMoney(userInfo.getMoney() * 100);
+            user.setNote(userInfo.getNote());
+            user.setMobile(userInfo.getMobile());
+            user.setEmail(userInfo.getEmail());
+            user.setQq(userInfo.getQq());
+            user.setUpdateTime(TimeUtil.now());
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void disableUser(int userId) {
+        User user = selectUserById(userId);
+        if (user != null) {
+            user.setStatus(UserEnum.Status.DISABLE.value);
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void enableUser(int userId) {
+        User user = selectUserById(userId);
+        if (user != null) {
+            user.setStatus(UserEnum.Status.ENABLE.value);
+            userRepository.save(user);
+        }
     }
 }

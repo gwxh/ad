@@ -40,7 +40,7 @@
                             <form id="adForm" enctype="multipart/form-data"
                                   th:action="${ad.id}?'/user/editAd':'/user/createAd'"
                                   th:method="post" th:object="${ad}"
-                                  class="cmxform form-horizontal" role="form">
+                                  class="form-horizontal" role="form">
                                 <input type="hidden" th:field="*{id}">
                                 <div class="form-group">
                                     <label class="col-lg-3 col-sm-3 control-label">所属广告计划</label>

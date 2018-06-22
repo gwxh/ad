@@ -60,11 +60,11 @@ $(function () {
             url: {
                 required: true
             },
-            "param.image":{
+            "param.image": {
                 required: true
             }
         },
-        messages:{
+        messages: {
             "param.image": {
                 required: "请上传广告图片"
             }
@@ -73,6 +73,45 @@ $(function () {
             form.submit();
         }
     });
+
+    $("#createUserForm").validate({
+        rules: {
+            username: {
+                required: true
+            },
+            password: {
+                required: true
+            },
+            money: {
+                required: true,
+                digits: true,
+                min: 1
+            }
+        }
+    });
+
+    $("#editUserForm").validate({
+        rules: {
+            id: {
+                required: true
+            },
+            user:{
+                required: true
+            },
+            password: {
+                minlength: 6
+            },
+            password2: {
+                minlength: 6,
+                equalTo: "#password"
+            },
+            money: {
+                required: true,
+                digits: true,
+                min: 1
+            }
+        }
+    })
 });
 
 function getFileName(path) {

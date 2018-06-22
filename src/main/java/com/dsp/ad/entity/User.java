@@ -8,7 +8,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
@@ -30,6 +30,8 @@ public class User {
     private int loginIP;
     @Column(nullable = false)
     private int createTime;
+    @Column(nullable = false)
+    private int updateTime;
 
     public int getId() {
         return id;
@@ -125,5 +127,13 @@ public class User {
 
     public void setCreateTime(int createTime) {
         this.createTime = createTime;
+    }
+
+    public int getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(int updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,9 +56,27 @@ public class AdminController {
         return PageController.REDIRECT + pageController.toMgrLoginPage();
     }
 
-    @PostMapping("createUser")
-    public String createUser(Model model,User user) {
+    @PostMapping("/createUser")
+    public String createUser(Model model, User user) {
         adminService.createUser(user);
-        return pageController.toMgrIndexPage(model);
+        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+    }
+
+    @PostMapping("/editUser")
+    public String editUser(Model model, User userInfo) {
+        adminService.editUser(userInfo);
+        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+    }
+
+    @RequestMapping("/disableUser/{userId}")
+    public String disableUser(Model model, @PathVariable int userId) {
+        adminService.disableUser(userId);
+        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+    }
+
+    @RequestMapping("/enableUser/{userId}")
+    public String enableUser(Model model, @PathVariable int userId) {
+        adminService.enableUser(userId);
+        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
     }
 }

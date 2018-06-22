@@ -118,16 +118,23 @@ public class PageController {
     }
 
 
-    @RequestMapping("/mgr/")
+    @RequestMapping({"/mgr/","/mgr/index"})
     public String toMgrIndexPage(Model model) {
         List<User> users = adminService.selectAllUser();
         model.addAttribute("users", users);
         model.addAttribute("user", new User());
-        return "mgr/index";
+        return "/mgr/index";
     }
 
     @RequestMapping("/mgr/login")
     public String toMgrLoginPage() {
         return "mgr/login";
+    }
+
+    @RequestMapping("/mgr/editUser/{userId}")
+    public String toMgrEditUserPage(Model model,@PathVariable int userId) {
+        User user = adminService.selectUserById(userId);
+        model.addAttribute("user",user);
+        return "mgr/edit_user";
     }
 }

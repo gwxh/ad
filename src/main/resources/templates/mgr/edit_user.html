@@ -30,7 +30,7 @@
     <aside class="right-side">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>会员管理</h1>
+            <h1>用户信息</h1>
         </section>
 
         <!-- Main content -->
@@ -38,50 +38,68 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
-                        <div class="box-header">
-                            <div class="box-tools">
-                                <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
-                                    <i class="fa fa-plus"></i> 新增会员
-                                </button>
-                            </div>
-                        </div>
                         <div class="box-body">
-                            <table class="table table-hover general-table" id="userList">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>广告商名称</th>
-                                    <th>总余额</th>
-                                    <th>备注</th>
-                                    <th>手机号码</th>
-                                    <th>QQ</th>
-                                    <th>邮箱地址</th>
-                                    <th>状态</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="user : ${users}">
-                                    <td th:text="${user.id}"></td>
-                                    <td th:text="${user.username}"></td>
-                                    <td th:include="util/currency::format(${user.money/100})"></td>
-                                    <td th:text="${user.note}"></td>
-                                    <td th:text="${user.mobile}"></td>
-                                    <td th:text="${user.qq}"></td>
-                                    <td th:text="${user.email}"></td>
-                                    <td th:switch="${user.status}">
-                                        <span th:case="0" class="label label-danger label-mini">禁用</span>
-                                        <span th:case="1" class="label label-info label-mini">活动</span>
-                                    </td>
-                                    <td>
-                                        <a th:href="@{/mgr/editUser/{id}(id=${user.id})}">修改&nbsp;</a>
-                                        <a th:href="${user.status==1}?@{/mgr/disableUser/{id}(id=${user.id})}:
-                                            @{/mgr/enableUser/{id}(id=${user.id})}"
-                                           th:text="${user.status==1}?'禁用':'启用'"></a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <form id="editUserForm" th:action="@{/mgr/editUser}"
+                                  th:method="post" th:object="${user}"
+                                  class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">用户ID</label>
+                                    <label class="col-lg-1" style="padding-top: 7px;" th:text="*{id}"></label>
+                                    <input type="hidden" th:field="*{id}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label">广告商名称</label>
+                                    <label class="col-lg-1" style="padding-top: 7px;" th:text="*{username}"></label>
+                                    <input type="hidden" th:field="*{username}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" th:for="money">余额</label>
+                                    <div class="col-lg-6">
+                                        <input th:name="money" class="form-control" th:value="*{money/100}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" th:for="password">新密码</label>
+                                    <div class="col-lg-6">
+                                        <input type="password" class="form-control" th:field="*{password}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" for="password2">再次输入</label>
+                                    <div class="col-lg-6">
+                                        <input id="password2" type="password" name="password2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" th:for="mobile">手机号码</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" th:field="*{mobile}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" th:for="email">邮箱地址</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" th:field="*{email}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" th:for="qq">QQ</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" th:field="*{qq}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-2 control-label" th:for="note">备注</label>
+                                    <div class="col-lg-6">
+                                        <input class="form-control" th:field="*{note}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-offset-3 col-lg-10">
+                                        <button type="submit" class="btn btn-primary">保存</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -129,12 +147,12 @@
                             <input class="form-control" th:field="*{mobile}">
                         </div>
                         <div class="form-group">
-                            <label th:for="email">邮箱地址</label>
-                            <input class="form-control" th:field="*{email}">
-                        </div>
-                        <div class="form-group">
                             <label th:for="qq">QQ</label>
                             <input class="form-control" th:field="*{qq}">
+                        </div>
+                        <div class="form-group">
+                            <label th:for="email">邮箱地址</label>
+                            <input class="form-control" th:field="*{email}">
                         </div>
                     </div><!-- /.box-body -->
                 </div>

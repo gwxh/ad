@@ -11,5 +11,13 @@ public interface AdminService {
 
     List<User> selectAllUser();
 
+    User selectUserById(int userId);
+
     void createUser(User user);
+
+    void editUser(User user);
+
+    void disableUser(int userId);
+
+    void enableUser(int userId);
 }
