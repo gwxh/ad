@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import javax.servlet.http.HttpSession;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
@@ -117,7 +118,6 @@ public class PageController {
         model.addAttribute("types", types);
     }
 
-
     @RequestMapping({"/mgr/", "/mgr/index"})
     public String toMgrIndexPage(Model model) {
         List<User> users = adminService.selectAllUser();
@@ -146,7 +146,7 @@ public class PageController {
     }
 
     @RequestMapping("/mgr/audit_plans")
-    public String toMgrAuditPlansPage(Model model){
+    public String toMgrAuditPlansPage(Model model) {
         List<ExtPlan> extPlans = adminService.selectAllAuditPlans();
         model.addAttribute("plans", extPlans);
         return "/mgr/audit_plans";
@@ -160,9 +160,19 @@ public class PageController {
     }
 
     @RequestMapping("/mgr/audit_ads")
-    public String toMgrAuditAdsPage(Model model){
+    public String toMgrAuditAdsPage(Model model) {
         List<ExtAd> extAds = adminService.selectAllAuditAds();
         model.addAttribute("ads", extAds);
         return "/mgr/audit_ads";
+    }
+
+    @RequestMapping("/toUser/{userId}")
+    public String toUser(HttpSession session, Model model, @PathVariable int userId) {
+        User user = adminService.selectUserById(userId);
+        if (user == null) {
+            return REDIRECT + toMgrIndexPage(model);
+        }
+        session.setAttribute("user", user);
+        return REDIRECT + "/user/";
     }
 }

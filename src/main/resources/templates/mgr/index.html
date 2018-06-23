@@ -62,7 +62,9 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="user : ${users}">
-                                    <td th:text="${user.id}"></td>
+                                    <td>
+                                        <a th:href="@{/toUser/{id}(id=${user.id})}" th:text="${user.id}" th:target="_blank"></a>
+                                    </td>
                                     <td th:text="${user.username}"></td>
                                     <td th:include="util/currency::format(${user.money/100})"></td>
                                     <td th:text="${user.note}"></td>

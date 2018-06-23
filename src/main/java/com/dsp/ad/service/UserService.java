@@ -33,6 +33,4 @@ public interface UserService {
     List<ExtAd> selectAds(User user);
 
     ExtAd selectAd(int adId, int userId);
-
-
 }
