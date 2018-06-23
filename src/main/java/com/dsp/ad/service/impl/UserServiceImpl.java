@@ -15,7 +15,6 @@ import com.dsp.ad.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -117,14 +116,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<ExtAd> selectAds(User user) {
         List<Advertisement> ads = adRepository.selectAds(user.getId());
-        List<ExtAd> list = new ArrayList<>();
-        for (Advertisement ad : ads) {
+        return ads.stream().map((Advertisement ad) -> {
             ExtAd extAd = new ExtAd(ad);
-            Plan plan = planRepository.selectPlan(ad.getPlanId(), ad.getUserId());
-            extAd.setPlanName(plan.getName());
-            list.add(extAd);
-        }
-        return list;
+            extAd.setPlanName(planRepository.selectPlan(extAd.getPlanId(),extAd.getUserId()).getName());
+            return extAd;
+        }).collect(Collectors.toList());
     }
 
     @Override

@@ -118,7 +118,7 @@ public class PageController {
     }
 
 
-    @RequestMapping({"/mgr/","/mgr/index"})
+    @RequestMapping({"/mgr/", "/mgr/index"})
     public String toMgrIndexPage(Model model) {
         List<User> users = adminService.selectAllUser();
         model.addAttribute("users", users);
@@ -128,13 +128,41 @@ public class PageController {
 
     @RequestMapping("/mgr/login")
     public String toMgrLoginPage() {
-        return "mgr/login";
+        return "/mgr/login";
     }
 
     @RequestMapping("/mgr/editUser/{userId}")
-    public String toMgrEditUserPage(Model model,@PathVariable int userId) {
+    public String toMgrEditUserPage(Model model, @PathVariable int userId) {
         User user = adminService.selectUserById(userId);
-        model.addAttribute("user",user);
-        return "mgr/edit_user";
+        model.addAttribute("user", user);
+        return "/mgr/edit_user";
+    }
+
+    @RequestMapping("/mgr/plans")
+    public String toMgrPlansPage(Model model) {
+        List<ExtPlan> extPlans = adminService.selectAllPlans();
+        model.addAttribute("plans", extPlans);
+        return "/mgr/plans";
+    }
+
+    @RequestMapping("/mgr/audit_plans")
+    public String toMgrAuditPlansPage(Model model){
+        List<ExtPlan> extPlans = adminService.selectAllAuditPlans();
+        model.addAttribute("plans", extPlans);
+        return "/mgr/audit_plans";
+    }
+
+    @RequestMapping("/mgr/ads")
+    public String toMgrAdsPage(Model model) {
+        List<ExtAd> extAds = adminService.selectAllAds();
+        model.addAttribute("ads", extAds);
+        return "/mgr/ads";
+    }
+
+    @RequestMapping("/mgr/audit_ads")
+    public String toMgrAuditAdsPage(Model model){
+        List<ExtAd> extAds = adminService.selectAllAuditAds();
+        model.addAttribute("ads", extAds);
+        return "/mgr/audit_ads";
     }
 }

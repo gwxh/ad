@@ -4,7 +4,7 @@ public interface AdEnum {
 
     enum Status {
         CREATE_CHECK(0, "新建待审"),
-        ENABLE(1, "停止"),
+        ENABLE(1, "活动/停止"),
         RUNNING(2, "开启"),
         EDIT_CHECK(3, "修改待审"),
         DISABLE(4, "禁用"),

@@ -7,6 +7,7 @@ public interface PlanEnum {
         ENABLE(1, "启用"),
         EDIT_CHECK(2, "修改待审"),
         DISABLE(3, "禁用"),
+        DELETE(4, "删除"),
         //
         ;
 

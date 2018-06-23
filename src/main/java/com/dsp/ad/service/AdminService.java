@@ -2,6 +2,8 @@ package com.dsp.ad.service;
 
 import com.dsp.ad.entity.Admin;
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtPlan;
 
 import java.util.List;
 
@@ -20,4 +22,28 @@ public interface AdminService {
     void disableUser(int userId);
 
     void enableUser(int userId);
+
+    List<ExtPlan> selectAllPlans();
+
+    List<ExtPlan> selectAllAuditPlans();
+
+    void enablePlan(int planId);
+
+    void disablePlan(int planId);
+
+    void deletePlan(int planId);
+
+    List<ExtAd> selectAllAds();
+
+    List<ExtAd> selectAllAuditAds();
+
+    void enableAd(int adId);
+
+    void disableAd(int adId);
+
+    void deleteAd(int adId);
+
+    void startAd(int adId);
+
+    void stopAd(int adId);
 }

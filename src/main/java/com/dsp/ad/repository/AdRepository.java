@@ -11,6 +11,12 @@ import java.util.List;
 @Repository
 public interface AdRepository extends JpaRepository<Advertisement, Integer> {
 
+    @Query("from Advertisement a where a.status in (1,2) order by a.updateTime desc,a.createTime desc")
+    List<Advertisement> selectAllAds();
+
+    @Query("from Advertisement a where a.status not in (1,2,5) order by a.updateTime desc,a.createTime desc")
+    List<Advertisement> selectAllAuditAds();
+
     @Query("from Advertisement a where a.userId=?1 and a.status!=5 order by a.createTime desc")
     List<Advertisement> selectAds(int userId);
 
@@ -19,5 +25,5 @@ public interface AdRepository extends JpaRepository<Advertisement, Integer> {
 
     @Modifying
     @Query("update Advertisement a set a.status=?3,a.updateTime=?4 where a.id=?1 and a.userId=?2")
-    int updateStatus(int adId, int userId, int status, int updateTime);
+    void updateStatus(int adId, int userId, int status, int updateTime);
 }

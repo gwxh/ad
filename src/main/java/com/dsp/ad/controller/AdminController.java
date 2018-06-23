@@ -79,4 +79,52 @@ public class AdminController {
         adminService.enableUser(userId);
         return PageController.REDIRECT + pageController.toMgrIndexPage(model);
     }
+
+    @RequestMapping("/enablePlan/{planId}")
+    public String enablePlan(Model model, @PathVariable int planId) {
+        adminService.enablePlan(planId);
+        return PageController.REDIRECT + pageController.toMgrAuditPlansPage(model);
+    }
+
+    @RequestMapping("/disablePlan/{planId}")
+    public String disablePlan(Model model, @PathVariable int planId) {
+        adminService.disablePlan(planId);
+        return PageController.REDIRECT + pageController.toMgrPlansPage(model);
+    }
+
+    @RequestMapping("/deletePlan/{planId}")
+    public String deletePlan(Model model, @PathVariable int planId) {
+        adminService.deletePlan(planId);
+        return PageController.REDIRECT + pageController.toMgrPlansPage(model);
+    }
+
+    @RequestMapping("/enableAd/{adId}")
+    public String enableAd(Model model, @PathVariable int adId) {
+        adminService.enableAd(adId);
+        return PageController.REDIRECT + pageController.toMgrAuditAdsPage(model);
+    }
+
+    @RequestMapping("/disableAd/{adId}")
+    public String disableAd(Model model, @PathVariable int adId) {
+        adminService.disableAd(adId);
+        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    }
+
+    @RequestMapping("/deleteAd/{adId}")
+    public String deleteAd(Model model, @PathVariable int adId) {
+        adminService.deleteAd(adId);
+        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    }
+
+    @RequestMapping("/startAd/{adId}")
+    public String startAd(Model model, @PathVariable int adId) {
+        adminService.startAd(adId);
+        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    }
+
+    @RequestMapping("/stopAd/{adId}")
+    public String stopAd(Model model, @PathVariable int adId) {
+        adminService.stopAd(adId);
+        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    }
 }
