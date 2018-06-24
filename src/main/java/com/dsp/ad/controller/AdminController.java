@@ -2,8 +2,12 @@ package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.Admin;
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.enums.AdEnum;
+import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.util.MD5Util;
+import com.dsp.ad.util.result.LLBResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
@@ -99,9 +104,30 @@ public class AdminController {
     }
 
     @RequestMapping("/enableAd/{adId}")
-    public String enableAd(Model model, @PathVariable int adId) {
-        adminService.enableAd(adId);
-        return PageController.REDIRECT + pageController.toMgrAuditAdsPage(model);
+    public String enableAd(RedirectAttributes attributes, @PathVariable int adId) {
+        ExtAd ad = adminService.selectAdById(adId);
+        if (ad == null) {
+            attributes.addFlashAttribute("msg", "广告不存在");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        if (ad.getStatus() == AdEnum.Status.ENABLE.value || ad.getStatus() == AdEnum.Status.RUNNING.value) {
+            attributes.addFlashAttribute("msg", "广告已激活");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        if (ad.getPlan().getStatus() != PlanEnum.Status.ENABLE.value) {
+            attributes.addFlashAttribute("msg", "广告计划没有被激活");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        LLBResult result = adminService.enableAd(ad);
+        if (result == null) {
+            attributes.addFlashAttribute("msg", "广告激活失败");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        if (!result.isSuccess()) {
+            attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        return PageController.REDIRECT_AUDIT_ADS;
     }
 
     @RequestMapping("/disableAd/{adId}")

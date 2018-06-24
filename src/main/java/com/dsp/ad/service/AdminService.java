@@ -1,9 +1,11 @@
 package com.dsp.ad.service;
 
 import com.dsp.ad.entity.Admin;
+import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
+import com.dsp.ad.util.result.LLBResult;
 
 import java.util.List;
 
@@ -27,6 +29,8 @@ public interface AdminService {
 
     List<ExtPlan> selectAllAuditPlans();
 
+    Plan selectPlanById(int planId);
+
     void enablePlan(int planId);
 
     void disablePlan(int planId);
@@ -37,7 +41,9 @@ public interface AdminService {
 
     List<ExtAd> selectAllAuditAds();
 
-    void enableAd(int adId);
+    ExtAd selectAdById(int adId);
+
+    LLBResult enableAd(ExtAd ad);
 
     void disableAd(int adId);
 

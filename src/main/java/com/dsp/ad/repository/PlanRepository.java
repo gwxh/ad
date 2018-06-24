@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Integer> {
 
-    @Query("from Plan p where p.status=1 order by p.updateTime desc,p.createTime desc")
+    @Query("from Plan p where p.status=1 order by p.id desc")
     List<Plan> selectAllPlans();
 
-    @Query("from Plan p where p.status not in (1,4) order by p.updateTime desc,p.createTime desc")
+    @Query("from Plan p where p.status not in (1,4) order by p.id desc")
     List<Plan> selectAllAuditPlans();
 
     @Query("from Plan p where p.userId=?1 order by p.id desc")

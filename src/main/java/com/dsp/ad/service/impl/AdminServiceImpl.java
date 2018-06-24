@@ -14,8 +14,10 @@ import com.dsp.ad.repository.AdminRepository;
 import com.dsp.ad.repository.PlanRepository;
 import com.dsp.ad.repository.UserRepository;
 import com.dsp.ad.service.AdminService;
+import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.MD5Util;
 import com.dsp.ad.util.TimeUtil;
+import com.dsp.ad.util.result.LLBResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,9 @@ public class AdminServiceImpl implements AdminService {
     private PlanRepository planRepository;
     @Autowired
     private AdRepository adRepository;
+
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public Admin selectAdminByName(String username) {
@@ -108,7 +113,8 @@ public class AdminServiceImpl implements AdminService {
         return plans.stream().map(ExtPlan::new).collect(Collectors.toList());
     }
 
-    private Plan selectPlanById(int planId) {
+    @Override
+    public Plan selectPlanById(int planId) {
         Optional<Plan> plan = planRepository.findById(planId);
         return plan.orElse(null);
     }
@@ -143,67 +149,61 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<ExtAd> selectAllAds() {
         List<Advertisement> ads = adRepository.selectAllAds();
-        return ads.stream().map((Advertisement ad) -> {
-            ExtAd extAd = new ExtAd(ad);
-            extAd.setPlanName(planRepository.selectPlan(extAd.getPlanId(), extAd.getUserId()).getName());
-            return extAd;
-        }).collect(Collectors.toList());
+        return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 
     @Override
     public List<ExtAd> selectAllAuditAds() {
         List<Advertisement> ads = adRepository.selectAllAuditAds();
-        return ads.stream().map((Advertisement ad) -> {
-            ExtAd extAd = new ExtAd(ad);
-            extAd.setPlanName(planRepository.selectPlan(extAd.getPlanId(), extAd.getUserId()).getName());
-            return extAd;
-        }).collect(Collectors.toList());
-    }
-
-    private Advertisement selectAd(int adId) {
-        Optional<Advertisement> ad = adRepository.findById(adId);
-        return ad.orElse(null);
+        return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 
     @Override
-    public void enableAd(int adId) {
-        Advertisement ad = selectAd(adId);
-        if (ad != null) {
-            ad.setStatus(AdEnum.Status.ENABLE.value);
-            adRepository.save(ad);
+    public ExtAd selectAdById(int adId) {
+        Optional<Advertisement> adOptional = adRepository.findById(adId);
+        return adOptional.map(advertisement -> new ExtAd(planRepository, advertisement)).orElse(null);
+    }
+
+    @Override
+    public LLBResult enableAd(ExtAd extAd) {
+        LLBResult result = null;
+        if (extAd.getStatus() == AdEnum.Status.CREATE_CHECK.value) {
+            result = taskService.createTask(extAd);
         }
+        adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+        return result;
     }
 
     @Override
     public void disableAd(int adId) {
-        Advertisement ad = selectAd(adId);
-        if (ad != null) {
-            ad.setStatus(AdEnum.Status.DISABLE.value);
-            adRepository.save(ad);
-        }
+//        Advertisement ad = selectAdById(adId);
+//        if (ad != null) {
+//            ad.setStatus(AdEnum.Status.DISABLE.value);
+//            adRepository.save(ad);
+//        }
     }
 
     @Override
     public void deleteAd(int adId) {
-        Advertisement ad = selectAd(adId);
-        if (ad != null) {
-            ad.setStatus(AdEnum.Status.DELETE.value);
-            adRepository.save(ad);
-        }
+//        Advertisement ad = selectAdById(adId);
+//        if (ad != null) {
+//            ad.setStatus(AdEnum.Status.DELETE.value);
+//            adRepository.save(ad);
+//        }
     }
 
     @Override
     public void startAd(int adId) {
-        Advertisement ad = selectAd(adId);
-        if (ad != null) {
-            ad.setStatus(AdEnum.Status.RUNNING.value);
-            adRepository.save(ad);
-        }
+//        Advertisement ad = selectAdById(adId);
+//        if (ad != null) {
+//            ad.setStatus(AdEnum.Status.RUNNING.value);
+//            adRepository.save(ad);
+//        }
     }
 
     @Override
     public void stopAd(int adId) {
-        enableAd(adId);
+//        enableAd(adId);
     }
 
 }

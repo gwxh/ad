@@ -18,7 +18,7 @@ import java.util.Set;
 public class UserFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout","/mgr.*","/toUser.*")));
+            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout","/mgr.*","/toUser.*",".*.png",".*.jpg")));
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

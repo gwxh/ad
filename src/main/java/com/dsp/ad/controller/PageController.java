@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -159,11 +160,15 @@ public class PageController {
         return "/mgr/ads";
     }
 
+    public static final String AUDIT_ADS = "/mgr/audit_ads";
+    public static final String REDIRECT_AUDIT_ADS = REDIRECT + AUDIT_ADS;
+
     @RequestMapping("/mgr/audit_ads")
-    public String toMgrAuditAdsPage(Model model) {
+    public String toMgrAuditAdsPage(Model model, @ModelAttribute("msg") String msg) {
         List<ExtAd> extAds = adminService.selectAllAuditAds();
         model.addAttribute("ads", extAds);
-        return "/mgr/audit_ads";
+        model.addAttribute("msg", msg);
+        return AUDIT_ADS;
     }
 
     @RequestMapping("/toUser/{userId}")

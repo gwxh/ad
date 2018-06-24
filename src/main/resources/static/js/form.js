@@ -32,14 +32,14 @@ $(function () {
                 number: true
             }
         }, submitHandler: function (form) {
-            var device = "";
+            var device = [];
             $.each($("input[name=device]:checked"), function () {
-                device += $(this).val() + ",";
+                device.push($(this).val());
             });
             $("#device").val(device);
-            var area = "";
+            var area = [];
             $.each($("input[name=area]:checked"), function () {
-                area += $(this).val() + ",";
+                area.push($(this).val());
             });
             $("#area").val(area);
             form.submit();

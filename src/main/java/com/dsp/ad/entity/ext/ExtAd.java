@@ -1,8 +1,10 @@
 package com.dsp.ad.entity.ext;
 
 import com.dsp.ad.entity.Advertisement;
+import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.subentity.AdParam;
 import com.dsp.ad.enums.AdEnum;
+import com.dsp.ad.repository.PlanRepository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
@@ -17,11 +19,11 @@ public class ExtAd {
     private String url;
     private AdParam param = new AdParam();
     private int status;
+    private ExtPlan plan = new ExtPlan();
 
     /**
      * 显示需要
      */
-    private String planName;
     private String typeName;
 
     /**
@@ -32,7 +34,7 @@ public class ExtAd {
     public ExtAd() {
     }
 
-    public ExtAd(Advertisement ad) {
+    public ExtAd(PlanRepository planRepository, Advertisement ad) {
         this.id = ad.getId();
         this.userId = ad.getUserId();
         this.planId = ad.getPlanId();
@@ -42,6 +44,8 @@ public class ExtAd {
         this.param = AdParam.fromJson(ad.getParam());
         this.status = ad.getStatus();
         this.typeName = Objects.requireNonNull(AdEnum.Type.valueOf(type)).text;
+        Plan plan = planRepository.selectPlan(planId, userId);
+        this.plan = new ExtPlan(plan);
     }
 
     public int getId() {
@@ -108,14 +112,6 @@ public class ExtAd {
         this.status = status;
     }
 
-    public String getPlanName() {
-        return planName;
-    }
-
-    public void setPlanName(String planName) {
-        this.planName = planName;
-    }
-
     public String getTypeName() {
         return typeName;
     }
@@ -130,5 +126,13 @@ public class ExtAd {
 
     public void setImageFile(MultipartFile imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public ExtPlan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(ExtPlan plan) {
+        this.plan = plan;
     }
 }

@@ -110,22 +110,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateAdStatus(User user, int adId, AdEnum.Status status) {
-        adRepository.updateStatus(adId, user.getId(), status.value, TimeUtil.now());
+        adRepository.updateStatus(adId, status.value);
     }
 
     @Override
     public List<ExtAd> selectAds(User user) {
         List<Advertisement> ads = adRepository.selectAds(user.getId());
-        return ads.stream().map((Advertisement ad) -> {
-            ExtAd extAd = new ExtAd(ad);
-            extAd.setPlanName(planRepository.selectPlan(extAd.getPlanId(),extAd.getUserId()).getName());
-            return extAd;
-        }).collect(Collectors.toList());
+        return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 
     @Override
     public ExtAd selectAd(int adId, int userId) {
         Advertisement ad = adRepository.selectAd(adId, userId);
-        return new ExtAd(ad);
+        return new ExtAd(planRepository, ad);
     }
 }
