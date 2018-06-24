@@ -12,6 +12,8 @@ public class Task {
     @Column(nullable = false)
     private int plan;
     @Column(nullable = false)
+    private int status;
+    @Column(nullable = false)
     private String result;
 
     public long getTaskId() {
@@ -44,5 +46,13 @@ public class Task {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

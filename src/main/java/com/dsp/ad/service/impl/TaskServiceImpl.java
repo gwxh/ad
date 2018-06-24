@@ -3,6 +3,7 @@ package com.dsp.ad.service.impl;
 import com.dsp.ad.config.LLB;
 import com.dsp.ad.entity.Task;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.enums.TaskEnum;
 import com.dsp.ad.repository.TaskRepository;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.HttpUtil;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.Map;
@@ -46,26 +48,55 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public LLBResult viewTask(ExtAd ad) {
+        Map<String, String> taskInfoMap = new TreeMap<>();
+        taskInfoMap.put("apiKey", LLB.API_KEY);
+        String taskId = getTaskId(ad);
+        if (taskId == null) {
+            return null;
+        }
+        taskInfoMap.put("taskId", taskId);
+        String result = HttpUtil.post(LLB.VIEW_TASK_URL, taskInfoMap);
+        return getResult(result);
+    }
+
+    @Override
     public LLBResult startTask(ExtAd ad) {
         Map<String, String> taskInfoMap = new TreeMap<>();
         taskInfoMap.put("apiKey", LLB.API_KEY);
-        taskInfoMap.put("taskId", getTaskId(ad));
+        String taskId = getTaskId(ad);
+        if (StringUtils.isEmpty(taskId)) {
+            return null;
+        }
+        taskInfoMap.put("taskId", taskId);
         taskInfoMap.put("taskType", "1");
         int plan = calcPlan(ad.getPlan().getUnitPrice(), ad.getPlan().getTotalPrice());
         int stopTime = TimeUtil.now() + calcDuration(plan);
         taskInfoMap.put("stopTime", String.valueOf(stopTime));
         String result = HttpUtil.post(LLB.START_TASK_URL, taskInfoMap);
-        return getResult(result);
+        LLBResult llbResult = getResult(result);
+        if (llbResult.isSuccess()) {
+            taskRepository.updateStatus(ad.getId(), TaskEnum.Status.TASK_START.value);
+        }
+        return llbResult;
     }
 
     @Override
     public LLBResult stopTask(ExtAd ad) {
         Map<String, String> taskInfoMap = new TreeMap<>();
         taskInfoMap.put("apiKey", LLB.API_KEY);
-        taskInfoMap.put("taskId", getTaskId(ad));
+        String taskId = getTaskId(ad);
+        if (StringUtils.isEmpty(taskId)) {
+            return null;
+        }
+        taskInfoMap.put("taskId", taskId);
         taskInfoMap.put("taskType", "1");
         String result = HttpUtil.post(LLB.STOP_TASK_URL, taskInfoMap);
-        return getResult(result);
+        LLBResult llbResult = getResult(result);
+        if (llbResult.isSuccess()) {
+            taskRepository.updateStatus(ad.getId(), TaskEnum.Status.TASK_STOP.value);
+        }
+        return llbResult;
     }
 
     private String getTaskId(ExtAd ad) {
@@ -99,6 +130,7 @@ public class TaskServiceImpl implements TaskService {
             task.setPlan(plan);
             task.setResult(llbResult.getStatus().getDetail());
             task.setTaskId(llbResult.getResult().getTaskId());
+            task.setStatus(TaskEnum.Status.TASK_STOP.value);
             taskRepository.save(task);
         }
         return llbResult;

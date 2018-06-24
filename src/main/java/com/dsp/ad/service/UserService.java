@@ -4,7 +4,6 @@ import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
-import com.dsp.ad.enums.PlanEnum;
 
 import java.util.List;
 
@@ -17,8 +16,6 @@ public interface UserService {
     void createPlan(ExtUser user, ExtPlan extPlan);
 
     void editPlan(ExtUser user, ExtPlan extPlan);
-
-    void updatePlanStatus(ExtUser user, int planId, PlanEnum.Status status);
 
     List<ExtPlan> selectPlans(int userId);
 

@@ -11,6 +11,7 @@ import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.repository.AdRepository;
 import com.dsp.ad.repository.PlanRepository;
 import com.dsp.ad.repository.UserRepository;
+import com.dsp.ad.service.TaskService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,11 +75,14 @@ public class UserServiceImpl implements UserService {
         plan.setUpdateTime(TimeUtil.now());
         plan.setStatus(PlanEnum.Status.EDIT_CHECK.value);
         planRepository.save(plan);
-    }
-
-    @Override
-    public void updatePlanStatus(ExtUser user, int planId, PlanEnum.Status status) {
-        planRepository.updateStatus(planId, user.getId(), status.value, TimeUtil.now());
+        List<Advertisement> ads = adRepository.selectAdsByPlan(extPlan.getId());
+        for (Advertisement ad : ads) {
+            ExtAd extAd = new ExtAd(planRepository, ad);
+            if (extAd.getStatus() == AdEnum.Status.RUNNING.value) {
+                adRepository.updateStatus(extAd.getId(),AdEnum.Status.ENABLE.value);
+                taskService.stopTask(extAd);
+            }
+        }
     }
 
     @Override
@@ -95,6 +99,9 @@ public class UserServiceImpl implements UserService {
         adRepository.save(ad);
     }
 
+    @Autowired
+    private TaskService taskService;
+
     @Override
     public void editAd(ExtUser user, ExtAd extAd) {
         Advertisement ad = adRepository.selectAd(extAd.getId(), user.getId());
@@ -107,6 +114,7 @@ public class UserServiceImpl implements UserService {
         ad.setUpdateTime(TimeUtil.now());
         ad.setStatus(AdEnum.Status.EDIT_CHECK.value);
         adRepository.save(ad);
+        taskService.stopTask(new ExtAd(planRepository, ad));
     }
 
     @Override

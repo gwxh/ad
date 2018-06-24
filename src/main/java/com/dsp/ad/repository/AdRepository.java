@@ -28,4 +28,7 @@ public interface AdRepository extends JpaRepository<Advertisement, Integer> {
     @Modifying
     @Query("update Advertisement a set a.status=?2 where a.id=?1")
     void updateStatus(int adId, int status);
+
+    @Query("from Advertisement a where a.planId=?")
+    List<Advertisement> selectAdsByPlan(int planId);
 }

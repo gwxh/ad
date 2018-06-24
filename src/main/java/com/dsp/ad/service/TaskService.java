@@ -9,6 +9,8 @@ public interface TaskService {
 
     LLBResult modifyTask(ExtAd ad);
 
+    LLBResult viewTask(ExtAd ad);
+
     LLBResult startTask(ExtAd ad);
 
     LLBResult stopTask(ExtAd ad);
