@@ -123,34 +123,75 @@ public class AdminController {
             attributes.addFlashAttribute("msg", "广告激活失败");
             return PageController.REDIRECT_AUDIT_ADS;
         }
-        if (!result.isSuccess()) {
-            attributes.addFlashAttribute("msg", result.getStatus().getDetail());
-            return PageController.REDIRECT_AUDIT_ADS;
-        }
+        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
         return PageController.REDIRECT_AUDIT_ADS;
     }
 
     @RequestMapping("/disableAd/{adId}")
-    public String disableAd(Model model, @PathVariable int adId) {
-        adminService.disableAd(adId);
-        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    public String disableAd(RedirectAttributes attributes, @PathVariable int adId) {
+        ExtAd ad = adminService.selectAdById(adId);
+        if (ad == null) {
+            attributes.addFlashAttribute("msg", "广告不存在");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        if (ad.getStatus() == AdEnum.Status.RUNNING.value) {
+            attributes.addFlashAttribute("msg", "广告任务正在运行");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        adminService.disableAd(ad);
+        return PageController.REDIRECT_MGR_ADS;
     }
 
     @RequestMapping("/deleteAd/{adId}")
-    public String deleteAd(Model model, @PathVariable int adId) {
-        adminService.deleteAd(adId);
-        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    public String deleteAd(RedirectAttributes attributes, @PathVariable int adId) {
+        ExtAd ad = adminService.selectAdById(adId);
+        if (ad == null) {
+            attributes.addFlashAttribute("msg", "广告不存在");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        if (ad.getStatus() == AdEnum.Status.RUNNING.value) {
+            attributes.addFlashAttribute("msg", "广告任务正在运行");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        adminService.deleteAd(ad);
+        return PageController.REDIRECT_MGR_ADS;
     }
 
     @RequestMapping("/startAd/{adId}")
-    public String startAd(Model model, @PathVariable int adId) {
-        adminService.startAd(adId);
-        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    public String startAd(RedirectAttributes attributes, @PathVariable int adId) {
+        ExtAd ad = adminService.selectAdById(adId);
+        if (ad == null) {
+            attributes.addFlashAttribute("msg", "广告不存在");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        User user = adminService.selectUserById(ad.getUserId());
+        if (user == null) {
+            attributes.addFlashAttribute("msg", "广告商不存在");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        double price = ad.getPlan().getTotalPrice();
+        LLBResult result = adminService.startAd(ad);
+        if (result == null) {
+            attributes.addFlashAttribute("msg", "广告开启失败");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+        return PageController.REDIRECT_MGR_ADS;
     }
 
     @RequestMapping("/stopAd/{adId}")
-    public String stopAd(Model model, @PathVariable int adId) {
-        adminService.stopAd(adId);
-        return PageController.REDIRECT + pageController.toMgrAdsPage(model);
+    public String stopAd(RedirectAttributes attributes, @PathVariable int adId) {
+        ExtAd ad = adminService.selectAdById(adId);
+        if (ad == null) {
+            attributes.addFlashAttribute("msg", "广告不存在");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        LLBResult result = adminService.stopAd(ad);
+        if (result == null) {
+            attributes.addFlashAttribute("msg", "广告开启失败");
+            return PageController.REDIRECT_AUDIT_ADS;
+        }
+        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+        return PageController.REDIRECT_MGR_ADS;
     }
 }

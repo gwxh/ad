@@ -3,11 +3,12 @@ package com.dsp.ad.enums;
 public interface AdEnum {
 
     enum Status {
+        UNKNOWN(-1, "未知"),
         CREATE_CHECK(0, "新建待审"),
         ENABLE(1, "活动/停止"),
         RUNNING(2, "开启"),
         EDIT_CHECK(3, "修改待审"),
-        DISABLE(4, "禁用"),
+        DISABLE(4, "锁定"),
         DELETE(5, "删除"),
         //
         ;
@@ -18,6 +19,15 @@ public interface AdEnum {
         Status(int value, String text) {
             this.value = value;
             this.text = text;
+        }
+
+        public static Status valueOf(int value){
+            for (Status status : values()) {
+                if(status.value == value){
+                    return status;
+                }
+            }
+            return UNKNOWN;
         }
     }
 

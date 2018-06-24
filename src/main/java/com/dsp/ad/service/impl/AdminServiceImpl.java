@@ -167,43 +167,54 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public LLBResult enableAd(ExtAd extAd) {
         LLBResult result = null;
-        if (extAd.getStatus() == AdEnum.Status.CREATE_CHECK.value) {
-            result = taskService.createTask(extAd);
+        switch (AdEnum.Status.valueOf(extAd.getStatus())) {
+            case CREATE_CHECK:
+                result = taskService.createTask(extAd);
+                if (result.isSuccess()) {
+                    adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+                }
+                break;
+            case EDIT_CHECK:
+                result = taskService.modifyTask(extAd);
+                if (result.isSuccess()) {
+                    adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+                }
+                break;
+            case DISABLE:
+                adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+                result = new LLBResult();
+                result.getStatus().setMessage("操作成功");
+                break;
         }
-        adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
         return result;
     }
 
     @Override
-    public void disableAd(int adId) {
-//        Advertisement ad = selectAdById(adId);
-//        if (ad != null) {
-//            ad.setStatus(AdEnum.Status.DISABLE.value);
-//            adRepository.save(ad);
-//        }
+    public void disableAd(ExtAd extAd) {
+        adRepository.updateStatus(extAd.getId(), AdEnum.Status.DISABLE.value);
     }
 
     @Override
-    public void deleteAd(int adId) {
-//        Advertisement ad = selectAdById(adId);
-//        if (ad != null) {
-//            ad.setStatus(AdEnum.Status.DELETE.value);
-//            adRepository.save(ad);
-//        }
+    public void deleteAd(ExtAd extAd) {
+        adRepository.updateStatus(extAd.getId(), AdEnum.Status.DELETE.value);
     }
 
     @Override
-    public void startAd(int adId) {
-//        Advertisement ad = selectAdById(adId);
-//        if (ad != null) {
-//            ad.setStatus(AdEnum.Status.RUNNING.value);
-//            adRepository.save(ad);
-//        }
+    public LLBResult startAd(ExtAd extAd) {
+        LLBResult result = taskService.startTask(extAd);
+        if (result.isSuccess()) {
+            adRepository.updateStatus(extAd.getId(), AdEnum.Status.RUNNING.value);
+        }
+        return result;
     }
 
     @Override
-    public void stopAd(int adId) {
-//        enableAd(adId);
+    public LLBResult stopAd(ExtAd extAd) {
+        LLBResult result = taskService.stopTask(extAd);
+        if (result.isSuccess()) {
+            adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+        }
+        return result;
     }
 
 }

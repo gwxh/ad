@@ -12,5 +12,9 @@ public interface LLB {
 
     String TASK_EXEC_STATUS_URL = "http://service.liuliangbao.cn/api/v2/task.pc.execBatch";
 
-    int SUCCESS_CODE = 200;
+    String START_TASK_URL = "http://service.liuliangbao.cn/api/v2/service.start";
+
+    String STOP_TASK_URL = "http://service.liuliangbao.cn/api/v2/service.stop";
+
+    int SUCCESS_CODE = 100;
 }

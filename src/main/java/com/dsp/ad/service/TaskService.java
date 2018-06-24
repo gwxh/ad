@@ -6,4 +6,10 @@ import com.dsp.ad.util.result.LLBResult;
 public interface TaskService {
 
     LLBResult createTask(ExtAd ad);
+
+    LLBResult modifyTask(ExtAd ad);
+
+    LLBResult startTask(ExtAd ad);
+
+    LLBResult stopTask(ExtAd ad);
 }

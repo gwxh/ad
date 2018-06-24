@@ -36,12 +36,12 @@ $(function () {
             $.each($("input[name=device]:checked"), function () {
                 device.push($(this).val());
             });
-            $("#device").val(device);
+            $("#device").val(JSON.stringify(device));
             var area = [];
             $.each($("input[name=area]:checked"), function () {
                 area.push($(this).val());
             });
-            $("#area").val(area);
+            $("#area").val(JSON.stringify(area));
             form.submit();
         }
     });

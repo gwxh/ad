@@ -153,22 +153,26 @@ public class PageController {
         return "/mgr/audit_plans";
     }
 
+    public static final String MGR_ADS = "/mgr/ads";
+    public static final String REDIRECT_MGR_ADS = REDIRECT + MGR_ADS;
+
     @RequestMapping("/mgr/ads")
-    public String toMgrAdsPage(Model model) {
+    public String toMgrAdsPage(Model model, @ModelAttribute("msg") String msg) {
         List<ExtAd> extAds = adminService.selectAllAds();
         model.addAttribute("ads", extAds);
-        return "/mgr/ads";
+        model.addAttribute("msg", msg);
+        return MGR_ADS;
     }
 
-    public static final String AUDIT_ADS = "/mgr/audit_ads";
-    public static final String REDIRECT_AUDIT_ADS = REDIRECT + AUDIT_ADS;
+    public static final String MGR_AUDIT_ADS = "/mgr/audit_ads";
+    public static final String REDIRECT_AUDIT_ADS = REDIRECT + MGR_AUDIT_ADS;
 
     @RequestMapping("/mgr/audit_ads")
     public String toMgrAuditAdsPage(Model model, @ModelAttribute("msg") String msg) {
         List<ExtAd> extAds = adminService.selectAllAuditAds();
         model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
-        return AUDIT_ADS;
+        return MGR_AUDIT_ADS;
     }
 
     @RequestMapping("/toUser/{userId}")
