@@ -94,11 +94,6 @@
 <script src="/js/messages_zh.min.js"></script>
 <script src="/js/form.js"></script>
 
-<!--message-->
-<script th:if="${msg!=''}" th:inline="javascript">
-    var msg = [[${msg}]];
-    alert(msg);
-</script>
-
+<script th:replace="/component/msg::msg"></script>
 </body>
 </html>

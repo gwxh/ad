@@ -14,6 +14,7 @@ public class ServletConfig {
     public ConfigurableServletWebServerFactory webServerFactory() {
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404.html"));
+//        factory.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500.html"));
         return factory;
     }
 }

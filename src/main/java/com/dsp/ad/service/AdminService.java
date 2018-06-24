@@ -2,9 +2,9 @@ package com.dsp.ad.service;
 
 import com.dsp.ad.entity.Admin;
 import com.dsp.ad.entity.Plan;
-import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
+import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.util.result.LLBResult;
 
 import java.util.List;
@@ -13,13 +13,13 @@ public interface AdminService {
 
     Admin selectAdminByName(String username);
 
-    List<User> selectAllUser();
+    List<ExtUser> selectAllUser();
 
-    User selectUserById(int userId);
+    ExtUser selectUserById(int userId);
 
-    void createUser(User user);
+    void createUser(ExtUser user);
 
-    void editUser(User user);
+    void editUser(ExtUser user);
 
     void disableUser(int userId);
 

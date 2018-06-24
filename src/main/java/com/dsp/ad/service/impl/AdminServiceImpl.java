@@ -6,6 +6,7 @@ import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
+import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.enums.UserEnum;
@@ -46,34 +47,42 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<User> selectAllUser() {
-        return userRepository.findAll();
+    public List<ExtUser> selectAllUser() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(ExtUser::new).collect(Collectors.toList());
     }
 
     @Override
-    public User selectUserById(int userId) {
-        Optional<User> user = userRepository.findById(userId);
-        return user.orElse(null);
+    public ExtUser selectUserById(int userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        return userOptional.map(ExtUser::new).orElse(null);
     }
 
     @Override
-    public void createUser(User user) {
-        String encryptPwd = MD5Util.md5(user.getPassword());
-        int money = user.getMoney() * 100;
+    public void createUser(ExtUser userInfo) {
+        User user = new User();
+        String encryptPwd = MD5Util.md5(userInfo.getPassword());
+        int money = (int) (userInfo.getMoney() * 100);
         user.setPassword(encryptPwd);
         user.setMoney(money);
         user.setStatus(UserEnum.Status.ENABLE.value);
         user.setCreateTime(TimeUtil.now());
+        user.setNote(userInfo.getNote());
+        user.setMobile(userInfo.getMobile());
+        user.setEmail(userInfo.getEmail());
+        user.setQq(userInfo.getQq());
         userRepository.save(user);
     }
 
     @Override
-    public void editUser(User userInfo) {
-        User user = selectUserById(userInfo.getId());
-        if (user != null) {
-            String encryptPwd = MD5Util.md5(user.getPassword());
+    public void editUser(ExtUser userInfo) {
+        Optional<User> userOptional = userRepository.findById(userInfo.getId());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            String encryptPwd = MD5Util.md5(userInfo.getPassword());
             user.setPassword(encryptPwd);
-            user.setMoney(userInfo.getMoney() * 100);
+            int money = (int) (userInfo.getMoney() * 100);
+            user.setMoney(money);
             user.setNote(userInfo.getNote());
             user.setMobile(userInfo.getMobile());
             user.setEmail(userInfo.getEmail());
@@ -85,19 +94,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void disableUser(int userId) {
-        User user = selectUserById(userId);
+        ExtUser user = selectUserById(userId);
         if (user != null) {
-            user.setStatus(UserEnum.Status.DISABLE.value);
-            userRepository.save(user);
+            userRepository.updateStatus(userId, UserEnum.Status.DISABLE.value);
         }
     }
 
     @Override
     public void enableUser(int userId) {
-        User user = selectUserById(userId);
+        ExtUser user = selectUserById(userId);
         if (user != null) {
-            user.setStatus(UserEnum.Status.ENABLE.value);
-            userRepository.save(user);
+            userRepository.updateStatus(userId, UserEnum.Status.ENABLE.value);
         }
     }
 

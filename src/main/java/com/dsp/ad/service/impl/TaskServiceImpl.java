@@ -81,6 +81,9 @@ public class TaskServiceImpl implements TaskService {
         LLBResult llbResult = null;
         try {
             llbResult = OBJECT_MAPPER.readValue(result, LLBResult.class);
+            if (llbResult.getStatus().getCode() == SUCCESS_CODE) {
+                llbResult.setSuccess(true);
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
@@ -95,10 +98,7 @@ public class TaskServiceImpl implements TaskService {
             int plan = Integer.parseInt(taskInfoMap.get("plan"));
             task.setPlan(plan);
             task.setResult(llbResult.getStatus().getDetail());
-            if (llbResult.getStatus().getCode() == SUCCESS_CODE) {
-                task.setTaskId(llbResult.getResult().getTaskId());
-                llbResult.setSuccess(true);
-            }
+            task.setTaskId(llbResult.getResult().getTaskId());
             taskRepository.save(task);
         }
         return llbResult;

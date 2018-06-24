@@ -3,6 +3,7 @@ package com.dsp.ad.controller;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
+import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,16 +51,20 @@ public class PageController {
     }
 
     @RequestMapping("/user/plan")
-    public String toPlanPage(Model model, @SessionAttribute User user) {
-        List<ExtPlan> extPlans = userService.selectPlans(user);
+    public String toPlanPage(Model model, @SessionAttribute ExtUser user) {
+        List<ExtPlan> extPlans = userService.selectPlans(user.getId());
         model.addAttribute("plans", extPlans);
         return "plan";
     }
 
+    public static final String USER_AD = "/user/ad";
+    public static final String REDIRECT_USER_AD = REDIRECT + USER_AD;
+
     @RequestMapping("/user/ad")
-    public String toAdPage(Model model, @SessionAttribute User user) {
-        List<ExtAd> extAds = userService.selectAds(user);
+    public String toAdPage(Model model, @SessionAttribute ExtUser user, @ModelAttribute("msg") String msg) {
+        List<ExtAd> extAds = userService.selectAds(user.getId());
         model.addAttribute("ads", extAds);
+        model.addAttribute("msg", msg);
         return "ad";
     }
 
@@ -70,7 +74,7 @@ public class PageController {
     }
 
     @RequestMapping("/user/setting")
-    public String toSettingPage(Model model, @SessionAttribute User user) {
+    public String toSettingPage(Model model, @SessionAttribute ExtUser user) {
         model.addAttribute("user", user);
         return "setting";
     }
@@ -82,7 +86,7 @@ public class PageController {
     }
 
     @RequestMapping("/user/editPlan/{planId}")
-    public String toEditPlanPage(Model model, @PathVariable int planId, @SessionAttribute User user) {
+    public String toEditPlanPage(Model model, @PathVariable int planId, @SessionAttribute ExtUser user) {
         ExtPlan extPlan = userService.selectPlan(planId, user.getId());
         if (extPlan == null) {
             return REDIRECT + toPlanPage(model, user);
@@ -92,14 +96,14 @@ public class PageController {
     }
 
     @RequestMapping("/user/createAd")
-    public String toCreateAd(Model model, @SessionAttribute User user) {
+    public String toCreateAd(Model model, @SessionAttribute ExtUser user) {
         initAdPage(model, user);
         model.addAttribute("ad", new ExtAd());
         return "create_ad";
     }
 
     @RequestMapping("/user/editAd/{adId}")
-    public String toEditAdPage(Model model, @PathVariable int adId, @SessionAttribute User user) throws FileNotFoundException {
+    public String toEditAdPage(Model model, @PathVariable int adId, @SessionAttribute ExtUser user) {
         ExtAd extAd = userService.selectAd(adId, user.getId());
         if (extAd == null) {
             return REDIRECT + toPlanPage(model, user);
@@ -109,8 +113,8 @@ public class PageController {
         return "create_ad";
     }
 
-    private void initAdPage(Model model, User user) {
-        List<ExtPlan> extPlans = userService.selectPlans(user);
+    private void initAdPage(Model model, ExtUser user) {
+        List<ExtPlan> extPlans = userService.selectPlans(user.getId());
         model.addAttribute("plans", extPlans);
         Map<Integer, String> types = new HashMap<>();
         for (AdEnum.Type type : AdEnum.Type.values()) {
@@ -121,7 +125,7 @@ public class PageController {
 
     @RequestMapping({"/mgr/", "/mgr/index"})
     public String toMgrIndexPage(Model model) {
-        List<User> users = adminService.selectAllUser();
+        List<ExtUser> users = adminService.selectAllUser();
         model.addAttribute("users", users);
         model.addAttribute("user", new User());
         return "/mgr/index";
@@ -134,7 +138,7 @@ public class PageController {
 
     @RequestMapping("/mgr/editUser/{userId}")
     public String toMgrEditUserPage(Model model, @PathVariable int userId) {
-        User user = adminService.selectUserById(userId);
+        ExtUser user = adminService.selectUserById(userId);
         model.addAttribute("user", user);
         return "/mgr/edit_user";
     }
@@ -177,7 +181,7 @@ public class PageController {
 
     @RequestMapping("/toUser/{userId}")
     public String toUser(HttpSession session, Model model, @PathVariable int userId) {
-        User user = adminService.selectUserById(userId);
+        ExtUser user = adminService.selectUserById(userId);
         if (user == null) {
             return REDIRECT + toMgrIndexPage(model);
         }

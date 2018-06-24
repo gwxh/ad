@@ -1,8 +1,8 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.Admin;
-import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.service.AdminService;
@@ -62,13 +62,13 @@ public class AdminController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(Model model, User user) {
+    public String createUser(Model model, ExtUser user) {
         adminService.createUser(user);
         return PageController.REDIRECT + pageController.toMgrIndexPage(model);
     }
 
     @PostMapping("/editUser")
-    public String editUser(Model model, User userInfo) {
+    public String editUser(Model model, ExtUser userInfo) {
         adminService.editUser(userInfo);
         return PageController.REDIRECT + pageController.toMgrIndexPage(model);
     }
@@ -162,18 +162,22 @@ public class AdminController {
         ExtAd ad = adminService.selectAdById(adId);
         if (ad == null) {
             attributes.addFlashAttribute("msg", "广告不存在");
-            return PageController.REDIRECT_AUDIT_ADS;
+            return PageController.REDIRECT_MGR_ADS;
         }
-        User user = adminService.selectUserById(ad.getUserId());
+        ExtUser user = adminService.selectUserById(ad.getUserId());
         if (user == null) {
             attributes.addFlashAttribute("msg", "广告商不存在");
-            return PageController.REDIRECT_AUDIT_ADS;
+            return PageController.REDIRECT_MGR_ADS;
         }
         double price = ad.getPlan().getTotalPrice();
+        if (user.getMoney() < price) {
+            attributes.addFlashAttribute("msg", "广告商余额不足");
+            return PageController.REDIRECT_MGR_ADS;
+        }
         LLBResult result = adminService.startAd(ad);
         if (result == null) {
             attributes.addFlashAttribute("msg", "广告开启失败");
-            return PageController.REDIRECT_AUDIT_ADS;
+            return PageController.REDIRECT_MGR_ADS;
         }
         attributes.addFlashAttribute("msg", result.getStatus().getDetail());
         return PageController.REDIRECT_MGR_ADS;

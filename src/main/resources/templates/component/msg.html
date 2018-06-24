@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://java.sun.com/JSP/Page">
+<body th:fragment="msg">
+<script th:if="${msg!=''}" th:inline="javascript">
+    var msg = [[${msg}]];
+    alert(msg);
+</script>
+</body>
+</html>

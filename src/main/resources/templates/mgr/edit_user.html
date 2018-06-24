@@ -55,7 +55,7 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label" th:for="money">余额</label>
                                     <div class="col-lg-6">
-                                        <input th:name="money" class="form-control" th:value="*{money/100}"/>
+                                        <input class="form-control" th:field="*{money}"/>
                                     </div>
                                 </div>
                                 <div class="form-group">

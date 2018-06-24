@@ -73,8 +73,8 @@
                                             <span th:case="4" class="label label-warning label-mini">已被锁定</span>
                                         </td>
                                         <td>
-                                            <a href="javascript:;" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>
-                                            <a href="javascript:;" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>
+                                            <a th:href="@{/user/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>
+                                            <a th:href="@{/user/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>
                                             <a th:href="@{/user/editAd/{id}(id=${ad.id})}">修改</a>
                                         </td>
                                     </tr>
@@ -110,5 +110,6 @@
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
 
+<script th:replace="/component/msg::msg"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class User {
     private String note;
     @Column(nullable = false)
     private int loginTime;
-    @Column(name = "login_ip")
+    @Column(name = "login_ip", nullable = false)
     private int loginIP;
     @Column(nullable = false)
     private int createTime;

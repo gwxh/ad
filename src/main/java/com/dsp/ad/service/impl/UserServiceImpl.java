@@ -5,6 +5,7 @@ import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
+import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.repository.AdRepository;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createPlan(User user, ExtPlan extPlan) {
+    public void createPlan(ExtUser user, ExtPlan extPlan) {
         Plan plan = new Plan();
         plan.setUserId(user.getId());
         plan.setName(extPlan.getName());
@@ -52,8 +53,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ExtPlan> selectPlans(User user) {
-        List<Plan> plans = planRepository.selectPlans(user.getId());
+    public List<ExtPlan> selectPlans(int userId) {
+        List<Plan> plans = planRepository.selectPlans(userId);
         return plans.stream().map(ExtPlan::new).collect(Collectors.toList());
     }
 
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editPlan(User user, ExtPlan extPlan) {
+    public void editPlan(ExtUser user, ExtPlan extPlan) {
         Plan plan = planRepository.selectPlan(extPlan.getId(), user.getId());
         plan.setName(extPlan.getName());
         plan.setUnitPrice((int) (extPlan.getUnitPrice() * 100));
@@ -76,12 +77,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePlanStatus(User user, int planId, PlanEnum.Status status) {
+    public void updatePlanStatus(ExtUser user, int planId, PlanEnum.Status status) {
         planRepository.updateStatus(planId, user.getId(), status.value, TimeUtil.now());
     }
 
     @Override
-    public void createAd(User user, ExtAd extAd) {
+    public void createAd(ExtUser user, ExtAd extAd) {
         Advertisement ad = new Advertisement();
         ad.setUserId(user.getId());
         ad.setPlanId(extAd.getPlanId());
@@ -95,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editAd(User user, ExtAd extAd) {
+    public void editAd(ExtUser user, ExtAd extAd) {
         Advertisement ad = adRepository.selectAd(extAd.getId(), user.getId());
         ad.setName(ad.getName());
         ad.setPlanId(extAd.getPlanId());
@@ -109,13 +110,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateAdStatus(User user, int adId, AdEnum.Status status) {
-        adRepository.updateStatus(adId, status.value);
-    }
-
-    @Override
-    public List<ExtAd> selectAds(User user) {
-        List<Advertisement> ads = adRepository.selectAds(user.getId());
+    public List<ExtAd> selectAds(int userId) {
+        List<Advertisement> ads = adRepository.selectAds(userId);
         return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 

@@ -107,7 +107,7 @@ $(function () {
             },
             money: {
                 required: true,
-                digits: true,
+                number:true,
                 min: 1
             }
         }
