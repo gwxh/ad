@@ -1,7 +1,7 @@
 package com.dsp.ad.service.impl;
 
+import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Admin;
-import com.dsp.ad.entity.Advertisement;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
@@ -62,9 +62,9 @@ public class AdminServiceImpl implements AdminService {
     public void createUser(ExtUser userInfo) {
         User user = new User();
         String encryptPwd = MD5Util.md5(userInfo.getPassword());
-        int money = (int) (userInfo.getMoney() * 100);
+        int amount = (int) (userInfo.getAmount() * 100);
         user.setPassword(encryptPwd);
-        user.setMoney(money);
+        user.setAmount(amount);
         user.setStatus(UserEnum.Status.ENABLE.value);
         user.setCreateTime(TimeUtil.now());
         user.setNote(userInfo.getNote());
@@ -81,8 +81,8 @@ public class AdminServiceImpl implements AdminService {
             User user = userOptional.get();
             String encryptPwd = MD5Util.md5(userInfo.getPassword());
             user.setPassword(encryptPwd);
-            int money = (int) (userInfo.getMoney() * 100);
-            user.setMoney(money);
+            int amount = (int) (userInfo.getAmount() * 100);
+            user.setAmount(amount);
             user.setNote(userInfo.getNote());
             user.setMobile(userInfo.getMobile());
             user.setEmail(userInfo.getEmail());
@@ -155,19 +155,19 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ExtAd> selectAllAds() {
-        List<Advertisement> ads = adRepository.selectAllAds();
+        List<Ad> ads = adRepository.selectAllAds();
         return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 
     @Override
     public List<ExtAd> selectAllAuditAds() {
-        List<Advertisement> ads = adRepository.selectAllAuditAds();
+        List<Ad> ads = adRepository.selectAllAuditAds();
         return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 
     @Override
     public ExtAd selectAdById(int adId) {
-        Optional<Advertisement> adOptional = adRepository.findById(adId);
+        Optional<Ad> adOptional = adRepository.findById(adId);
         return adOptional.map(advertisement -> new ExtAd(planRepository, advertisement)).orElse(null);
     }
 

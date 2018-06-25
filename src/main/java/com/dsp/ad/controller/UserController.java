@@ -138,7 +138,7 @@ public class UserController {
             return PageController.REDIRECT_USER_AD;
         }
         double price = ad.getPlan().getTotalPrice();
-        if (user.getMoney() < price) {
+        if (user.getAmount() < price) {
             attributes.addFlashAttribute("msg", "广告商余额不足");
             return PageController.REDIRECT_USER_AD;
         }

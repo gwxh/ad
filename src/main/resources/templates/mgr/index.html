@@ -66,7 +66,7 @@
                                         <a th:href="@{/toUser/{id}(id=${user.id})}" th:text="${user.id}" th:target="_blank"></a>
                                     </td>
                                     <td th:text="${user.username}"></td>
-                                    <td th:include="util/currency::format(${user.money})"></td>
+                                    <td th:include="util/currency::format(${user.amount})"></td>
                                     <td th:text="${user.note}"></td>
                                     <td th:text="${user.mobile}"></td>
                                     <td th:text="${user.qq}"></td>
@@ -119,8 +119,8 @@
                             <input type="password" class="form-control" th:field="*{password}">
                         </div>
                         <div class="form-group">
-                            <label th:for="money">余额</label>
-                            <input class="form-control" th:field="*{money}">
+                            <label th:for="amount">余额</label>
+                            <input class="form-control" th:field="*{amount}">
                         </div>
                         <div class="form-group">
                             <label th:for="note">备注</label>

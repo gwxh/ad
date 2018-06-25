@@ -13,7 +13,7 @@ public class User {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    private int money;
+    private int amount;
     @Column(nullable = false)
     private int status;
     @Column(nullable = false)
@@ -57,12 +57,12 @@ public class User {
         this.password = password;
     }
 
-    public int getMoney() {
-        return money;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setMoney(int money) {
-        this.money = money;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getStatus() {

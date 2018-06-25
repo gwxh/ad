@@ -170,7 +170,7 @@ public class AdminController {
             return PageController.REDIRECT_MGR_ADS;
         }
         double price = ad.getPlan().getTotalPrice();
-        if (user.getMoney() < price) {
+        if (user.getAmount() < price) {
             attributes.addFlashAttribute("msg", "广告商余额不足");
             return PageController.REDIRECT_MGR_ADS;
         }

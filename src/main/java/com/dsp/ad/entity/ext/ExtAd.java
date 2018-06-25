@@ -1,6 +1,6 @@
 package com.dsp.ad.entity.ext;
 
-import com.dsp.ad.entity.Advertisement;
+import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.subentity.AdParam;
 import com.dsp.ad.enums.AdEnum;
@@ -34,7 +34,7 @@ public class ExtAd {
     public ExtAd() {
     }
 
-    public ExtAd(PlanRepository planRepository, Advertisement ad) {
+    public ExtAd(PlanRepository planRepository, Ad ad) {
         this.id = ad.getId();
         this.userId = ad.getUserId();
         this.planId = ad.getPlanId();

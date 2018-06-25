@@ -10,7 +10,7 @@ public interface LLB {
 
     String MODIFY_TASK_URL = "http://service.liuliangbao.cn/api/v2/task.pc.modify";
 
-    String TASK_EXEC_STATUS_URL = "http://service.liuliangbao.cn/api/v2/task.pc.execBatch";
+    String SELECT_TASK_EXEC = "http://service.liuliangbao.cn/api/v2/service.history";
 
     String START_TASK_URL = "http://service.liuliangbao.cn/api/v2/service.start";
 

@@ -6,7 +6,7 @@ public class ExtUser {
 
     private int id;
     private String username;
-    private double money;
+    private double amount;
     private int status;
     private String email;
     private String qq;
@@ -21,7 +21,7 @@ public class ExtUser {
     public ExtUser(User user) {
         this.id = user.getId();
         this.username = user.getUsername();
-        this.money = user.getMoney() / 100d;
+        this.amount = user.getAmount() / 100d;
         this.status = user.getStatus();
         this.email = user.getEmail();
         this.qq = user.getQq();
@@ -45,12 +45,12 @@ public class ExtUser {
         this.username = username;
     }
 
-    public double getMoney() {
-        return money;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public int getStatus() {

@@ -1,6 +1,6 @@
 package com.dsp.ad.service.impl;
 
-import com.dsp.ad.entity.Advertisement;
+import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService {
         plan.setUpdateTime(TimeUtil.now());
         plan.setStatus(PlanEnum.Status.EDIT_CHECK.value);
         planRepository.save(plan);
-        List<Advertisement> ads = adRepository.selectAdsByPlan(extPlan.getId());
-        for (Advertisement ad : ads) {
+        List<Ad> ads = adRepository.selectAdsByPlan(extPlan.getId());
+        for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(planRepository, ad);
             if (extAd.getStatus() == AdEnum.Status.RUNNING.value) {
                 adRepository.updateStatus(extAd.getId(),AdEnum.Status.ENABLE.value);
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createAd(ExtUser user, ExtAd extAd) {
-        Advertisement ad = new Advertisement();
+        Ad ad = new Ad();
         ad.setUserId(user.getId());
         ad.setPlanId(extAd.getPlanId());
         ad.setName(extAd.getName());
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void editAd(ExtUser user, ExtAd extAd) {
-        Advertisement ad = adRepository.selectAd(extAd.getId(), user.getId());
+        Ad ad = adRepository.selectAd(extAd.getId(), user.getId());
         ad.setName(ad.getName());
         ad.setPlanId(extAd.getPlanId());
         ad.setName(extAd.getName());
@@ -119,13 +119,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<ExtAd> selectAds(int userId) {
-        List<Advertisement> ads = adRepository.selectAds(userId);
+        List<Ad> ads = adRepository.selectAds(userId);
         return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
     }
 
     @Override
     public ExtAd selectAd(int adId, int userId) {
-        Advertisement ad = adRepository.selectAd(adId, userId);
+        Ad ad = adRepository.selectAd(adId, userId);
         return new ExtAd(planRepository, ad);
     }
 }

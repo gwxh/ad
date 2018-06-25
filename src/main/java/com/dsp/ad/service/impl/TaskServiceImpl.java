@@ -8,6 +8,7 @@ import com.dsp.ad.repository.TaskRepository;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.HttpUtil;
 import com.dsp.ad.util.TimeUtil;
+import com.dsp.ad.util.result.LLBExecResult;
 import com.dsp.ad.util.result.LLBResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -49,31 +50,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public LLBResult viewTask(ExtAd ad) {
-        Map<String, String> taskInfoMap = new TreeMap<>();
-        taskInfoMap.put("apiKey", LLB.API_KEY);
-        String taskId = getTaskId(ad);
-        if (taskId == null) {
-            return null;
-        }
-        taskInfoMap.put("taskId", taskId);
-        String result = HttpUtil.post(LLB.VIEW_TASK_URL, taskInfoMap);
+        Map<String, String> taskMap = taskMap(ad);
+        String result = HttpUtil.post(LLB.VIEW_TASK_URL, taskMap);
         return getResult(result);
     }
 
     @Override
     public LLBResult startTask(ExtAd ad) {
-        Map<String, String> taskInfoMap = new TreeMap<>();
-        taskInfoMap.put("apiKey", LLB.API_KEY);
-        String taskId = getTaskId(ad);
-        if (StringUtils.isEmpty(taskId)) {
-            return null;
-        }
-        taskInfoMap.put("taskId", taskId);
-        taskInfoMap.put("taskType", "1");
+        Map<String, String> taskMap = taskMap(ad);
         int plan = calcPlan(ad.getPlan().getUnitPrice(), ad.getPlan().getTotalPrice());
         int stopTime = TimeUtil.now() + calcDuration(plan);
-        taskInfoMap.put("stopTime", String.valueOf(stopTime));
-        String result = HttpUtil.post(LLB.START_TASK_URL, taskInfoMap);
+        taskMap.put("stopTime", String.valueOf(stopTime));
+        String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);
         LLBResult llbResult = getResult(result);
         if (llbResult.isSuccess()) {
             taskRepository.updateStatus(ad.getId(), TaskEnum.Status.TASK_START.value);
@@ -83,20 +71,29 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public LLBResult stopTask(ExtAd ad) {
-        Map<String, String> taskInfoMap = new TreeMap<>();
-        taskInfoMap.put("apiKey", LLB.API_KEY);
-        String taskId = getTaskId(ad);
-        if (StringUtils.isEmpty(taskId)) {
-            return null;
-        }
-        taskInfoMap.put("taskId", taskId);
-        taskInfoMap.put("taskType", "1");
-        String result = HttpUtil.post(LLB.STOP_TASK_URL, taskInfoMap);
+        Map<String, String> taskMap = taskMap(ad);
+        String result = HttpUtil.post(LLB.STOP_TASK_URL, taskMap);
         LLBResult llbResult = getResult(result);
         if (llbResult.isSuccess()) {
             taskRepository.updateStatus(ad.getId(), TaskEnum.Status.TASK_STOP.value);
         }
         return llbResult;
+    }
+
+    @Override
+    public LLBExecResult selectTaskExec(ExtAd ad) {
+        Map<String, String> taskMap = taskMap(ad);
+        String result = HttpUtil.post(LLB.SELECT_TASK_EXEC, taskMap);
+        LLBExecResult llbExecResult = null;
+        try {
+            llbExecResult = OBJECT_MAPPER.readValue(result, LLBExecResult.class);
+            if (llbExecResult.getStatus().getCode() == SUCCESS_CODE) {
+                llbExecResult.setSuccess(true);
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return llbExecResult;
     }
 
     private String getTaskId(ExtAd ad) {
@@ -137,20 +134,32 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private Map<String, String> taskInfoMap(ExtAd ad) {
-        Map<String, String> map = new TreeMap<>();
-        map.put("apiKey", LLB.API_KEY);
-        map.put("url", ad.getUrl());
+        Map<String, String> taskInfoMap = new TreeMap<>();
+        taskInfoMap.put("apiKey", LLB.API_KEY);
+        taskInfoMap.put("url", ad.getUrl());
         int plan = calcPlan(ad.getPlan().getUnitPrice(), ad.getPlan().getTotalPrice());
         String planStr = String.valueOf(plan);
-        map.put("plan", planStr);
+        taskInfoMap.put("plan", planStr);
         String name = ad.getPlan().getName() + "-" + ad.getName() + "-" + ad.getId();
-        map.put("name", name);
-        map.put("pv", "6");
-        map.put("source", "[{\"type\": 2,\"rate\": 100}]");
-        map.put("fastCurve", "true");
-        map.put("areas", ad.getPlan().getParam().getArea());
+        taskInfoMap.put("name", name);
+        taskInfoMap.put("pv", "6");
+        taskInfoMap.put("source", "[{\"type\": 2,\"rate\": 100}]");
+        taskInfoMap.put("fastCurve", "true");
+        taskInfoMap.put("areas", ad.getPlan().getParam().getArea());
         //todo ua未传
-        return map;
+        return taskInfoMap;
+    }
+
+    private Map<String, String> taskMap(ExtAd ad) {
+        Map<String, String> taskMap = new TreeMap<>();
+        taskMap.put("apiKey", LLB.API_KEY);
+        String taskId = getTaskId(ad);
+        if (StringUtils.isEmpty(taskId)) {
+            return null;
+        }
+        taskMap.put("taskId", taskId);
+        taskMap.put("taskType", "1");
+        return taskMap;
     }
 
     private int calcPlan(double unitPrice, double totalPrice) {
