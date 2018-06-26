@@ -135,6 +135,9 @@ public class PageController {
         model.addAttribute("types", types);
     }
 
+    private final static String MGR_INDEX = "/mgr/index";
+    public final static String REDIRECT_MGR_INDEX = REDIRECT + MGR_INDEX;
+
     @RequestMapping({"/mgr/", "/mgr/index"})
     public String toMgrIndexPage(Model model) {
         List<ExtUser> users = adminService.selectAllUser();
@@ -143,30 +146,39 @@ public class PageController {
         return "/mgr/index";
     }
 
+    private final static String MGR_LOGIN = "/mgr/login";
+    public final static String REDIRECT_MGR_LOGIN = REDIRECT + MGR_LOGIN;
+
     @RequestMapping("/mgr/login")
     public String toMgrLoginPage() {
-        return "/mgr/login";
+        return "mgr/login";
     }
 
     @RequestMapping("/mgr/editUser/{userId}")
     public String toMgrEditUserPage(Model model, @PathVariable int userId) {
         ExtUser user = adminService.selectUserById(userId);
         model.addAttribute("user", user);
-        return "/mgr/edit_user";
+        return "mgr/edit_user";
     }
+
+    private final static String MGR_PLANS = "/mgr/plans";
+    public final static String REDIRECT_MGR_PLANS = REDIRECT + MGR_PLANS;
 
     @RequestMapping("/mgr/plans")
     public String toMgrPlansPage(Model model) {
         List<ExtPlan> extPlans = adminService.selectAllPlans();
         model.addAttribute("plans", extPlans);
-        return "/mgr/plans";
+        return "mgr/plans";
     }
+
+    private final static String MGR_AUDIT_PLANS = "/mgr/audit_plans";
+    public final static String REDIRECT_MGR_AUDIT_PLANS = REDIRECT + MGR_AUDIT_PLANS;
 
     @RequestMapping("/mgr/audit_plans")
     public String toMgrAuditPlansPage(Model model) {
         List<ExtPlan> extPlans = adminService.selectAllAuditPlans();
         model.addAttribute("plans", extPlans);
-        return "/mgr/audit_plans";
+        return "mgr/audit_plans";
     }
 
     public static final String MGR_ADS = "/mgr/ads";
@@ -177,7 +189,7 @@ public class PageController {
         List<ExtAd> extAds = adminService.selectAllAds();
         model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
-        return MGR_ADS;
+        return "mgr/ads";
     }
 
     public static final String MGR_AUDIT_ADS = "/mgr/audit_ads";
@@ -188,14 +200,14 @@ public class PageController {
         List<ExtAd> extAds = adminService.selectAllAuditAds();
         model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
-        return MGR_AUDIT_ADS;
+        return "mgr/audit_ads";
     }
 
     @RequestMapping("/toUser/{userId}")
     public String toUser(HttpSession session, Model model, @PathVariable int userId) {
         ExtUser user = adminService.selectUserById(userId);
         if (user == null) {
-            return REDIRECT + toMgrIndexPage(model);
+            return REDIRECT_MGR_INDEX;
         }
         session.setAttribute("user", user);
         return REDIRECT + "/user/";

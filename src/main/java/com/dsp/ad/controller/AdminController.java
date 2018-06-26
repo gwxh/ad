@@ -58,49 +58,49 @@ public class AdminController {
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.setAttribute("admin", null);
-        return PageController.REDIRECT + pageController.toMgrLoginPage();
+        return PageController.REDIRECT_MGR_LOGIN;
     }
 
     @PostMapping("/createUser")
     public String createUser(Model model, ExtUser user) {
         adminService.createUser(user);
-        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+        return PageController.REDIRECT_MGR_INDEX;
     }
 
     @PostMapping("/editUser")
     public String editUser(Model model, ExtUser userInfo) {
         adminService.editUser(userInfo);
-        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+        return PageController.REDIRECT_MGR_INDEX;
     }
 
     @RequestMapping("/disableUser/{userId}")
     public String disableUser(Model model, @PathVariable int userId) {
         adminService.disableUser(userId);
-        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+        return PageController.REDIRECT_MGR_INDEX;
     }
 
     @RequestMapping("/enableUser/{userId}")
     public String enableUser(Model model, @PathVariable int userId) {
         adminService.enableUser(userId);
-        return PageController.REDIRECT + pageController.toMgrIndexPage(model);
+        return PageController.REDIRECT_MGR_INDEX;
     }
 
     @RequestMapping("/enablePlan/{planId}")
     public String enablePlan(Model model, @PathVariable int planId) {
         adminService.enablePlan(planId);
-        return PageController.REDIRECT + pageController.toMgrAuditPlansPage(model);
+        return PageController.REDIRECT_MGR_AUDIT_PLANS;
     }
 
     @RequestMapping("/disablePlan/{planId}")
     public String disablePlan(Model model, @PathVariable int planId) {
         adminService.disablePlan(planId);
-        return PageController.REDIRECT + pageController.toMgrPlansPage(model);
+        return PageController.REDIRECT_MGR_PLANS;
     }
 
     @RequestMapping("/deletePlan/{planId}")
     public String deletePlan(Model model, @PathVariable int planId) {
         adminService.deletePlan(planId);
-        return PageController.REDIRECT + pageController.toMgrPlansPage(model);
+        return PageController.REDIRECT_MGR_PLANS;
     }
 
     @RequestMapping("/enableAd/{adId}")
