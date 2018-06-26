@@ -9,8 +9,28 @@ import java.util.Date;
 public class TimeUtil {
 
     public static int day() {
+        return day(0);
+    }
+
+    public static int day(int day){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
+        calendar.add(Calendar.DATE, day);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return (int) (calendar.getTimeInMillis() / 1000);
+    }
+
+    public static int month(){
+        return month(0);
+    }
+
+    public static int month(int month){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.MONTH, month);
+        calendar.set(Calendar.DATE, 1);
         calendar.set(Calendar.HOUR, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -24,5 +44,9 @@ public class TimeUtil {
     public static String getYYYYMMDDhhmmss(LocalDateTime localDateTime) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         return df.format(localDateTime);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(day());
     }
 }

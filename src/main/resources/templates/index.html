@@ -40,7 +40,7 @@
                             <div class="summary">
                                 <span>账户余额</span>
                                 <h3 class="red-txt">
-                                    <span th:replace="util/currency::format(${session.user.amount})"></span>
+                                    <span th:replace="util/currency::format(${userAmount})"></span>
                                 </h3>
                             </div>
                         </div>
@@ -51,7 +51,9 @@
                         <div class="panel-body">
                             <div class="summary">
                                 <span>当日支付</span>
-                                <h3 class="green-txt">11,600 元</h3>
+                                <h3 class="green-txt">
+                                    <span th:replace="util/currency::format(${todayConsumeAmount})"></span>
+                                </h3>
                             </div>
                         </div>
                     </section>
@@ -61,7 +63,9 @@
                         <div class="panel-body">
                             <div class="summary">
                                 <span>昨日支付</span>
-                                <h3 class="green-txt">45,600 元</h3>
+                                <h3 class="green-txt">
+                                    <span th:replace="util/currency::format(${yesterdayConsumeAmount})"></span>
+                                </h3>
                             </div>
                         </div>
                     </section>
@@ -71,46 +75,14 @@
                         <div class="panel-body">
                             <div class="summary">
                                 <span>当月支付</span>
-                                <h3 class="green-txt">45,600 元</h3>
+                                <h3 class="green-txt">
+                                    <span th:replace="util/currency::format(${monthConsumeAmount})"></span>
+                                </h3>
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
-            <!--<div class="state-info">-->
-            <!--<section class="panel">-->
-            <!--<div class="panel-body">-->
-            <!--<div class="summary">-->
-            <!--<span>账户余额</span>-->
-            <!--<h3 class="red-txt">$ 11,600</h3>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</section>-->
-            <!--<section class="panel">-->
-            <!--<div class="panel-body">-->
-            <!--<div class="summary">-->
-            <!--<span>当月支付</span>-->
-            <!--<h3 class="green-txt">$ 45,600</h3>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</section>-->
-            <!--<section class="panel">-->
-            <!--<div class="panel-body">-->
-            <!--<div class="summary">-->
-            <!--<span>昨日支付</span>-->
-            <!--<h3 class="green-txt">$ 45,600</h3>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</section>-->
-            <!--<section class="panel">-->
-            <!--<div class="panel-body">-->
-            <!--<div class="summary">-->
-            <!--<span>当日支付</span>-->
-            <!--<h3 class="green-txt">$ 45,600</h3>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</section>-->
-            <!--</div>-->
         </div>
         <!-- page heading end-->
 

@@ -4,19 +4,24 @@ import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtAdLog;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
+import com.dsp.ad.repository.AdLogRepository;
 import com.dsp.ad.repository.AdRepository;
 import com.dsp.ad.repository.PlanRepository;
 import com.dsp.ad.repository.UserRepository;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.TimeUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,7 +84,7 @@ public class UserServiceImpl implements UserService {
         for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(planRepository, ad);
             if (extAd.getStatus() == AdEnum.Status.RUNNING.value) {
-                adRepository.updateStatus(extAd.getId(),AdEnum.Status.ENABLE.value);
+                adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
                 taskService.stopTask(extAd);
             }
         }
@@ -127,5 +132,53 @@ public class UserServiceImpl implements UserService {
     public ExtAd selectAd(int adId, int userId) {
         Ad ad = adRepository.selectAd(adId, userId);
         return new ExtAd(planRepository, ad);
+    }
+
+    @Autowired
+    private AdLogRepository adLogRepository;
+
+    @Override
+    public double selectUserTodayConsumeAmount(int userId) {
+        int day = TimeUtil.day();
+        Integer amount = adLogRepository.selectUserAdsLogByDay(day, userId);
+        if (amount == null) {
+            return 0;
+        }
+        return amount / 100d;
+    }
+
+    @Override
+    public double selectUserYesterdayConsumeAmount(int userId) {
+        int yesterday = TimeUtil.day(-1);
+        Integer amount = adLogRepository.selectUserAdsLogByDay(yesterday, userId);
+        if (amount == null) {
+            return 0;
+        }
+        return amount / 100d;
+    }
+
+    private int monthConsumeAmount;
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    @Override
+    public String selectUserMonthConsumeLogJson(int userId) throws JsonProcessingException {
+        monthConsumeAmount = 0;
+        int month = TimeUtil.month();
+        int nextMonth = TimeUtil.month(1);
+        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogByMonth(month, nextMonth, userId);
+        for (ExtAdLog extAdLog : extAdLogs) {
+            if (extAdLog.getRecordTime() == null) {
+                extAdLogs = new ArrayList<>();
+                break;
+            }
+            monthConsumeAmount += extAdLog.getAmount();
+        }
+        return OBJECT_MAPPER.writeValueAsString(extAdLogs);
+    }
+
+    @Override
+    public double selectUserMonthConsumeAmount(int userId) {
+        return monthConsumeAmount / 100d;
     }
 }

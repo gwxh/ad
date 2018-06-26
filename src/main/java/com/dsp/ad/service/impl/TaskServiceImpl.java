@@ -82,7 +82,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public LLBExecResult selectTaskExec(ExtAd ad) {
-        Map<String, String> taskMap = taskMap(ad);
+        Map<String, String> taskMap = new TreeMap<>();
+        taskMap.put("apiKey", LLB.API_KEY);
+        String taskId = getTaskId(ad);
+        if (StringUtils.isEmpty(taskId)) {
+            return null;
+        }
+        taskMap.put("taskIds", taskId);
         String result = HttpUtil.post(LLB.SELECT_TASK_EXEC, taskMap);
         LLBExecResult llbExecResult = null;
         try {

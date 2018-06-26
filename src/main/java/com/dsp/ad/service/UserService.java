@@ -4,6 +4,7 @@ import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 
@@ -28,4 +29,12 @@ public interface UserService {
     List<ExtAd> selectAds(int userId);
 
     ExtAd selectAd(int adId, int userId);
+
+    double selectUserTodayConsumeAmount(int userId);
+
+    double selectUserYesterdayConsumeAmount(int userId);
+
+    String  selectUserMonthConsumeLogJson(int userId) throws JsonProcessingException;
+
+    double selectUserMonthConsumeAmount(int userId);
 }

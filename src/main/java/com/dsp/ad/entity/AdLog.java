@@ -3,11 +3,14 @@ package com.dsp.ad.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="task_log")
+@Table(name="ad_log")
 public class AdLog {
 
     @EmbeddedId
     private AdLogPrimaryKey adLogPK;
+
+    @Column
+    private int userId;
 
     @Column(nullable = false)
     private int exec;
@@ -18,6 +21,14 @@ public class AdLog {
 
     public AdLogPrimaryKey getAdLogPK() {
         return adLogPK;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setAdLogPK(AdLogPrimaryKey adLogPK) {

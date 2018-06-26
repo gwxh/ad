@@ -86,12 +86,7 @@ public class ScheduledTask {
                 if (execResult.getResult() == null || execResult.getResult().isEmpty()) {
                     continue;
                 }
-                ExecResult todayExecResult = null;
-                for (ExecResult result : execResult.getResult()) {
-                    if (today == result.getDay()) {
-                        todayExecResult = result;
-                    }
-                }
+                ExecResult todayExecResult = execResult.getResult().get(0);
                 if (todayExecResult == null) {
                     continue;
                 }
@@ -99,7 +94,7 @@ public class ScheduledTask {
                 AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(extAd.getId(), today);
                 Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
                 AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
-                int adTotalExec = todayExecResult.getExec();
+                int adTotalExec = todayExecResult.getToday();
                 int exec = adTotalExec - adLog.getExec();
 
                 ExtPlan plan = extAd.getPlan();
@@ -115,7 +110,7 @@ public class ScheduledTask {
                     continue;
                 }
                 int prevPlanAmount = planLog.getAmount();
-                int  planAmount = prevPlanAmount + realConsumeAmount;
+                int planAmount = prevPlanAmount + realConsumeAmount;
                 if (planAmount >= planTotalPrice) {
                     realConsumeAmount = planAmount - planTotalPrice;
                     planAmount = planTotalPrice;
@@ -135,7 +130,8 @@ public class ScheduledTask {
                 int randPv = rand.nextInt(6) + 1;
                 int cpc = adLog.getCpc() + exec * randPv;
                 adLog.setAdLogPK(adLogPK);
-                adLog.setExec(todayExecResult.getExec());
+                adLog.setUserId(userId);
+                adLog.setExec(todayExecResult.getToday());
                 adLog.setCpc(cpc);
                 adLog.setAmount(adAmount);
                 adLogRepository.save(adLog);
@@ -156,7 +152,7 @@ public class ScheduledTask {
 
     private void needStopTask(ExtAd extAd) {
         LLBResult result = taskService.viewTask(extAd);
-        if (result != null) {
+        if (result != null && result.getTask() != null) {
             if (result.getTask().getStatus() == TaskEnum.Status.TASK_STOP.value) {
                 extAd.setStatus(AdEnum.Status.ENABLE.value);
                 adRepository.updateStatus(extAd.getId(), extAd.getStatus());

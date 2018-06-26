@@ -7,7 +7,7 @@ public class ExecResult {
 
     private int day;
     private int plan;
-    private int exec;
+    private int today;
 
     public int getDay() {
         return day;
@@ -25,11 +25,11 @@ public class ExecResult {
         this.plan = plan;
     }
 
-    public int getExec() {
-        return exec;
+    public int getToday() {
+        return today;
     }
 
-    public void setExec(int exec) {
-        this.exec = exec;
+    public void setToday(int today) {
+        this.today = today;
     }
 }

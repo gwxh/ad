@@ -7,6 +7,7 @@ import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +41,19 @@ public class PageController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping("/user/")
-    public String toIndexPage() {
+    @RequestMapping("/")
+    public String index(Model model, @SessionAttribute ExtUser user) throws JsonProcessingException {
+        int userId = user.getId();
+        user = adminService.selectUserById(userId);
+        double todayConsumeAmount = userService.selectUserTodayConsumeAmount(userId);
+        double yesterdayConsumeAmount = userService.selectUserYesterdayConsumeAmount(userId);
+        String logJson = userService.selectUserMonthConsumeLogJson(userId);
+        double monthConsumeAmount = userService.selectUserMonthConsumeAmount(userId);
+        model.addAttribute("userAmount", user.getAmount());
+        model.addAttribute("todayConsumeAmount", todayConsumeAmount);
+        model.addAttribute("yesterdayConsumeAmount", yesterdayConsumeAmount);
+        model.addAttribute("logJson", logJson);
+        model.addAttribute("monthConsumeAmount", monthConsumeAmount);
         return "index";
     }
 

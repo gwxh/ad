@@ -13,7 +13,7 @@ public class UserConsumeLog {
     private UserConsumeLogPrimaryKey userConsumeLogPK;
 
     @Column
-    private Integer amount;
+    private int amount;
 
     public UserConsumeLogPrimaryKey getUserConsumeLogPK() {
         return userConsumeLogPK;
@@ -23,11 +23,11 @@ public class UserConsumeLog {
         this.userConsumeLogPK = userConsumeLogPK;
     }
 
-    public Integer getAmount() {
+    public int getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 }
