@@ -91,7 +91,7 @@ public class ScheduledTask {
                     continue;
                 }
 
-                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(extAd.getId(), today);
+                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, extAd.getId());
                 Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
                 AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
                 int adTotalExec = todayExecResult.getToday();
@@ -100,7 +100,7 @@ public class ScheduledTask {
                 ExtPlan plan = extAd.getPlan();
                 int realConsumeAmount = (int) (exec * plan.getUnitPrice() * 100);
 
-                PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(plan.getId(), today);
+                PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
                 Optional<PlanLog> optionalPlanLog = planLogRepository.findById(planLogPK);
                 int planTotalPrice = (int) (plan.getTotalPrice() * 100);
                 PlanLog planLog = optionalPlanLog.orElseGet(PlanLog::new);
@@ -138,9 +138,9 @@ public class ScheduledTask {
 
                 userAdsConsume += realConsumeAmount;
             }
-            System.out.println("用户" + userId + "花费" + userAdsConsume / 100 + "元");
+            System.out.println("用户<" + userId + ">花费" + userAdsConsume / 100 + "元");
             userRepository.consume(userId, userAdsConsume);
-            UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(userId, today);
+            UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(today, userId);
             Optional<UserConsumeLog> optionalConsumeLog = userConsumeLogRepository.findById(userConsumeLogPK);
             UserConsumeLog consumeLog = optionalConsumeLog.orElseGet(UserConsumeLog::new);
             int userConsume = consumeLog.getAmount() + userAdsConsume;

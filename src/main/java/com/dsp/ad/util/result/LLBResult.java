@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LLBResult {
 
-    private Status status;
-    private Result result;
-    private Task task;
+    private Status status = new Status();
+    private Result result = new Result();
+    private Task task = new Task();
     private boolean success;
 
     public Status getStatus() {

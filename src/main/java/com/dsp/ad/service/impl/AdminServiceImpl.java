@@ -190,7 +190,7 @@ public class AdminServiceImpl implements AdminService {
             case DISABLE:
                 adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
                 result = new LLBResult();
-                result.getStatus().setMessage("操作成功");
+                result.getStatus().setDetail("操作成功");
                 break;
         }
         return result;
