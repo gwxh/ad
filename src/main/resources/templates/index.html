@@ -9,9 +9,6 @@
 
     <title>八方传播-广告商后台</title>
 
-    <!--C3 Chart-->
-    <link href="/js/c3-chart/c3.css" rel="stylesheet"/>
-
     <!--common-->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/style-responsive.css" rel="stylesheet">
@@ -98,9 +95,9 @@
                             </span>
                         </header>
                         <div class="panel-body">
-
+                            <input id="logJson" type="hidden" th:value="${logJson}">
                             <div class="chart">
-                                <div id="chart"></div>
+                                <div id="container"></div>
                             </div>
                         </div>
                     </section>
@@ -123,14 +120,66 @@
 <script src="/js/modernizr.min.js"></script>
 <script src="/js/jquery.nicescroll.js"></script>
 
-<!--C3 Chart-->
-<script src="/js/c3-chart/d3.v3.min.js"></script>
-<script src="/js/c3-chart/c3.js"></script>
-<script src="/js/c3-chart/c3-chart.init.js"></script>
-
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
 
+<script src="/js/highcharts.js"></script>
+
+<script>
+    $(function () {
+        var logJson = $("#logJson").val();
+        var log = JSON.parse(logJson);
+        var xArray = [];
+        var execArray = [];
+        var cpcArray = [];
+        for (var i in log) {
+            xArray.push(toDate(log[i].recordTime));
+            execArray.push(log[i].exec);
+            cpcArray.push(log[i].cpc);
+        }
+        var chart = Highcharts.chart('container', {
+            title: {
+                text: '当月效果报表'
+            },
+            xAxis: {
+                categories: xArray
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+                }
+            },
+            series: [{
+                name: '网页浏览量',
+                data: execArray
+            }, {
+                name: 'cpc',
+                data: cpcArray
+            }]
+        });
+    });
+
+    function toDate(timestamp) {
+        var date = new Date(timestamp * 1000);
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        var D = date.getDate();
+        return Y + M + D;
+    }
+</script>
 
 </body>
 </html>

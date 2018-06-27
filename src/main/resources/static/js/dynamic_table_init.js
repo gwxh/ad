@@ -61,7 +61,7 @@ var dataTablesSettings = {
 };
 
 $(function () {
-    $('#planList,#adList,#userList').dataTable(dataTablesSettings);
+    $('#planList,#adList,#userList,#logList').dataTable(dataTablesSettings);
 });
 
 

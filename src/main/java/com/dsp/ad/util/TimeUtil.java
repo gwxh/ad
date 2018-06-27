@@ -41,8 +41,8 @@ public class TimeUtil {
         return (int) LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
     }
 
-    public static String getYYYYMMDDhhmmss(LocalDateTime localDateTime) {
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+    public static String toDate(LocalDateTime localDateTime,String pattern) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
         return df.format(localDateTime);
     }
 

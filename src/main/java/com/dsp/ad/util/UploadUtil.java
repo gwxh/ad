@@ -16,7 +16,7 @@ public class UploadUtil {
 
     public String uploadImage(MultipartFile imageFile) throws IOException {
         if (imageFile != null) {
-            String time = TimeUtil.getYYYYMMDDhhmmss(LocalDateTime.now());
+            String time = TimeUtil.toDate(LocalDateTime.now(), "yyyyMMddHHmmss");
             String fileName = imageFile.getOriginalFilename();
             String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
             String newImageName = time + "." + suffix;

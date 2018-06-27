@@ -2,6 +2,7 @@ package com.dsp.ad.service;
 
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtAdLog;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,4 +38,6 @@ public interface UserService {
     String  selectUserMonthConsumeLogJson(int userId) throws JsonProcessingException;
 
     double selectUserMonthConsumeAmount(int userId);
+
+    List<ExtAdLog> selectUserConsumeLogs(int userId);
 }

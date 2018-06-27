@@ -2,16 +2,28 @@ package com.dsp.ad.entity.ext;
 
 public class ExtAdLog {
 
+    private String date;
     private Integer recordTime;
     private Long exec;
     private Long cpc;
     private Long amount;
+
+    public ExtAdLog() {
+    }
 
     public ExtAdLog(Integer recordTime, Long exec, Long cpc, Long amount) {
         this.recordTime = recordTime;
         this.exec = exec;
         this.cpc = cpc;
         this.amount = amount;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Integer getRecordTime() {

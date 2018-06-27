@@ -21,7 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -180,5 +184,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public double selectUserMonthConsumeAmount(int userId) {
         return monthConsumeAmount / 100d;
+    }
+
+    @Override
+    public List<ExtAdLog> selectUserConsumeLogs(int userId) {
+        long totalExec = 0, totalCpc = 0, totalAmount = 0;
+
+        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogs(userId);
+
+        for (ExtAdLog extAdLog : extAdLogs) {
+            if (extAdLog.getRecordTime() == null) {
+                extAdLogs = new ArrayList<>();
+                break;
+            }
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(extAdLog.getRecordTime()), ZoneId.systemDefault());
+            extAdLog.setDate(TimeUtil.toDate(localDateTime,"yyyy-MM-dd"));
+            totalExec += extAdLog.getExec();
+            totalCpc += extAdLog.getCpc();
+            totalAmount += extAdLog.getAmount();
+        }
+        ExtAdLog totalLog = new ExtAdLog();
+        totalLog.setDate("汇总");
+        totalLog.setExec(totalExec);
+        totalLog.setCpc(totalCpc);
+        totalLog.setAmount(totalAmount);
+        extAdLogs.add(totalLog);
+        Collections.reverse(extAdLogs);
+        return extAdLogs;
     }
 }

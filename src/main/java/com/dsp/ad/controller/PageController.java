@@ -2,6 +2,7 @@ package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtAdLog;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
@@ -81,7 +82,9 @@ public class PageController {
     }
 
     @RequestMapping("/user/data")
-    public String toDataPage() {
+    public String toDataPage(Model model, @SessionAttribute ExtUser user) {
+        List<ExtAdLog> logs = userService.selectUserConsumeLogs(user.getId());
+        model.addAttribute("logs", logs);
         return "data";
     }
 
