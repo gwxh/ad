@@ -143,7 +143,7 @@ public class PageController {
         List<ExtUser> users = adminService.selectAllUser();
         model.addAttribute("users", users);
         model.addAttribute("user", new User());
-        return "/mgr/index";
+        return "mgr/index";
     }
 
     private final static String MGR_LOGIN = "/mgr/login";
