@@ -13,35 +13,29 @@
                     <span>会员管理</span>
                 </a>
             </li>
-            <li th:class="${flag=='planList'||flag=='auditPlan'?'treeview active':'treeview'}">
-                <a href="">
+            <li th:class="${flag=='planList'?'active':''}">
+                <a href="/mgr/plans">
                     <i class="fa fa-book"></i>
-                    <span>计划管理</span>
-                    <i class="fa fa-angle-left pull-right"></i>
+                    <span>计划列表</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li th:class="${flag=='planList'?'active':''}">
-                        <a href="/mgr/plans"><i class="fa fa-angle-double-right"></i> 计划列表</a>
-                    </li>
-                    <li th:class="${flag=='auditPlan'?'active':''}">
-                        <a href="/mgr/audit_plans"><i class="fa fa-angle-double-right"></i> 待审计划</a>
-                    </li>
-                </ul>
             </li>
-            <li th:class="${flag=='adList'||flag=='auditAd'?'treeview active':'treeview'}">
-                <a href="">
-                    <i class="fa fa-bookmark"></i>
-                    <span>广告管理</span>
-                    <i class="fa fa-angle-left pull-right"></i>
+            <li th:class="${flag=='auditPlan'?'active':''}">
+                <a href="/mgr/audit_plans">
+                    <i class="fa fa-book"></i>
+                    <span>待审计划</span>
                 </a>
-                <ul class="treeview-menu">
-                    <li th:class="${flag=='adList'?'active':''}">
-                        <a href="/mgr/ads"><i class="fa fa-angle-double-right"></i> 广告列表</a>
-                    </li>
-                    <li th:class="${flag=='auditAd'?'active':''}">
-                        <a href="/mgr/audit_ads"><i class="fa fa-angle-double-right"></i> 待审广告</a>
-                    </li>
-                </ul>
+            </li>
+            <li th:class="${flag=='adList'?'active':''}">
+                <a href="/mgr/ads">
+                    <i class="fa fa-bookmark"></i>
+                    <span>广告列表</span>
+                </a>
+            </li>
+            <li th:class="${flag=='auditAd'?'active':''}">
+                <a href="/mgr/audit_ads">
+                    <i class="fa fa-bookmark"></i>
+                    <span>待审广告</span>
+                </a>
             </li>
         </ul>
     </section>

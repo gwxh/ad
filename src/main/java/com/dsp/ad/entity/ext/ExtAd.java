@@ -1,10 +1,8 @@
 package com.dsp.ad.entity.ext;
 
 import com.dsp.ad.entity.Ad;
-import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.subentity.AdParam;
 import com.dsp.ad.enums.AdEnum;
-import com.dsp.ad.repository.PlanRepository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
@@ -20,6 +18,7 @@ public class ExtAd {
     private AdParam param = new AdParam();
     private int status;
     private ExtPlan plan = new ExtPlan();
+    private ExtUser user = new ExtUser();
 
     /**
      * 显示需要
@@ -34,7 +33,7 @@ public class ExtAd {
     public ExtAd() {
     }
 
-    public ExtAd(PlanRepository planRepository, Ad ad) {
+    public ExtAd(Ad ad) {
         this.id = ad.getId();
         this.userId = ad.getUserId();
         this.planId = ad.getPlanId();
@@ -44,8 +43,6 @@ public class ExtAd {
         this.param = AdParam.fromJson(ad.getParam());
         this.status = ad.getStatus();
         this.typeName = Objects.requireNonNull(AdEnum.Type.valueOf(type)).text;
-        Plan plan = planRepository.selectPlan(planId, userId);
-        this.plan = new ExtPlan(plan);
     }
 
     public int getId() {
@@ -134,5 +131,13 @@ public class ExtAd {
 
     public void setPlan(ExtPlan plan) {
         this.plan = plan;
+    }
+
+    public ExtUser getUser() {
+        return user;
+    }
+
+    public void setUser(ExtUser user) {
+        this.user = user;
     }
 }

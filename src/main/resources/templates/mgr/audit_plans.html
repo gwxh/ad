@@ -43,6 +43,7 @@
                                 <thead>
                                 <tr>
                                     <th>计划名称</th>
+                                    <th>广告商</th>
                                     <th>单价</th>
                                     <th>限额</th>
                                     <th>状态</th>
@@ -52,6 +53,7 @@
                                 <tbody>
                                 <tr th:each="plan : ${plans}">
                                     <td th:text="${plan.name}"></td>
+                                    <td th:text="${plan.user.username}"></td>
                                     <td th:include="util/currency::format(${plan.unitPrice})"></td>
                                     <td th:include="util/currency::format(${plan.totalPrice})"></td>
                                     <td th:switch="${plan.status}">
@@ -60,8 +62,8 @@
                                         <span th:case="2" class="label label-danger label-mini">修改待审</span>
                                         <span th:case="3" class="label label-warning label-mini">已被锁定</span>
                                     </td>
-                                    <td>
-                                        <a th:href="@{/mgr/enablePlan/{id}(id=${plan.id})}">激活&nbsp;&nbsp;&nbsp;</a>
+                                    <td class="operate">
+                                        <a th:href="@{/mgr/enablePlan/{id}(id=${plan.id})}">激活</a>
                                     </td>
                                 </tr>
                                 </tbody>

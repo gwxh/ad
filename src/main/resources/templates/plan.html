@@ -68,8 +68,8 @@
                                             <span th:case="2" class="label label-danger label-mini">修改待审</span>
                                             <span th:case="3" class="label label-warning label-mini">已被锁定</span>
                                         </td>
-                                        <td>
-                                            <a th:href="@{/user/editPlan/{id}(id=${plan.id})}">修改&nbsp;&nbsp;&nbsp;</a>
+                                        <td class="operate">
+                                            <a th:href="@{/user/editPlan/{id}(id=${plan.id})}">修改</a>
                                             <a th:href="@{/user/createAd}">新增广告</a>
                                         </td>
                                     </tr>

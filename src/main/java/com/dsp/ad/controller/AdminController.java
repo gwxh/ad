@@ -62,43 +62,48 @@ public class AdminController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(Model model, ExtUser user) {
+    public String createUser(ExtUser user) {
         adminService.createUser(user);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
     @PostMapping("/editUser")
-    public String editUser(Model model, ExtUser userInfo) {
+    public String editUser(ExtUser userInfo) {
         adminService.editUser(userInfo);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
     @RequestMapping("/disableUser/{userId}")
-    public String disableUser(Model model, @PathVariable int userId) {
+    public String disableUser(@PathVariable int userId) {
         adminService.disableUser(userId);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
     @RequestMapping("/enableUser/{userId}")
-    public String enableUser(Model model, @PathVariable int userId) {
+    public String enableUser(@PathVariable int userId) {
         adminService.enableUser(userId);
+        return PageController.REDIRECT_MGR_INDEX;
+    }
+    @RequestMapping("/deleteUser/{userId}")
+    public String deleteUser(@PathVariable int userId) {
+        adminService.deleteUser(userId);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
     @RequestMapping("/enablePlan/{planId}")
-    public String enablePlan(Model model, @PathVariable int planId) {
+    public String enablePlan(@PathVariable int planId) {
         adminService.enablePlan(planId);
         return PageController.REDIRECT_MGR_AUDIT_PLANS;
     }
 
     @RequestMapping("/disablePlan/{planId}")
-    public String disablePlan(Model model, @PathVariable int planId) {
+    public String disablePlan(@PathVariable int planId) {
         adminService.disablePlan(planId);
         return PageController.REDIRECT_MGR_PLANS;
     }
 
     @RequestMapping("/deletePlan/{planId}")
-    public String deletePlan(Model model, @PathVariable int planId) {
+    public String deletePlan(@PathVariable int planId) {
         adminService.deletePlan(planId);
         return PageController.REDIRECT_MGR_PLANS;
     }

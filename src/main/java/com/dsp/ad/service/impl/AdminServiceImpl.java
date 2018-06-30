@@ -109,66 +109,92 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public void deleteUser(int userId) {
+        ExtUser user = selectUserById(userId);
+        if (user != null) {
+            userRepository.updateStatus(userId, UserEnum.Status.DELETE.value);
+        }
+    }
+
+    @Override
     public List<ExtPlan> selectAllPlans() {
         List<Plan> plans = planRepository.selectAllPlans();
-        return plans.stream().map(ExtPlan::new).collect(Collectors.toList());
+        return plans.stream().map(this::newExtPlan).collect(Collectors.toList());
     }
 
     @Override
     public List<ExtPlan> selectAllAuditPlans() {
         List<Plan> plans = planRepository.selectAllAuditPlans();
-        return plans.stream().map(ExtPlan::new).collect(Collectors.toList());
+        return plans.stream().map(this::newExtPlan).collect(Collectors.toList());
+    }
+
+    private ExtPlan newExtPlan(Plan plan) {
+        ExtPlan extPlan = new ExtPlan(plan);
+        ExtUser extUser = selectUserById(plan.getUserId());
+        extPlan.setUser(extUser);
+        return extPlan;
     }
 
     @Override
-    public Plan selectPlanById(int planId) {
-        Optional<Plan> plan = planRepository.findById(planId);
-        return plan.orElse(null);
+    public ExtPlan selectPlanById(int planId) {
+        Optional<Plan> planOptional = planRepository.findById(planId);
+        return planOptional.map(ExtPlan::new).orElse(null);
     }
 
     @Override
     public void enablePlan(int planId) {
-        Plan plan = selectPlanById(planId);
+        ExtPlan plan = selectPlanById(planId);
         if (plan != null) {
             plan.setStatus(PlanEnum.Status.ENABLE.value);
-            planRepository.save(plan);
+            planRepository.updateStatus(planId, plan.getStatus());
         }
     }
 
     @Override
     public void disablePlan(int planId) {
-        Plan plan = selectPlanById(planId);
+        ExtPlan plan = selectPlanById(planId);
         if (plan != null) {
             plan.setStatus(PlanEnum.Status.DISABLE.value);
-            planRepository.save(plan);
+            planRepository.updateStatus(planId, plan.getStatus());
         }
     }
 
     @Override
     public void deletePlan(int planId) {
-        Plan plan = selectPlanById(planId);
+        ExtPlan plan = selectPlanById(planId);
         if (plan != null) {
             plan.setStatus(PlanEnum.Status.DELETE.value);
-            planRepository.save(plan);
+            planRepository.updateStatus(planId, plan.getStatus());
         }
+        List<Ad> ads = adRepository.selectAdsByPlan(planId);
+        ads.forEach(ad -> adRepository.updateStatus(ad.getId(), AdEnum.Status.DELETE.value));
     }
 
     @Override
     public List<ExtAd> selectAllAds() {
         List<Ad> ads = adRepository.selectAllAds();
-        return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
+        return ads.stream().map(this::newExtAd).collect(Collectors.toList());
     }
 
     @Override
     public List<ExtAd> selectAllAuditAds() {
         List<Ad> ads = adRepository.selectAllAuditAds();
-        return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
+        return ads.stream().map(this::newExtAd).collect(Collectors.toList());
+    }
+
+    private ExtAd newExtAd(Ad ad) {
+        ExtAd extAd = new ExtAd(ad);
+        ExtPlan extPlan = selectPlanById(ad.getPlanId());
+        extAd.setPlan(extPlan);
+        ExtUser extUser = selectUserById(ad.getUserId());
+        extAd.setUser(extUser);
+        return extAd;
     }
 
     @Override
     public ExtAd selectAdById(int adId) {
         Optional<Ad> adOptional = adRepository.findById(adId);
-        return adOptional.map(advertisement -> new ExtAd(planRepository, advertisement)).orElse(null);
+        return adOptional.map(this::newExtAd).orElse(null);
     }
 
     @Override

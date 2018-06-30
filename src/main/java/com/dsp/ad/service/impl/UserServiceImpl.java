@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
         planRepository.save(plan);
         List<Ad> ads = adRepository.selectAdsByPlan(extPlan.getId());
         for (Ad ad : ads) {
-            ExtAd extAd = new ExtAd(planRepository, ad);
+            ExtAd extAd = new ExtAd(ad);
             if (extAd.getStatus() == AdEnum.Status.RUNNING.value) {
                 adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
                 taskService.stopTask(extAd);
@@ -123,19 +123,26 @@ public class UserServiceImpl implements UserService {
         ad.setUpdateTime(TimeUtil.now());
         ad.setStatus(AdEnum.Status.EDIT_CHECK.value);
         adRepository.save(ad);
-        taskService.stopTask(new ExtAd(planRepository, ad));
+        taskService.stopTask(new ExtAd(ad));
     }
 
     @Override
     public List<ExtAd> selectAds(int userId) {
         List<Ad> ads = adRepository.selectAds(userId);
-        return ads.stream().map(ad -> new ExtAd(planRepository, ad)).collect(Collectors.toList());
+        return ads.stream().map(this::newExtAd).collect(Collectors.toList());
     }
 
     @Override
     public ExtAd selectAd(int adId, int userId) {
         Ad ad = adRepository.selectAd(adId, userId);
-        return new ExtAd(planRepository, ad);
+        return newExtAd(ad);
+    }
+
+    private ExtAd newExtAd(Ad ad) {
+        ExtAd extAd = new ExtAd(ad);
+        ExtPlan extPlan = selectPlan(ad.getPlanId(), ad.getUserId());
+        extAd.setPlan(extPlan);
+        return extAd;
     }
 
     @Autowired
@@ -198,7 +205,7 @@ public class UserServiceImpl implements UserService {
                 break;
             }
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(extAdLog.getRecordTime()), ZoneId.systemDefault());
-            extAdLog.setDate(TimeUtil.toDate(localDateTime,"yyyy-MM-dd"));
+            extAdLog.setDate(TimeUtil.toDate(localDateTime, "yyyy-MM-dd"));
             totalExec += extAdLog.getExec();
             totalCpc += extAdLog.getCpc();
             totalAmount += extAdLog.getAmount();

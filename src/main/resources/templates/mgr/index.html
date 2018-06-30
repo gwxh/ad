@@ -77,6 +77,7 @@
                                     </td>
                                     <td>
                                         <a th:href="@{/mgr/editUser/{id}(id=${user.id})}">修改&nbsp;</a>
+                                        <a th:href="@{/mgr/deleteUser/{id}(id=${user.id})}">删除&nbsp;</a>
                                         <a th:href="${user.status==1}?@{/mgr/disableUser/{id}(id=${user.id})}:
                                             @{/mgr/enableUser/{id}(id=${user.id})}"
                                            th:text="${user.status==1}?'禁用':'启用'"></a>

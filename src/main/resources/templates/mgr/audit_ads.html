@@ -43,6 +43,7 @@
                                 <thead>
                                 <tr>
                                     <th>浏览</th>
+                                    <th>广告商</th>
                                     <th>计划名称</th>
                                     <th>广告名称</th>
                                     <th>广告类型</th>
@@ -54,6 +55,7 @@
                                 <tbody>
                                 <tr th:each="ad : ${ads}">
                                     <td><img th:src="${'/'+ad.param.image}" width="105" height="90"/></td>
+                                    <td th:text="${ad.user.username}"></td>
                                     <td th:text="${ad.plan.name}"></td>
                                     <td th:text="${ad.name}"></td>
                                     <td th:text="${ad.typeName}"></td>
@@ -65,8 +67,9 @@
                                         <span th:case="3" class="label label-danger label-mini">修改待审</span>
                                         <span th:case="4" class="label label-warning label-mini">已被锁定</span>
                                     </td>
-                                    <td>
-                                        <a th:href="@{/mgr/enableAd/{id}(id=${ad.id})}">激活&nbsp;&nbsp;&nbsp;</a>
+                                    <td class="operate">
+                                        <a th:href="@{/mgr/enableAd/{id}(id=${ad.id})}">激活</a>
+                                        <a th:href="@{/mgr/deleteAd/{id}(id=${ad.id})}">删除</a>
                                     </td>
                                 </tr>
                                 </tbody>

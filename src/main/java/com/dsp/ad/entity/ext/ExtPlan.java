@@ -12,6 +12,8 @@ public class ExtPlan {
     private PlanParam param = new PlanParam();
     private int status;
 
+    private ExtUser user = new ExtUser();
+
     public ExtPlan() {
     }
 
@@ -19,7 +21,7 @@ public class ExtPlan {
         this.id = plan.getId();
         this.name = plan.getName();
         this.unitPrice = plan.getUnitPrice() / 100d;
-        this.totalPrice = plan.getTotalPrice() /100d;
+        this.totalPrice = plan.getTotalPrice() / 100d;
         this.status = plan.getStatus();
         this.param = PlanParam.fromJson(plan.getParam());
     }
@@ -70,5 +72,13 @@ public class ExtPlan {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public ExtUser getUser() {
+        return user;
+    }
+
+    public void setUser(ExtUser user) {
+        this.user = user;
     }
 }

@@ -1,7 +1,6 @@
 package com.dsp.ad.service;
 
 import com.dsp.ad.entity.Admin;
-import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
@@ -25,11 +24,13 @@ public interface AdminService {
 
     void enableUser(int userId);
 
+    void deleteUser(int userId);
+
     List<ExtPlan> selectAllPlans();
 
     List<ExtPlan> selectAllAuditPlans();
 
-    Plan selectPlanById(int planId);
+    ExtPlan selectPlanById(int planId);
 
     void enablePlan(int planId);
 

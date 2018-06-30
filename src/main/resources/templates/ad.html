@@ -72,7 +72,7 @@
                                             <span th:case="3" class="label label-danger label-mini">修改待审</span>
                                             <span th:case="4" class="label label-warning label-mini">已被锁定</span>
                                         </td>
-                                        <td>
+                                        <td class="operate">
                                             <!--<a th:href="@{/user/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>-->
                                             <!--<a th:href="@{/user/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>-->
                                             <a th:href="@{/user/editAd/{id}(id=${ad.id})}">修改</a>
