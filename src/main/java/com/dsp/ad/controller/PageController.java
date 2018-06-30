@@ -213,6 +213,6 @@ public class PageController {
             return REDIRECT_MGR_INDEX;
         }
         session.setAttribute("user", user);
-        return REDIRECT + "/user/";
+        return REDIRECT + "/";
     }
 }

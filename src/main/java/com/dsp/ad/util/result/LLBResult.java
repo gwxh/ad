@@ -7,7 +7,6 @@ public class LLBResult {
 
     private Status status = new Status();
     private Result result = new Result();
-    private Task task = new Task();
     private boolean success;
 
     public Status getStatus() {
@@ -34,11 +33,4 @@ public class LLBResult {
         this.success = success;
     }
 
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
 }

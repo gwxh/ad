@@ -154,8 +154,8 @@ public class ScheduledTask {
 
     private void needStopTask(ExtAd extAd) {
         LLBResult result = taskService.viewTask(extAd);
-        if (result != null && result.getTask() != null) {
-            if (result.getTask().getStatus() == TaskEnum.Status.TASK_STOP.value) {
+        if (result != null && result.getResult() != null) {
+            if (result.getResult().getStatus() == TaskEnum.Status.TASK_STOP.value) {
                 extAd.setStatus(AdEnum.Status.ENABLE.value);
                 adRepository.updateStatus(extAd.getId(), extAd.getStatus());
             }
