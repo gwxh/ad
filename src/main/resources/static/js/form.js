@@ -42,6 +42,46 @@ $(function () {
                 area.push($(this).val());
             });
             $("#area").val(JSON.stringify(area));
+            var sex = [];
+            $.each($("input[name=sex]:checked"), function () {
+                sex.push($(this).val());
+            });
+            $("#sex").val(JSON.stringify(sex));
+            var age = [];
+            $.each($("input[name=age]:checked"), function () {
+                age.push($(this).val());
+            });
+            $("#age").val(JSON.stringify(age));
+            var income = [];
+            $.each($("input[name=income]:checked"), function () {
+                income.push($(this).val());
+            });
+            $("#income").val(JSON.stringify(income));
+            var consumption = [];
+            $.each($("input[name=consumption]:checked"), function () {
+                consumption.push($(this).val());
+            });
+            $("#consumption").val(JSON.stringify(consumption));
+            var car = [];
+            $.each($("input[name=car]:checked"), function () {
+                car.push($(this).val());
+            });
+            $("#car").val(JSON.stringify(car));
+            var marry = [];
+            $.each($("input[name=marry]:checked"), function () {
+                marry.push($(this).val());
+            });
+            $("#marry").val(JSON.stringify(marry));
+            var child = [];
+            $.each($("input[name=child]:checked"), function () {
+                child.push($(this).val());
+            });
+            $("#child").val(JSON.stringify(child));
+            var quality = [];
+            $.each($("input[name=quality]:checked"), function () {
+                quality.push($(this).val());
+            });
+            $("#quality").val(JSON.stringify(quality));
             form.submit();
         }
     });

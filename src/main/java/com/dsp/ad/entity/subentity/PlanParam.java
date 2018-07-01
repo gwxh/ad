@@ -16,8 +16,16 @@ public class PlanParam {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanParam.class);
 
     private String device;
-
     private String area;
+    private String sex;
+    private String age;
+    private String income;
+    private String consumption;
+    private String car;
+    private String marry;
+    private String child;
+    private String quality;
+
 
     public String toJson() {
         try {
@@ -53,5 +61,69 @@ public class PlanParam {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getIncome() {
+        return income;
+    }
+
+    public void setIncome(String income) {
+        this.income = income;
+    }
+
+    public String getConsumption() {
+        return consumption;
+    }
+
+    public void setConsumption(String consumption) {
+        this.consumption = consumption;
+    }
+
+    public String getCar() {
+        return car;
+    }
+
+    public void setCar(String car) {
+        this.car = car;
+    }
+
+    public String getMarry() {
+        return marry;
+    }
+
+    public void setMarry(String marry) {
+        this.marry = marry;
+    }
+
+    public String getChild() {
+        return child;
+    }
+
+    public void setChild(String child) {
+        this.child = child;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
     }
 }
