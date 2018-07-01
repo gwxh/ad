@@ -133,8 +133,8 @@ public class ScheduledTask {
                 int cpc = adLog.getCpc() + exec * randPv;
                 adLog.setAdLogPK(adLogPK);
                 adLog.setUserId(userId);
-                adLog.setExec(todayExecResult.getToday());
-                adLog.setCpc(cpc);
+                adLog.setExec(cpc);
+                adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
                 adLogRepository.save(adLog);
 
