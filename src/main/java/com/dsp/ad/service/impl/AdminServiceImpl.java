@@ -1,19 +1,13 @@
 package com.dsp.ad.service.impl;
 
-import com.dsp.ad.entity.Ad;
-import com.dsp.ad.entity.Admin;
-import com.dsp.ad.entity.Plan;
-import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.enums.UserEnum;
-import com.dsp.ad.repository.AdRepository;
-import com.dsp.ad.repository.AdminRepository;
-import com.dsp.ad.repository.PlanRepository;
-import com.dsp.ad.repository.UserRepository;
+import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.MD5Util;
@@ -198,6 +192,9 @@ public class AdminServiceImpl implements AdminService {
         return adOptional.map(this::newExtAd).orElse(null);
     }
 
+    @Autowired
+    private TaskRepository taskRepository;
+
     @Override
     public LLBResult enableAd(ExtAd extAd) {
         LLBResult result = null;
@@ -209,7 +206,12 @@ public class AdminServiceImpl implements AdminService {
                 }
                 break;
             case EDIT_CHECK:
-                result = taskService.modifyTask(extAd);
+                Optional<Task> taskOptional = taskRepository.findById(extAd.getId());
+                if (taskOptional.isPresent() && taskOptional.get().getTaskId() > 0) {
+                    result = taskService.modifyTask(extAd);
+                } else {
+                    result = taskService.createTask(extAd);
+                }
                 if (result.isSuccess()) {
                     adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
                 }
