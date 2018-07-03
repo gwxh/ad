@@ -140,4 +140,44 @@ $(function () {
             $("[name=quality]").attr("checked", false);
         }
     });
+
+    for (var i = 1; i < 26; i++) {
+        var mJson = $("#m" + i).val();
+        if (mJson !== "") {
+            var m = JSON.parse(mJson);
+            for (var j = 0; j < m.length; j++) {
+                $("input[name=m" + i + "][value=" + m[j] + "]").attr("checked", "checked");
+            }
+        }
+        $("#m" + i + "CheckAll").click(function () {
+            var value = $(this).val();
+            if (this.checked) {
+                $("[name=m" + value + "]").attr("checked", true);
+            } else {
+                $("[name=m" + value + "]").attr("checked", false);
+            }
+        });
+    }
+
+    for (var i = 1; i < 8; i++) {
+        for (var j = 0; j <= 23; j++) {
+            $("#day" + i + " .hour").append('<label class="checkbox-inline"><input type="checkbox" name="d' + i + '" value="' + j + '">' + j+'</label>');
+        }
+
+        var dJson = $("#d" + i).val();
+        if (dJson !== "") {
+            var d = JSON.parse(dJson);
+            for (var j = 0; j < d.length; j++) {
+                $("input[name=d" + i + "][value=" + d[j] + "]").attr("checked", "checked");
+            }
+        }
+        $("#d" + i + "CheckAll").click(function () {
+            var value = $(this).val();
+            if (this.checked) {
+                $("[name=d" + value + "]").attr("checked", true);
+            } else {
+                $("[name=d" + value + "]").attr("checked", false);
+            }
+        });
+    }
 });

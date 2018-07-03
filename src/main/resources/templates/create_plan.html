@@ -491,6 +491,911 @@
                         <!--pagination end-->
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--pagination start-->
+                        <section class="panel">
+                            <header class="panel-heading">
+                                媒体选择
+                                <span class="tools pull-right">
+                                        <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <div class="col-lg-9">
+                                        <div class="radio">
+                                            <div class="col-lg-3">
+                                                <label><input type="radio" th:field="*{param.media}" value="0">
+                                                    全网智能优化</label>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <label><input type="radio" th:field="*{param.media}" value="1">
+                                                    定向媒体</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="media" style="display: none;">
+                                    <div class="form-group"
+                                         style="border-top: 1px dotted rgba(0, 0, 0, 0.2);border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">工具</label>
+                                        <div class="col-lg-9">
+                                            <input id="m1" type="hidden" th:field="*{param.m1}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m1CheckAll" type="checkbox" name="all" value="1">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="0">工具全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="1">导航地图
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="2">手机清理
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="3">应用市场
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="4">通讯
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="5">生活工具
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="6">手机美化
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m1" value="7">系统工具
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">阅读</label>
+                                        <div class="col-lg-9">
+                                            <input id="m2" type="hidden" th:field="*{param.m2}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m2CheckAll" type="checkbox" name="all" value="2">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="0">阅读全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="1">人文社科
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="2">小说
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="3">动漫
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="4">科技资讯
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="5">体育资讯
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="6">娱乐资讯
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="7">军事资讯
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m2" value="8">综合新闻
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">视听</label>
+                                        <div class="col-lg-9">
+                                            <input id="m3" type="hidden" th:field="*{param.m3}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m3CheckAll" type="checkbox" name="all" value="3">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="0">视听全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="1">视频
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="2">电视
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="3">电影
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="4">音乐
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="5">听书
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m3" value="6">K歌
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">游戏</label>
+                                        <div class="col-lg-9">
+                                            <input id="m4" type="hidden" th:field="*{param.m4}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m4CheckAll" type="checkbox" name="all" value="4">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="0">游戏全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="1">休闲时间
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="2">跑酷竞速
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="3">宝石消除
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="4">网络游戏
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="5">动作射击
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="6">扑克棋牌
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="7">塔防守卫
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="8">体育格斗
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="9">角色扮演
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="10">经营策略
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m4" value="11">游戏综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">社交</label>
+                                        <div class="col-lg-9">
+                                            <input id="m5" type="hidden" th:field="*{param.m5}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m5CheckAll" type="checkbox" name="all" value="5">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m5" value="0">社交全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m5" value="1">兴趣社交
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m5" value="2">直播
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m5" value="3">婚恋
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m5" value="4">社交综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">购物</label>
+                                        <div class="col-lg-9">
+                                            <input id="m6" type="hidden" th:field="*{param.m6}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m6CheckAll" type="checkbox" name="all" value="6">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m6" value="0">购物全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m6" value="1">物流
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m6" value="2">支付
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m6" value="3">商城
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m6" value="4">外卖
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m6" value="5">购物综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">健康</label>
+                                        <div class="col-lg-9">
+                                            <input id="m7" type="hidden" th:field="*{param.m7}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m7CheckAll" type="checkbox" name="all" value="7">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m7" value="0">健康全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m7" value="1">健康管理
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m7" value="2">问诊就医
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m7" value="3">运动健身
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m7" value="4">养生保养
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">旅行</label>
+                                        <div class="col-lg-9">
+                                            <input id="m8" type="hidden" th:field="*{param.m8}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m8CheckAll" type="checkbox" name="all" value="8">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m8" value="0">旅行全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m8" value="1">交通工具
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m8" value="2">旅行攻略
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m8" value="3">旅行综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">小众</label>
+                                        <div class="col-lg-9">
+                                            <input id="m9" type="hidden" th:field="*{param.m9}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m9CheckAll" type="checkbox" name="all" value="9">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="0">小众全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="1">爱宠
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="2">菜谱
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="3">时尚
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="4">八卦
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="5">彩票
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m9" value="6">桌游
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">母婴</label>
+                                        <div class="col-lg-9">
+                                            <input id="m10" type="hidden" th:field="*{param.m10}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m10CheckAll" type="checkbox" name="all"  value="10">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="0">母婴全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="1">幼儿娱乐
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="2">幼儿教育
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="3">妈妈交流
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="4">孕期
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="5">母婴综合
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m10" value="6">母婴用品
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">汽车</label>
+                                        <div class="col-lg-9">
+                                            <input id="m11" type="hidden" th:field="*{param.m11}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m11CheckAll" type="checkbox" name="all"  value="11">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="0">汽车全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="1">买车
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="2">二手车
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="3">租用车
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="4">车维护保养
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="5">车险
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m11" value="6">汽车综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">住房</label>
+                                        <div class="col-lg-9">
+                                            <input id="m12" type="hidden" th:field="*{param.m12}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m12CheckAll" type="checkbox" name="all" value="12">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m12" value="0">住房全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m12" value="1">买房
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m12" value="2">租房
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m12" value="3">卖房
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m12" value="4">房屋维修装饰
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m12" value="5">房屋综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">理财</label>
+                                        <div class="col-lg-9">
+                                            <input id="m13" type="hidden" th:field="*{param.m13}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m13CheckAll" type="checkbox" name="all" value="13">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="0">理财全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="1">彩票及相关
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="2">记账
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="3">保险
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="4">贷款
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="5">投资
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m13" value="6">理财综合
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">教育</label>
+                                        <div class="col-lg-9">
+                                            <input id="m14" type="hidden" th:field="*{param.m14}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m14CheckAll" type="checkbox" name="all" value="14">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="0">教育全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="1">驾考
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="2">成人外语
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="3">任务社科
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="4">成人教育
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="5">小语种
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="6">职业培训
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="7">职业资格
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m14" value="8">少儿教育
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">工作</label>
+                                        <div class="col-lg-9">
+                                            <input id="m15" type="hidden" th:field="*{param.m15}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m15CheckAll" type="checkbox" name="all" value="15">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m15" value="0">工作全部
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m15" value="1">商务工具
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m15" value="2">求职招聘
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">服饰</label>
+                                        <div class="col-lg-9">
+                                            <input id="m16" type="hidden" th:field="*{param.m16}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m16CheckAll" type="checkbox" name="all" value="16">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m16" value="0">女装
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m16" value="1">男装
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m16" value="2">女鞋
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m16" value="3">男鞋
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m16" value="4">箱包
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m16" value="5">饰品
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">个人美妆</label>
+                                        <div class="col-lg-9">
+                                            <input id="m17" type="hidden" th:field="*{param.m17}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m17CheckAll" type="checkbox" name="all" value="17">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m17" value="0">品牌档次
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m17" value="1">品牌偏好
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m17" value="2">产品类别
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m17" value="3">产品功效
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">家用电器</label>
+                                        <div class="col-lg-9">
+                                            <input id="m18" type="hidden" th:field="*{param.m18}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m18CheckAll" type="checkbox" name="all" value="18">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m18" value="0">大家电
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m18" value="1">厨房电器
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m18" value="2">健康电器
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m18" value="3">小家电
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">新闻资讯</label>
+                                        <div class="col-lg-9">
+                                            <input id="m19" type="hidden" th:field="*{param.m19}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m19CheckAll" type="checkbox" name="all" value="19">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m19" value="0">军事
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m19" value="1">财经
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m19" value="2">时政
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m19" value="3">体育
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">美容整形</label>
+                                        <div class="col-lg-9">
+                                            <input id="m20" type="hidden" th:field="*{param.m20}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m20CheckAll" type="checkbox" name="all" value="20">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m20" value="0">生活美容
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">家居用品</label>
+                                        <div class="col-lg-9">
+                                            <input id="m21" type="hidden" th:field="*{param.m21}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m21CheckAll" type="checkbox" name="all" value="21">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m21" value="0">住宅家具
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m21" value="1">餐厨餐具
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m21" value="2">家纺
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m21" value="3">家装软饰
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">食品餐饮</label>
+                                        <div class="col-lg-9">
+                                            <input id="m22" type="hidden" th:field="*{param.m22}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m22CheckAll" type="checkbox" name="all" value="22">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m22" value="0">餐饮美食
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m22" value="1">电商食品
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">手机数码</label>
+                                        <div class="col-lg-9">
+                                            <input id="m23" type="hidden" th:field="*{param.m23}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m23CheckAll" type="checkbox" name="all"  value="23">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m23" value="0">相机摄像机
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m23" value="1">数码影音
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m23" value="2">数码配件
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m23" value="3">手机
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">女性时尚</label>
+                                        <div class="col-lg-9">
+                                            <input id="m24" type="hidden" th:field="*{param.m24}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m24CheckAll" type="checkbox" name="all" value="24">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m24" value="0">美容减肥
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m24" value="1">时装时尚
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m24" value="2">奢侈品
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m24" value="3">时尚论坛
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m24" value="4">女性综合
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m24" value="5">其他
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group"
+                                         style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
+                                        <label class="col-lg-1 col-sm-1 control-label">投资金融</label>
+                                        <div class="col-lg-9">
+                                            <input id="m25" type="hidden" th:field="*{param.m25}">
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input id="m25CheckAll" type="checkbox" name="all" value="25">全选
+                                                </label>
+                                            </div>
+                                            <div class="input-group m-bot15">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m25" value="0">财经资讯
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m25" value="1">股票基金
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m25" value="2">博彩/彩票
+                                                </label>
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="m25" value="3">其他
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!--pagination end-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--pagination start-->
+                        <section class="panel">
+                            <header class="panel-heading">
+                                时间段
+                                <span class="tools pull-right">
+                                        <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                </span>
+                            </header>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周一</label>
+                                    <div id="day1" class="col-lg-9">
+                                        <input id="d1" type="hidden" th:field="*{param.d1}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d1CheckAll" type="checkbox" name="all" value="1">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周二</label>
+                                    <div id="day2" class="col-lg-9">
+                                        <input id="d2" type="hidden" th:field="*{param.d2}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d2CheckAll" type="checkbox" name="all" value="2">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周三</label>
+                                    <div id="day3" class="col-lg-9">
+                                        <input id="d3" type="hidden" th:field="*{param.d3}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d3CheckAll" type="checkbox" name="all" value="3">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周四</label>
+                                    <div id="day4" class="col-lg-9">
+                                        <input id="d4" type="hidden" th:field="*{param.d4}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d4CheckAll" type="checkbox" name="all" value="4">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周五</label>
+                                    <div id="day5" class="col-lg-9">
+                                        <input id="d5" type="hidden" th:field="*{param.d5}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d5CheckAll" type="checkbox" name="all" value="5">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周六</label>
+                                    <div id="day6" class="col-lg-9">
+                                        <input id="d6" type="hidden" th:field="*{param.d6}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d6CheckAll" type="checkbox" name="all" value="6">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周日</label>
+                                    <div id="day7" class="col-lg-9">
+                                        <input id="d7" type="hidden" th:field="*{param.d7}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d7CheckAll" type="checkbox" name="all" value="7">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!--pagination end-->
+                    </div>
+                </div>
                 <div class="row" style="margin-bottom: 60px;">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-primary btn-lg btn-block"
@@ -524,6 +1429,26 @@
 <script src="/js/messages_zh.min.js"></script>
 <script src="/js/form.js"></script>
 <script src="/js/form-data.js"></script>
+
+<script>
+    $(function () {
+        var value =parseInt($("input[name='param.media']:checked").val());
+        mediaRadioChoose(value);
+
+        $("[name='param.media']").change(function () {
+            value = parseInt($(this).val());
+            mediaRadioChoose(value);
+        });
+
+        function mediaRadioChoose(value) {
+            if (value > 0) {
+                $("#media").slideDown();
+            } else {
+                $("#media").slideUp();
+            }
+        }
+    })
+</script>
 
 </body>
 </html>

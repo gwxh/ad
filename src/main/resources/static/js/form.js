@@ -83,6 +83,22 @@ $(function () {
                 quality.push($(this).val());
             });
             $("#quality").val(JSON.stringify(quality));
+
+            for (var i = 1; i < 26; i++) {
+                var m = [];
+                $.each($("input[name=m" + i + "]:checked"), function () {
+                    m.push($(this).val());
+                });
+                $("#m" + i).val(JSON.stringify(m));
+            }
+
+            for (var i = 1; i < 8; i++) {
+                var d = [];
+                $.each($("input[name=d" + i + "]:checked"), function () {
+                    d.push($(this).val());
+                });
+                $("#d" + i).val(JSON.stringify(d));
+            }
             form.submit();
         }
     });
