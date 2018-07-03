@@ -29,7 +29,8 @@ $(function () {
             },
             totalPrice: {
                 required: true,
-                number: true
+                number: true,
+                min: 500
             }
         }, submitHandler: function (form) {
             var device = [];
@@ -100,11 +101,25 @@ $(function () {
             url: {
                 required: true
             },
+            type: {
+                required: true,
+                min: 1
+            },
+            "param.size": {
+                required: true
+            },
             "param.image": {
                 required: true
             }
         },
         messages: {
+            type: {
+                required: "请选择广告类型",
+                min: "请选择广告类型"
+            },
+            "param.size": {
+                required: "请选择尺寸模板"
+            },
             "param.image": {
                 required: "请上传广告图片"
             }
@@ -135,7 +150,7 @@ $(function () {
             id: {
                 required: true
             },
-            user:{
+            user: {
                 required: true
             },
             password: {
@@ -147,7 +162,7 @@ $(function () {
             },
             money: {
                 required: true,
-                number:true,
+                number: true,
                 min: 1
             }
         }

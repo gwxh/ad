@@ -70,6 +70,7 @@
                                     <td class="operate">
                                         <a th:href="@{/mgr/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启</a>
                                         <a th:href="@{/mgr/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭</a>
+                                        <a th:href="@{/mgr/toAd/{id}(id=${ad.id})}" th:target="_blank">修改</a>
                                         <a th:href="@{/mgr/disableAd/{id}(id=${ad.id})}">锁定</a>
                                         <a th:href="@{/mgr/deleteAd/{id}(id=${ad.id})}">删除</a>
                                     </td>

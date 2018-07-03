@@ -2,6 +2,7 @@ package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.Admin;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
@@ -202,5 +203,43 @@ public class AdminController {
         }
         attributes.addFlashAttribute("msg", result.getStatus().getDetail());
         return PageController.REDIRECT_MGR_ADS;
+    }
+
+    @RequestMapping("/toUser/{userId}")
+    public String toUser(HttpSession session, @PathVariable int userId) {
+        ExtUser user = adminService.selectUserById(userId);
+        if (user == null) {
+            return PageController.REDIRECT_MGR_INDEX;
+        }
+        session.setAttribute("user", user);
+        return PageController.REDIRECT + "/";
+    }
+
+    @RequestMapping("/toPlan/{planId}")
+    public String toPlan(HttpSession session, @PathVariable int planId) {
+        ExtPlan plan = adminService.selectPlanById(planId);
+        if (plan == null) {
+            return PageController.REDIRECT_MGR_INDEX;
+        }
+        ExtUser user = adminService.selectUserById(plan.getUserId());
+        if (user == null) {
+            return PageController.REDIRECT_MGR_INDEX;
+        }
+        session.setAttribute("user", user);
+        return PageController.REDIRECT + "/user/editPlan/" + planId;
+    }
+
+    @RequestMapping("/toAd/{adId}")
+    public String toAd(HttpSession session, @PathVariable int adId) {
+        ExtAd ad = adminService.selectAdById(adId);
+        if (ad == null) {
+            return PageController.REDIRECT_MGR_INDEX;
+        }
+        ExtUser user = adminService.selectUserById(ad.getUserId());
+        if (user == null) {
+            return PageController.REDIRECT_MGR_INDEX;
+        }
+        session.setAttribute("user", user);
+        return PageController.REDIRECT + "/user/editAd/" + adId;
     }
 }

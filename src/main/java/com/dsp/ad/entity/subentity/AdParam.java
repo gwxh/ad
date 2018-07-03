@@ -16,6 +16,7 @@ public class AdParam {
     private static final Logger LOGGER = LoggerFactory.getLogger(AdParam.class);
 
     private String image;
+    private String size;
 
     public static AdParam fromJson(String json) {
         if (!StringUtils.isEmpty(json)) {
@@ -43,5 +44,13 @@ public class AdParam {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

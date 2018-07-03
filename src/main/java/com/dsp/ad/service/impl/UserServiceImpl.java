@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createPlan(ExtUser user, ExtPlan extPlan) {
+    public int createPlan(ExtUser user, ExtPlan extPlan) {
         Plan plan = new Plan();
         plan.setUserId(user.getId());
         plan.setName(extPlan.getName());
@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService {
         plan.setCreateTime(TimeUtil.now());
         plan.setStatus(PlanEnum.Status.CREATE_CHECK.value);
         planRepository.save(plan);
+        return plan.getId();
     }
 
     @Override

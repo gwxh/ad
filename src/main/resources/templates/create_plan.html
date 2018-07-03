@@ -54,11 +54,22 @@
                                     <div class="col-lg-6">
                                         <input class="form-control" th:field="*{unitPrice}">
                                     </div>
+                                    <label class="control-label">元（最低单价为0.2元）</label>
                                 </div>
                                 <div class="form-group">
                                     <label th:for="totalPrice" class="col-lg-1 col-sm-1 control-label">计划限额</label>
                                     <div class="col-lg-6">
                                         <input class="form-control" th:field="*{totalPrice}">
+                                    </div>
+                                    <label class="control-label">元 （最低限额为500元）</label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">投放速率</label>
+                                    <div class="col-lg-6">
+                                        <select id="planId" class="form-control" th:field="*{param.speed}">
+                                            <option value="0">匀速</option>
+                                            <option value="1">加速</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +258,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group" >
+                                <div class="form-group">
                                     <label class="col-lg-1 col-sm-1 control-label">收入</label>
                                     <div class="col-lg-9">
                                         <input id="income" type="hidden" th:field="*{param.income}">
@@ -482,7 +493,8 @@
                 </div>
                 <div class="row" style="margin-bottom: 60px;">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">保存计划</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block"
+                                th:text="${plan.id}?'修改计划':'保存计划，去创建广告'"></button>
                     </div>
                 </div>
             </form>

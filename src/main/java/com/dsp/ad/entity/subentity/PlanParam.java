@@ -15,6 +15,11 @@ public class PlanParam {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Logger LOGGER = LoggerFactory.getLogger(PlanParam.class);
 
+    /**
+     * 投放速率
+     * 0.匀速1.加速
+     */
+    private int speed;
     private String device;
     private String area;
     private String sex;
@@ -125,5 +130,13 @@ public class PlanParam {
 
     public void setQuality(String quality) {
         this.quality = quality;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

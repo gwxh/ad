@@ -70,7 +70,7 @@
                                         </td>
                                         <td class="operate">
                                             <a th:href="@{/user/editPlan/{id}(id=${plan.id})}">修改</a>
-                                            <a th:href="@{/user/createAd}">新增广告</a>
+                                            <a th:href="@{/user/createAd/{id}(id=${plan.id})}">新增广告</a>
                                         </td>
                                     </tr>
                                     </tbody>

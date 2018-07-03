@@ -3,6 +3,7 @@ package com.dsp.ad.service.impl;
 import com.dsp.ad.config.LLB;
 import com.dsp.ad.entity.Task;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.enums.TaskEnum;
 import com.dsp.ad.repository.TaskRepository;
 import com.dsp.ad.service.TaskService;
@@ -58,9 +59,12 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public LLBResult startTask(ExtAd ad) {
         Map<String, String> taskMap = taskMap(ad);
-        int plan = calcPlan(ad.getPlan().getUnitPrice(), ad.getPlan().getTotalPrice());
-        int stopTime = TimeUtil.now() + calcDuration(plan);
-        taskMap.put("stopTime", String.valueOf(stopTime));
+        ExtPlan extPlan = ad.getPlan();
+        int plan = calcPlan(extPlan.getUnitPrice(), extPlan.getTotalPrice());
+        if (extPlan.getParam().getSpeed() == 0) {
+            int stopTime = TimeUtil.now() + calcDuration(plan);
+            taskMap.put("stopTime", String.valueOf(stopTime));
+        }
         String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);
         LLBResult llbResult = getResult(result);
         if (llbResult.isSuccess()) {

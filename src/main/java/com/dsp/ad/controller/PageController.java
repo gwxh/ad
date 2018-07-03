@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,10 +109,14 @@ public class PageController {
         return "create_plan";
     }
 
-    @RequestMapping("/user/createAd")
-    public String toCreateAd(Model model, @SessionAttribute ExtUser user) {
+    @RequestMapping("/user/createAd/{planId}")
+    public String toCreateAd(Model model, @SessionAttribute ExtUser user, @PathVariable int planId) {
         initAdPage(model, user);
-        model.addAttribute("ad", new ExtAd());
+        ExtAd ad = new ExtAd();
+        if (planId > 0) {
+            ad.setPlanId(planId);
+        }
+        model.addAttribute("ad", ad);
         return "create_ad";
     }
 
@@ -204,15 +207,5 @@ public class PageController {
         model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
         return "mgr/audit_ads";
-    }
-
-    @RequestMapping("/toUser/{userId}")
-    public String toUser(HttpSession session, Model model, @PathVariable int userId) {
-        ExtUser user = adminService.selectUserById(userId);
-        if (user == null) {
-            return REDIRECT_MGR_INDEX;
-        }
-        session.setAttribute("user", user);
-        return REDIRECT + "/";
     }
 }

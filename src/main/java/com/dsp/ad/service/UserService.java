@@ -15,7 +15,7 @@ public interface UserService {
 
     void saveUserInfo(User user);
 
-    void createPlan(ExtUser user, ExtPlan extPlan);
+    int createPlan(ExtUser user, ExtPlan extPlan);
 
     void editPlan(ExtUser user, ExtPlan extPlan);
 

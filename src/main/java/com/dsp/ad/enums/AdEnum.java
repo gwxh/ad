@@ -21,9 +21,9 @@ public interface AdEnum {
             this.text = text;
         }
 
-        public static Status valueOf(int value){
+        public static Status valueOf(int value) {
             for (Status status : values()) {
-                if(status.value == value){
+                if (status.value == value) {
                     return status;
                 }
             }
@@ -32,12 +32,12 @@ public interface AdEnum {
     }
 
     enum Type {
-        GROUP_IMAGE(1, "组图广告"),
-        BIG_IMAGE(2, "大图广告"),
-        LOWER_RIGHT_CORNER(3, "右下角"),
-        MOBILE_SCREEN(4, "移动插屏"),
-        MOBILE_BANNER(5, "移动Banner"),
-        APP_SCREEN(6, "APP开屏"),
+        //        GROUP_IMAGE(1, "组图广告"),
+//        BIG_IMAGE(2, "大图广告"),
+//        LOWER_RIGHT_CORNER(3, "右下角"),
+        MOBILE_SCREEN(1, "移动插屏"),
+        MOBILE_BANNER(2, "移动Banner"),
+        APP_SCREEN(3, "APP开屏"),
         //
         ;
 
