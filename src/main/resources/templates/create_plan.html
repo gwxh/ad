@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <link rel="shortcut icon" type="image/png">
 
-    <title>八方传播-广告商后台</title>
+    <title>广告商后台</title>
 
     <!--common-->
     <link href="/css/style.css" rel="stylesheet">
@@ -54,7 +54,7 @@
                                     <div class="col-lg-6">
                                         <input class="form-control" th:field="*{unitPrice}">
                                     </div>
-                                    <label class="control-label">元（最低单价为0.2元）</label>
+                                    <label class="control-label">元（最低单价为0.5元）</label>
                                 </div>
                                 <div class="form-group">
                                     <label th:for="totalPrice" class="col-lg-1 col-sm-1 control-label">计划限额</label>
@@ -123,9 +123,6 @@
                                             </label>
                                             <label class="checkbox-inline">
                                                 <input type="checkbox" name="area" value="33">澳门
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" name="area" value="0">国外
                                             </label>
                                         </div>
                                         <div class="input-group m-bot15">
@@ -201,25 +198,6 @@
                                             </label>
                                             <label class="checkbox-inline">
                                                 <input type="checkbox" name="area" value="32">香港
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group" style="border-bottom: 1px dotted rgba(0, 0, 0, 0.2);">
-                                    <label class="col-lg-1 col-sm-1 control-label">性别</label>
-                                    <div class="col-lg-9">
-                                        <input id="sex" type="hidden" th:field="*{param.sex}">
-                                        <div class="input-group m-bot15">
-                                            <label class="checkbox-inline">
-                                                <input id="sexCheckAll" type="checkbox" name="all">全选
-                                            </label>
-                                        </div>
-                                        <div class="input-group m-bot15">
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" name="sex" value="0">女
-                                            </label>
-                                            <label class="checkbox-inline">
-                                                <input type="checkbox" name="sex" value="1">男
                                             </label>
                                         </div>
                                     </div>

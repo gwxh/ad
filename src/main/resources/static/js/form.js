@@ -25,7 +25,7 @@ $(function () {
             unitPrice: {
                 required: true,
                 number: true,
-                min: 0.2
+                min: 0.5
             },
             totalPrice: {
                 required: true,
