@@ -117,7 +117,7 @@ public class ScheduledTask {
                 int planAmount = planLog.getAmount() + realConsumeAmount;
                 int planTotalPrice = (int) (plan.getTotalPrice() * 100);
                 if (planAmount >= planTotalPrice) {
-                    realConsumeAmount = planAmount - planTotalPrice;
+                    realConsumeAmount = planTotalPrice-planLog.getAmount();
                     planAmount = planTotalPrice;
                     planLog.setComplete(true);
                 }
