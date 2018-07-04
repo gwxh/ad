@@ -93,26 +93,29 @@ public class ScheduledTask {
                     continue;
                 }
 
-                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, extAd.getId());
-                Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
-                AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
-                int adTotalExec = todayExecResult.getToday();
-                int exec = adTotalExec - adLog.getExec();
-
                 ExtPlan plan = extAd.getPlan();
-                int realConsumeAmount = (int) (exec * plan.getUnitPrice() * 100);
-
                 PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
                 Optional<PlanLog> optionalPlanLog = planLogRepository.findById(planLogPK);
-                int planTotalPrice = (int) (plan.getTotalPrice() * 100);
                 PlanLog planLog = optionalPlanLog.orElseGet(PlanLog::new);
                 if (planLog.isComplete()) {
                     taskService.stopTask(extAd);
                     adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
                     continue;
                 }
-                int prevPlanAmount = planLog.getAmount();
-                int planAmount = prevPlanAmount + realConsumeAmount;
+
+                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, extAd.getId());
+                Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
+                AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
+                int adTotalExec = todayExecResult.getToday();
+                int realExec = adTotalExec - adLog.getCpc();
+                if (realExec <= 0) {
+                    continue;
+                }
+
+                int realConsumeAmount = (int) (realExec * plan.getUnitPrice() * 100);
+
+                int planAmount = planLog.getAmount() + realConsumeAmount;
+                int planTotalPrice = (int) (plan.getTotalPrice() * 100);
                 if (planAmount >= planTotalPrice) {
                     realConsumeAmount = planAmount - planTotalPrice;
                     planAmount = planTotalPrice;
@@ -122,7 +125,7 @@ public class ScheduledTask {
                 planLog.setAmount(planAmount);
                 planLogRepository.save(planLog);
 
-                if (userAmount < realConsumeAmount) {
+                if (realConsumeAmount > userAmount) {
                     realConsumeAmount = userAmount;
                     noMoney = true;
                 }
@@ -130,7 +133,7 @@ public class ScheduledTask {
                 int adAmount = adLog.getAmount() + realConsumeAmount;
                 Random rand = new Random();
                 int randPv = rand.nextInt(6) + 1;
-                int cpc = adLog.getCpc() + exec * randPv;
+                int cpc = adLog.getCpc() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
                 adLog.setUserId(userId);
                 adLog.setExec(cpc);
