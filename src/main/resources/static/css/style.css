@@ -8,6 +8,10 @@ Author: ThemeBucket
 @import url('jquery-ui-1.10.3.css');
 @import url('../fonts/css/font-awesome.min.css');
 
+html,body,section,.main-content{
+    height: 100%;
+}
+
 body {
     background: #424f63;
     font-family: 'Open Sans', sans-serif;
@@ -895,7 +899,6 @@ h5.left-nav-title {
 .main-content {
     margin-left: 200px;
     background: #eff0f4;
-    min-height: 700px;
 }
 
 .page-heading {
