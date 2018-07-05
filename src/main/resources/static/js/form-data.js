@@ -13,13 +13,6 @@ $(function () {
             $("input[name=area][value=" + area[i] + "]").attr("checked", "checked");
         }
     }
-    var sexJson = $("#sex").val();
-    if (sexJson !== "") {
-        var sex = JSON.parse(sexJson);
-        for (var i = 0; i < sex.length; i++) {
-            $("input[name=sex][value=" + sex[i] + "]").attr("checked", "checked");
-        }
-    }
     var ageJson = $("#age").val();
     if (ageJson !== "") {
         var age = JSON.parse(ageJson);
@@ -82,13 +75,6 @@ $(function () {
             $("[name=device]").attr("checked", true);
         } else {
             $("[name=device]").attr("checked", false);
-        }
-    });
-    $("#sexCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=sex]").attr("checked", true);
-        } else {
-            $("[name=sex]").attr("checked", false);
         }
     });
     $("#ageCheckAll").click(function () {

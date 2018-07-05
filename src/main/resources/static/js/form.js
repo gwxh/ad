@@ -43,11 +43,6 @@ $(function () {
                 area.push($(this).val());
             });
             $("#area").val(JSON.stringify(area));
-            var sex = [];
-            $.each($("input[name=sex]:checked"), function () {
-                sex.push($(this).val());
-            });
-            $("#sex").val(JSON.stringify(sex));
             var age = [];
             $.each($("input[name=age]:checked"), function () {
                 age.push($(this).val());

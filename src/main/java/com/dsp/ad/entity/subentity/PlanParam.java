@@ -22,7 +22,6 @@ public class PlanParam {
     private int speed;
     private String device;
     private String area;
-    private String sex;
     private String age;
     private String income;
     private String consumption;
@@ -105,14 +104,6 @@ public class PlanParam {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
     }
 
     public String getAge() {
