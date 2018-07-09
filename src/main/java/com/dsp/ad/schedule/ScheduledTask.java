@@ -60,8 +60,8 @@ public class ScheduledTask {
             List<ExtAd> extAds = userAdsMap.get(ad.getId());
             if (extAds == null) {
                 extAds = new ArrayList<>();
-                userAdsMap.put(ad.getUserId(), extAds);
             }
+            userAdsMap.put(ad.getUserId(), extAds);
             extAds.add(extAd);
         }
         log.info("共{}个用户", userAdsMap.size());
@@ -69,7 +69,7 @@ public class ScheduledTask {
             Integer userId = entry.getKey();
             ExtUser extUser = adminService.selectUserById(userId);
             if (extUser.getAmount() <= 0) {
-                log.info("User<{}> no money!", userId);
+                log.info("用户<{}>没钱了!", userId);
                 continue;
             }
             int userAmount = (int) (extUser.getAmount() * 100);
@@ -117,7 +117,7 @@ public class ScheduledTask {
                 int planAmount = planLog.getAmount() + realConsumeAmount;
                 int planTotalPrice = (int) (plan.getTotalPrice() * 100);
                 if (planAmount >= planTotalPrice) {
-                    realConsumeAmount = planTotalPrice-planLog.getAmount();
+                    realConsumeAmount = planTotalPrice - planLog.getAmount();
                     planAmount = planTotalPrice;
                     planLog.setComplete(true);
                 }
@@ -143,7 +143,7 @@ public class ScheduledTask {
 
                 userAdsConsume += realConsumeAmount;
             }
-            log.info("User<{}> consume {} Yuan", userId, userAdsConsume / 100d);
+            log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
             userRepository.consume(userId, userAdsConsume);
             UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(today, userId);
             Optional<UserConsumeLog> optionalConsumeLog = userConsumeLogRepository.findById(userConsumeLogPK);
