@@ -1,6 +1,8 @@
 package com.dsp.ad.schedule;
 
-import com.dsp.ad.entity.*;
+import com.dsp.ad.entity.Ad;
+import com.dsp.ad.entity.UserConsumeLog;
+import com.dsp.ad.entity.UserConsumeLogPrimaryKey;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
@@ -10,8 +12,6 @@ import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.TimeUtil;
-import com.dsp.ad.util.result.ExecResult;
-import com.dsp.ad.util.result.LLBExecResult;
 import com.dsp.ad.util.result.LLBResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +57,7 @@ public class ScheduledTask {
             needStopTask(extAd);
             ExtPlan extPlan = adminService.selectPlanById(ad.getPlanId());
             extAd.setPlan(extPlan);
-            List<ExtAd> extAds = userAdsMap.get(ad.getId());
+            List<ExtAd> extAds = userAdsMap.get(ad.getUserId());
             if (extAds == null) {
                 extAds = new ArrayList<>();
             }
@@ -77,72 +77,7 @@ public class ScheduledTask {
             List<ExtAd> extAds = entry.getValue();
             int userAdsConsume = 0;
             boolean noMoney = false;
-            for (ExtAd extAd : extAds) {
-                if (noMoney) {
-                    break;
-                }
-                LLBExecResult execResult = taskService.selectTaskExec(extAd);
-                if (execResult == null) {
-                    continue;
-                }
-                if (execResult.getResult() == null || execResult.getResult().isEmpty()) {
-                    continue;
-                }
-                ExecResult todayExecResult = execResult.getResult().get(0);
-                if (todayExecResult == null) {
-                    continue;
-                }
-
-                ExtPlan plan = extAd.getPlan();
-                PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
-                Optional<PlanLog> optionalPlanLog = planLogRepository.findById(planLogPK);
-                PlanLog planLog = optionalPlanLog.orElseGet(PlanLog::new);
-                if (planLog.isComplete()) {
-                    taskService.stopTask(extAd);
-                    adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
-                    continue;
-                }
-
-                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, extAd.getId());
-                Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
-                AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
-                int adTotalExec = todayExecResult.getToday();
-                int realExec = adTotalExec - adLog.getCpc();
-                if (realExec <= 0) {
-                    continue;
-                }
-
-                int realConsumeAmount = (int) (realExec * plan.getUnitPrice() * 100);
-
-                int planAmount = planLog.getAmount() + realConsumeAmount;
-                int planTotalPrice = (int) (plan.getTotalPrice() * 100);
-                if (planAmount >= planTotalPrice) {
-                    realConsumeAmount = planTotalPrice - planLog.getAmount();
-                    planAmount = planTotalPrice;
-                    planLog.setComplete(true);
-                }
-                planLog.setPlanLogPk(planLogPK);
-                planLog.setAmount(planAmount);
-                planLogRepository.save(planLog);
-
-                if (realConsumeAmount > userAmount) {
-                    realConsumeAmount = userAmount;
-                    noMoney = true;
-                }
-
-                int adAmount = adLog.getAmount() + realConsumeAmount;
-                Random rand = new Random();
-                int randPv = rand.nextInt(6) + 1;
-                int cpc = adLog.getCpc() + realExec * randPv;
-                adLog.setAdLogPK(adLogPK);
-                adLog.setUserId(userId);
-                adLog.setExec(cpc);
-                adLog.setCpc(todayExecResult.getToday());
-                adLog.setAmount(adAmount);
-                adLogRepository.save(adLog);
-
-                userAdsConsume += realConsumeAmount;
-            }
+            for (ExtAd extAd : extAds)
             log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
             userRepository.consume(userId, userAdsConsume);
             UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(today, userId);
