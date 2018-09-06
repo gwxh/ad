@@ -42,7 +42,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ExtUser> selectAllUser() {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.selectUsers();
         return users.stream().map(ExtUser::new).collect(Collectors.toList());
     }
 

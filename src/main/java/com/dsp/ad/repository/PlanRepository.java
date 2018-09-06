@@ -18,7 +18,7 @@ public interface PlanRepository extends JpaRepository<Plan, Integer> {
     @Query("from Plan p where p.status not in (1,4) order by p.id desc")
     List<Plan> selectAllAuditPlans();
 
-    @Query("from Plan p where p.userId=?1 and p.status !=4 order by p.id desc")
+    @Query("from Plan p where p.userId=?1 and p.status <>4 order by p.id desc")
     List<Plan> selectPlans(int userId);
 
     @Query("from Plan p where p.id=?1 and p.userId=?2")

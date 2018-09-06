@@ -18,10 +18,10 @@ public interface AdRepository extends JpaRepository<Ad, Integer> {
     @Query("from Ad a where a.status not in (1,2,5) order by a.id desc")
     List<Ad> selectAllAuditAds();
 
-    @Query("from Ad a where a.userId=?1 and a.status!=5 order by a.id desc")
+    @Query("from Ad a where a.userId=?1 and a.status<>5 order by a.id desc")
     List<Ad> selectAds(int userId);
 
-    @Query("from Ad a where a.id=?1 and a.userId=?2 and a.status!=5")
+    @Query("from Ad a where a.id=?1 and a.userId=?2 and a.status<>5")
     Ad selectAd(int adId, int userId);
 
     @Transactional
