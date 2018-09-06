@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
         int plan = calcPlan(extPlan.getUnitPrice(), extPlan.getTotalPrice());
         if (extPlan.getParam().getSpeed() == 0) {
             int stopTime = TimeUtil.now() + calcDuration(plan);
-            taskMap.put("stopTime", String.valueOf(stopTime));
+            taskMap.put("endTime", String.valueOf(stopTime));
         }
         String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);
         LLBResult llbResult = getResult(result);
