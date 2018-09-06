@@ -47,11 +47,13 @@ public class ScheduledTask {
 
     @Scheduled(cron = "59 * * * * ?")
     private void calcUserConsume() {
-        Map<Integer, List<ExtAd>> userAdsMap = new HashMap<>();
         int today = TimeUtil.day();
-        log.info("统计任务开始执行");
+        Map<Integer, List<ExtAd>> userAdsMap = new HashMap<>();
         List<Ad> ads = adRepository.selectAdsByStartStatus();
-        log.info("获取到{}条任务", ads.size());
+        if (!ads.isEmpty()) {
+            log.info("获取到{}条任务", ads.size());
+        }
+
         for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(ad);
             needStopTask(extAd);
@@ -64,7 +66,10 @@ public class ScheduledTask {
             userAdsMap.put(ad.getUserId(), extAds);
             extAds.add(extAd);
         }
-        log.info("共{}个用户", userAdsMap.size());
+        if (!userAdsMap.isEmpty()) {
+            log.info("共{}个用户", userAdsMap.size());
+        }
+
         for (Map.Entry<Integer, List<ExtAd>> entry : userAdsMap.entrySet()) {
             Integer userId = entry.getKey();
             ExtUser extUser = adminService.selectUserById(userId);
@@ -73,23 +78,28 @@ public class ScheduledTask {
                 continue;
             }
             int userAmount = (int) (extUser.getAmount() * 100);
+            log.info("用户<{}>余额：{}元", userId, extUser.getAmount());
 
             List<ExtAd> extAds = entry.getValue();
             int userAdsConsume = 0;
             boolean noMoney = false;
             for (ExtAd extAd : extAds) {
                 if (noMoney) {
+                    log.info("用户<{}>没钱了!", userId);
                     break;
                 }
                 LLBExecResult execResult = taskService.selectTaskExec(extAd);
                 if (execResult == null) {
+                    log.info("任务数据查不到");
                     continue;
                 }
                 if (execResult.getResult() == null || execResult.getResult().isEmpty()) {
+                    log.info("任务数据查不到");
                     continue;
                 }
                 ExecResult todayExecResult = execResult.getResult().get(0);
                 if (todayExecResult == null) {
+                    log.info("任务数据查不到");
                     continue;
                 }
 
@@ -97,30 +107,38 @@ public class ScheduledTask {
                 PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
                 Optional<PlanLog> optionalPlanLog = planLogRepository.findById(planLogPK);
                 PlanLog planLog = optionalPlanLog.orElseGet(PlanLog::new);
+                int adId = extAd.getId();
                 if (planLog.isComplete()) {
+                    log.info("计划<{}>完成,停止任务执行", plan.getId());
                     taskService.stopTask(extAd);
-                    adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+                    adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
                     continue;
                 }
 
-                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, extAd.getId());
+                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, adId);
                 Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
                 AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
+                log.info("广告<{}>执行总量：{}，上一次执行量：{}", adId, todayExecResult.getToday(), adLog.getCpc());
                 int adTotalExec = todayExecResult.getToday();
                 int realExec = adTotalExec - adLog.getCpc();
                 if (realExec <= 0) {
                     continue;
                 }
 
+                log.info("广告<{}>当前单价为：{}元", plan.getUnitPrice() / 100d);
                 int realConsumeAmount = (int) (realExec * plan.getUnitPrice() * 100);
 
                 int planAmount = planLog.getAmount() + realConsumeAmount;
                 int planTotalPrice = (int) (plan.getTotalPrice() * 100);
                 if (planAmount >= planTotalPrice) {
                     realConsumeAmount = planTotalPrice - planLog.getAmount();
+                    if (realConsumeAmount <= 0) {
+                        continue;
+                    }
                     planAmount = planTotalPrice;
                     planLog.setComplete(true);
                 }
+                log.info("广告<{}>本次花费：{}元", adId, realConsumeAmount / 100d);
                 planLog.setPlanLogPk(planLogPK);
                 planLog.setAmount(planAmount);
                 planLogRepository.save(planLog);
@@ -128,22 +146,25 @@ public class ScheduledTask {
                 if (realConsumeAmount > userAmount) {
                     realConsumeAmount = userAmount;
                     noMoney = true;
+                    log.info("用户<{}>余额已用完", userId);
                 }
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
                 Random rand = new Random();
                 int randPv = rand.nextInt(6) + 1;
-                int cpc = adLog.getCpc() + realExec * randPv;
+                int exec = adLog.getCpc() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
                 adLog.setUserId(userId);
-                adLog.setExec(cpc);
+                adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
                 adLogRepository.save(adLog);
 
                 userAdsConsume += realConsumeAmount;
             }
-            log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
+            if (userAdsConsume > 0) {
+                log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
+            }
             userRepository.consume(userId, userAdsConsume);
             UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(today, userId);
             Optional<UserConsumeLog> optionalConsumeLog = userConsumeLogRepository.findById(userConsumeLogPK);
