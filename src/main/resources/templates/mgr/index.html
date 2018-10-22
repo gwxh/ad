@@ -63,7 +63,8 @@
                                 <tbody>
                                 <tr th:each="user : ${users}">
                                     <td>
-                                        <a th:href="@{/mgr/toUser/{id}(id=${user.id})}" th:text="${user.id}" th:target="_blank"></a>
+                                        <a th:href="@{/mgr/toUser/{id}(id=${user.id})}" th:text="${user.id}"
+                                           th:target="_blank"></a>
                                     </td>
                                     <td th:text="${user.username}"></td>
                                     <td th:include="util/currency::format(${user.amount})"></td>
@@ -162,6 +163,6 @@
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/messages_zh.min.js"></script>
 <script src="/js/form.js"></script>
-
+<script th:replace="component/msg::msg"></script>
 </body>
 </html>

@@ -107,7 +107,11 @@ public class UserController {
     }
 
     @PostMapping("/createAd")
-    public String createAd(ExtAd ad, @SessionAttribute ExtUser user) throws IOException {
+    public String createAd(ExtAd ad, @SessionAttribute ExtUser user, Model model) throws IOException {
+        if (ad.getPlan().getUser().getId() != user.getId()) {
+            model.addAttribute("msg", "用户身份错误！");
+            return pageController.toCreateAd(model, user, ad.getPlanId());
+        }
         ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
         userService.createAd(user, ad);
         return PageController.REDIRECT_USER_AD;

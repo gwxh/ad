@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("from User u where u.username = ?1")
     User selectUserByName(String username);
 
-    @Query("from User u where u.status <> 2")
+    @Query("from User u where u.status <> 2 order by u.id desc")
     List<User> selectUsers();
 
     @Transactional

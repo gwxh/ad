@@ -1,12 +1,14 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.Admin;
+import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.service.AdminService;
+import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.MD5Util;
 import com.dsp.ad.util.result.LLBResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     PageController pageController;
@@ -63,7 +68,12 @@ public class AdminController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(ExtUser user) {
+    public String createUser(ExtUser user, RedirectAttributes attributes) {
+        User u = userService.selectUserByName(user.getUsername());
+        if (u != null) {
+            attributes.addFlashAttribute("msg", "广告商名称不允许重复！");
+            return PageController.REDIRECT_MGR_INDEX;
+        }
         adminService.createUser(user);
         return PageController.REDIRECT_MGR_INDEX;
     }
@@ -85,6 +95,7 @@ public class AdminController {
         adminService.enableUser(userId);
         return PageController.REDIRECT_MGR_INDEX;
     }
+
     @RequestMapping("/deleteUser/{userId}")
     public String deleteUser(@PathVariable int userId) {
         adminService.deleteUser(userId);
