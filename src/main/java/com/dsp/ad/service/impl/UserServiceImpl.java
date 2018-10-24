@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Plan findPlanById(int planId,int userId) {
+        return planRepository.selectPlan(planId, userId);
+    }
+
+    @Override
     public ExtPlan selectPlan(int planId, int userId) {
         Plan plan = planRepository.selectPlan(planId, userId);
         return new ExtPlan(plan);

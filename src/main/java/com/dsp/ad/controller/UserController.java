@@ -1,5 +1,6 @@
 package com.dsp.ad.controller;
 
+import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
@@ -108,7 +109,8 @@ public class UserController {
 
     @PostMapping("/createAd")
     public String createAd(ExtAd ad, @SessionAttribute ExtUser user, Model model) throws IOException {
-        if (ad.getPlan().getUser().getId() != user.getId()) {
+        Plan plan = userService.findPlanById(ad.getPlanId(), user.getId());
+        if (plan == null) {
             model.addAttribute("msg", "用户身份错误！");
             return pageController.toCreateAd(model, user, ad.getPlanId());
         }

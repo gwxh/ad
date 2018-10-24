@@ -1,5 +1,6 @@
 package com.dsp.ad.service;
 
+import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtAdLog;
@@ -20,6 +21,8 @@ public interface UserService {
     void editPlan(ExtUser user, ExtPlan extPlan);
 
     List<ExtPlan> selectPlans(int userId);
+
+    Plan findPlanById(int planId, int userId);
 
     ExtPlan selectPlan(int planId, int userId);
 
