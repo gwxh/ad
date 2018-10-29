@@ -84,15 +84,15 @@ public class UserController {
     }
 
     @PostMapping("/editPassword")
-    public String editPassword(Model model, @SessionAttribute ExtUser extUser, String oldPassword, String newPassword2) {
-        User user = userService.selectUserByName(extUser.getUsername());
-        if (!user.getPassword().equals(MD5Util.md5(oldPassword))) {
+    public String editPassword(Model model, @SessionAttribute ExtUser user, String oldPassword, String newPassword2) {
+        User oldUser = userService.selectUserByName(user.getUsername());
+        if (!oldUser.getPassword().equals(MD5Util.md5(oldPassword))) {
             model.addAttribute("msg", "旧密码输出错误");
-            return pageController.toSettingPage(model, extUser);
+            return pageController.toSettingPage(model, user);
         }
-        user.setPassword(MD5Util.md5(newPassword2));
-        userService.saveUserInfo(user);
-        return PageController.REDIRECT + pageController.toSettingPage(model, extUser);
+        oldUser.setPassword(MD5Util.md5(newPassword2));
+        userService.saveUserInfo(oldUser);
+        return PageController.REDIRECT + pageController.toSettingPage(model, user);
     }
 
     @PostMapping("/createPlan")
