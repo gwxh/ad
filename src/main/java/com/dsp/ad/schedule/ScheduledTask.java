@@ -48,27 +48,11 @@ public class ScheduledTask {
     @Scheduled(cron = "59 * * * * ?")
     private void calcUserConsume() {
         int today = TimeUtil.day();
-        Map<Integer, List<ExtAd>> userAdsMap = new HashMap<>();
         List<Ad> ads = adRepository.selectAdsByStartStatus();
         if (!ads.isEmpty()) {
             log.info("获取到{}条任务", ads.size());
         }
-
-        for (Ad ad : ads) {
-            ExtAd extAd = new ExtAd(ad);
-            needStopTask(extAd);
-            ExtPlan extPlan = adminService.selectPlanById(ad.getPlanId());
-            extAd.setPlan(extPlan);
-            List<ExtAd> extAds = userAdsMap.get(ad.getUserId());
-            if (extAds == null) {
-                extAds = new ArrayList<>();
-            }
-            userAdsMap.put(ad.getUserId(), extAds);
-            extAds.add(extAd);
-        }
-        if (!userAdsMap.isEmpty()) {
-            log.info("共{}个用户", userAdsMap.size());
-        }
+        Map<Integer, List<ExtAd>> userAdsMap = initUserAdsMap(ads);
 
         for (Map.Entry<Integer, List<ExtAd>> entry : userAdsMap.entrySet()) {
             Integer userId = entry.getKey();
@@ -125,7 +109,7 @@ public class ScheduledTask {
                     continue;
                 }
 
-                log.info("广告<{}>当前单价为：{}元", plan.getUnitPrice() / 100d);
+                log.info("广告<{}>当前单价为：{}元", plan.getId(), plan.getUnitPrice() / 100d);
                 int realConsumeAmount = (int) (realExec * plan.getUnitPrice() * 100);
 
                 int planAmount = planLog.getAmount() + realConsumeAmount;
@@ -162,6 +146,11 @@ public class ScheduledTask {
 
                 userAdsConsume += realConsumeAmount;
             }
+            if (userAdsConsume > userAmount) {
+                log.info("用户<{}>实际消费了{}了元", userId, userAdsConsume / 100d);
+                userAdsConsume = userAmount;
+                log.info("由于余额不足，扣除用户<{}>所有余额:<{}>元", userId, userAdsConsume / 100d);
+            }
             if (userAdsConsume > 0) {
                 log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
             }
@@ -174,6 +163,26 @@ public class ScheduledTask {
             consumeLog.setAmount(userConsume);
             userConsumeLogRepository.save(consumeLog);
         }
+    }
+
+    private Map<Integer, List<ExtAd>> initUserAdsMap(List<Ad> ads) {
+        Map<Integer, List<ExtAd>> userAdsMap = new HashMap<>();
+        for (Ad ad : ads) {
+            ExtAd extAd = new ExtAd(ad);
+            needStopTask(extAd);
+            ExtPlan extPlan = adminService.selectPlanById(ad.getPlanId());
+            extAd.setPlan(extPlan);
+            List<ExtAd> extAds = userAdsMap.get(ad.getUserId());
+            if (extAds == null) {
+                extAds = new ArrayList<>();
+            }
+            userAdsMap.put(ad.getUserId(), extAds);
+            extAds.add(extAd);
+        }
+        if (!userAdsMap.isEmpty()) {
+            log.info("共{}个用户", userAdsMap.size());
+        }
+        return userAdsMap;
     }
 
     private void needStopTask(ExtAd extAd) {
