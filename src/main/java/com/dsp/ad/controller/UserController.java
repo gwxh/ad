@@ -74,13 +74,13 @@ public class UserController {
     }
 
     @PostMapping("/saveUserInfo")
-    public String saveUserInfo(Model model, ExtUser userInfo, @SessionAttribute ExtUser extUser) {
-        User user = userService.selectUserByName(extUser.getUsername());
+    public String saveUserInfo(Model model, ExtUser userInfo, @SessionAttribute ExtUser user) {
+        User user1 = userService.selectUserByName(user.getUsername());
         user.setMobile(userInfo.getMobile());
         user.setEmail(userInfo.getEmail());
         user.setQq(userInfo.getQq());
-        userService.saveUserInfo(user);
-        return PageController.REDIRECT + pageController.toSettingPage(model, extUser);
+        userService.saveUserInfo(user1);
+        return PageController.REDIRECT + pageController.toSettingPage(model, user);
     }
 
     @PostMapping("/editPassword")
