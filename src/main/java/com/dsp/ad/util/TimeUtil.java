@@ -31,7 +31,7 @@ public class TimeUtil {
         calendar.setTime(new Date());
         calendar.add(Calendar.MONTH, month);
         calendar.set(Calendar.DATE, 1);
-        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         return (int) (calendar.getTimeInMillis() / 1000);
