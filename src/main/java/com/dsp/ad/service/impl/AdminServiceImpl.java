@@ -74,8 +74,10 @@ public class AdminServiceImpl implements AdminService {
         Optional<User> userOptional = userRepository.findById(userInfo.getId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            String encryptPwd = MD5Util.md5(userInfo.getPassword());
-            user.setPassword(encryptPwd);
+            if (!userInfo.getPassword().isEmpty()) {
+                String encryptPwd = MD5Util.md5(userInfo.getPassword());
+                user.setPassword(encryptPwd);
+            }
             int amount = (int) (userInfo.getAmount() * 100);
             user.setAmount(amount);
             user.setNote(userInfo.getNote());
