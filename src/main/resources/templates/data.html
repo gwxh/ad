@@ -1,91 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <link rel="shortcut icon" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
 
     <title>广告商后台</title>
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!--responsive table-->
-    <link href="/css/table-responsive.css" rel="stylesheet"/>
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-icon-style.css">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
 
-    <!--common-->
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/ui-elements/button.css">
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css"/>
 </head>
-<body class="sticky-header">
 
-<section>
+<body>
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<div th:replace="component/header::header"></div>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** SIDE NAVBAR *****-->
     <div th:replace="component/left_nav::left-nav('data')"></div>
 
-    <!-- main content start-->
-    <div class="main-content">
-        <div th:replace="component/header::header"></div>
-
-        <!--body wrapper start-->
-        <div class="wrapper">
-            <div class="row">
-                <div class="col-sm-12">
-                    <section class="panel">
-                        <header class="panel-heading">数据报告</header>
-                        <div class="panel-body">
-                            <section id="unseen">
-                                <table class="table table-hover general-table" id="logList">
-                                    <thead>
-                                    <tr>
-                                        <th>日期</th>
-                                        <th>网页浏览量</th>
-                                        <th>cpc有效</th>
-                                        <th>支付</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="log : ${logs}">
-                                        <td th:text="${log.date}"></td>
-                                        <td th:text="${#numbers.formatInteger(log.exec,3,'COMMA')}"></td>
-                                        <td th:text="${#numbers.formatInteger(log.cpc,3,'COMMA')}"></td>
-                                        <td th:include="util/currency::format(${log.amount/100})"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </section>
-                        </div>
-                    </section>
+    <div class="content-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-c2">
+                    <table class="table table-hover" id="logList">
+                        <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>网页浏览量</th>
+                            <th>cpc有效</th>
+                            <th>支付</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="log : ${logs}">
+                            <td th:text="${log.date}"></td>
+                            <td th:text="${#numbers.formatInteger(log.exec,3,'COMMA')}"></td>
+                            <td th:text="${#numbers.formatInteger(log.cpc,3,'COMMA')}"></td>
+                            <td th:include="util/currency::format(${log.amount/100})"></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <div th:replace="component/footer::footer"></div>
     </div>
-    <!-- main content end-->
+</div>
 
-</section>
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="/js/jquery-1.10.2.min.js"></script>
-<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<!--Global Javascript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/tether.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/modernizr.min.js"></script>
-<script src="/js/jquery.nicescroll.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/front.js"></script>
 
 <!--data table-->
 <script type="text/javascript" src="/js/data-tables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
-<script src="/js/dynamic_table_init.js"></script>
-
-<!--common scripts for all pages-->
-<script src="/js/scripts.js"></script>
+<script src="/js/data-tables/dynamic_table_init.js"></script>
 
 </body>
+
 </html>

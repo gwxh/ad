@@ -1,159 +1,119 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <link rel="shortcut icon" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
 
     <title>广告商后台</title>
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!--common-->
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet">
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-icon-style.css">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="sticky-header">
 
-<section>
-    <div th:replace="component/left_nav::left-nav('ad')"></div>
+<body>
 
-    <!-- main content start-->
-    <div class="main-content">
-        <div th:replace="component/header::header"></div>
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<div th:replace="component/header::header"></div>
 
-        <!--body wrapper start-->
-        <section class="wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            新建广告
-                        </header>
-                        <div class="panel-body">
-                            <form id="adForm" enctype="multipart/form-data"
-                                  th:action="${ad.id}?'/user/editAd':'/user/createAd'"
-                                  th:method="post" th:object="${ad}"
-                                  class="form-horizontal" role="form">
-                                <input type="hidden" th:field="*{id}">
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-sm-3 control-label">所属广告计划</label>
-                                    <div class="col-lg-6">
-                                        <select id="planId" class="form-control" th:field="*{planId}">
-                                            <option th:each="plan : ${plans}" th:text="${plan.name}"
-                                                    th:value="${plan.id}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label th:for="name" class="col-lg-3 col-sm-3 control-label">广告名称</label>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" th:field="*{name}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label th:for="url" class="col-lg-3 col-sm-3 control-label">广告地址</label>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" th:field="*{url}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-sm-3 control-label">广告类型</label>
-                                    <div class="col-lg-6">
-                                        <select id="type" class="form-control" th:field="*{type}">
-                                            <option value="0">请选择广告类型</option>
-                                            <option th:each="type : ${types}" th:value="${type.key}"
-                                                    th:text="${type.value}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-sm-3 control-label">尺寸模板</label>
-                                    <div class="col-lg-6">
-                                        <select id="size" class="form-control" th:field="*{param.size}">
-                                            <option value="">请选择尺寸模板</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-3 col-sm-3 control-label">上传图片</label>
-                                    <div class="col-lg-6">
-                                        <input type="file" th:field="*{imageFile}"/>
-                                        <input id="imageName" type="hidden" th:field="*{param.image}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-3 col-lg-10">
-                                        <button type="submit" class="btn btn-primary">保存</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </section>
-                </div>
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** SIDE NAVBAR *****-->
+    <div th:replace="component/left_nav::left-nav('plan')"></div>
+
+    <div class="content-inner">
+        <div class="card form" id="form1">
+            <div class="card-header">
+                <h3>广告内容</h3>
             </div>
-        </section>
-        <!--body wrapper end-->
-
-        <div th:replace="component/footer::footer"></div>
+            <br>
+            <form id="adForm" enctype="multipart/form-data"
+                  th:action="${ad.id}?'/user/editAd':'/user/createAd'"
+                  th:method="post" th:object="${ad}"
+                  class="form-horizontal" role="form">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group row">
+                    <label class="col-form-label">所属广告计划</label>
+                    <div class="col-lg-6">
+                        <select id="planId" class="form-control" th:field="*{planId}">
+                            <option th:each="plan : ${plans}" th:text="${plan.name}"
+                                    th:value="${plan.id}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label th:for="name" class="col-form-label">广告名称</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" th:field="*{name}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label th:for="url" class="col-form-label">广告地址</label>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" th:field="*{url}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label">广告类型</label>
+                    <div class="col-lg-6">
+                        <select id="type" class="form-control" th:field="*{type}">
+                            <option value="0">请选择广告类型</option>
+                            <option th:each="type : ${types}" th:value="${type.key}"
+                                    th:text="${type.value}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label">尺寸模板</label>
+                    <div class="col-lg-6">
+                        <select id="size" class="form-control" th:field="*{param.size}">
+                            <option value="">请选择尺寸模板</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label">上传图片</label>
+                    <div class="col-lg-6">
+                        <input type="file" th:field="*{imageFile}"/>
+                        <input id="imageName" type="hidden" th:field="*{param.image}"/>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-general btn-blue mr-2">保存</button>
+            </form>
+        </div>
     </div>
-    <!-- main content end-->
+</div>
 
-</section>
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="/js/jquery-1.10.2.min.js"></script>
-<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<!--Global Javascript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/tether.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/modernizr.min.js"></script>
-<script src="/js/jquery.nicescroll.js"></script>
-
-<!--common scripts for all pages-->
-<script src="/js/scripts.js"></script>
-
-<!--form-->
+<script src="/js/jquery.cookie.js"></script>
 <script src="/js/jquery.validate.min.js"></script>
-<script src="/js/messages_zh.min.js"></script>
+<script src="/js/front.js"></script>
+
 <script src="/js/form.js"></script>
-<script th:replace="component/msg::msg"></script>
+<script src="/js/form-data.js"></script>
+<script src="/js/messages_zh.min.js"></script>
 
-<script>
-    $(function () {
-        var typeSelectEle = $("#type");
-        var value = parseInt(typeSelectEle.val());
-        if (value > 0) {
-            chooseSelect(value)
-        }
-        typeSelectEle.change(function () {
-            value = parseInt($(this).val());
-            chooseSelect(value);
-        });
-
-        function chooseSelect(value) {
-            var sizeSelectEle = $("#size").empty();
-            switch (value) {
-                case 1:
-                    sizeSelectEle.append("<option value='750*750'>图片-750*750</option>");
-                    break;
-                case 2:
-                    sizeSelectEle.append("<option value='640*100'>图片-640*100</option>");
-                    break;
-                case 3:
-                    sizeSelectEle.append("<option value='720*1280'>图片-720*1280</option>");
-                    break;
-                default:
-                    sizeSelectEle.append("<option>请选择尺寸模板</option>");
-                    break;
-            }
-        }
-    });
-</script>
 </body>
+
 </html>

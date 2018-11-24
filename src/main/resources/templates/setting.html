@@ -1,85 +1,236 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+    <!--<meta charset="utf-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+    <!--<meta name="keywords" content="">-->
+    <!--<meta name="description" content="">-->
+    <!--<link rel="shortcut icon" type="image/png">-->
+
+    <!--<title>广告商后台</title>-->
+
+    <!--&lt;!&ndash;common&ndash;&gt;-->
+    <!--<link href="/css/style.css" rel="stylesheet">-->
+    <!--<link href="/css/style-responsive.css" rel="stylesheet">-->
+
+    <!--&lt;!&ndash; HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries &ndash;&gt;-->
+    <!--&lt;!&ndash;[if lt IE 9]>-->
+    <!--<script src="/js/html5shiv.js"></script>-->
+    <!--<script src="/js/respond.min.js"></script>-->
+    <!--<![endif]&ndash;&gt;-->
+<!--</head>-->
+<!--<body class="sticky-header">-->
+
+<!--<section>-->
+    <!--<div th:replace="component/left_nav::left-nav('setting')"></div>-->
+
+    <!--&lt;!&ndash; main content start&ndash;&gt;-->
+    <!--<div class="main-content">-->
+        <!--<div th:replace="component/header::header"></div>-->
+
+        <!--&lt;!&ndash;body wrapper start&ndash;&gt;-->
+        <!--<section class="wrapper">-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-3"></div>-->
+                <!--<div class="col-lg-6">-->
+                    <!--<section class="panel">-->
+                        <!--<header class="panel-heading">基本信息</header>-->
+                        <!--<div class="panel-body">-->
+                            <!--<form th:action="@{/user/saveUserInfo}" th:method="post" th:object="${user}"-->
+                                  <!--class="form-horizontal" role="form">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label class="col-lg-3 col-sm-3 control-label">用户名</label>-->
+                                    <!--<div class="col-lg-6" style="margin-top: 7px;"-->
+                                         <!--th:text="${session.user.username}"></div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label th:for="mobile" class="col-lg-3 col-sm-3 control-label">手机号码</label>-->
+                                    <!--<div class="col-lg-6">-->
+                                        <!--<input class="form-control" th:field="*{mobile}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label th:for="email" class="col-lg-3 col-sm-3 control-label">电子邮箱</label>-->
+                                    <!--<div class="col-lg-6">-->
+                                        <!--<input class="form-control" th:field="*{email}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label th:for="qq" class="col-lg-3 col-sm-3 control-label">QQ</label>-->
+                                    <!--<div class="col-lg-6">-->
+                                        <!--<input class="form-control" th:field="*{qq}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<div class="col-lg-offset-5 col-lg-10">-->
+                                        <!--<button type="submit" class="btn btn-primary">保存</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</section>-->
+
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-3"></div>-->
+                <!--<div class="col-lg-6">-->
+                    <!--<section class="panel">-->
+                        <!--<header class="panel-heading">修改密码</header>-->
+                        <!--<div class="panel-body">-->
+                            <!--<form id="passwordForm" th:action="@{/user/editPassword}" th:method="post"-->
+                                  <!--class="form-horizontal" role="form">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label for="oldPassword" class="col-lg-3 col-sm-3 control-label">旧密码</label>-->
+                                    <!--<div class="col-lg-6">-->
+                                        <!--<input type="password" id="oldPassword" name="oldPassword"-->
+                                               <!--th:class="${msg!=null?'form-control error':'form-control'}">-->
+                                        <!--<label th:if="${msg!=null}" th:text="${msg}" for="oldPassword"-->
+                                               <!--class="error"></label>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label for="newPassword1" class="col-lg-3 col-sm-3 control-label">新密码</label>-->
+                                    <!--<div class="col-lg-6">-->
+                                        <!--<input type="password" class="form-control" id="newPassword1"-->
+                                               <!--name="newPassword1">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<label for="newPassword2" class="col-lg-3 col-sm-3 control-label">确认新密码</label>-->
+                                    <!--<div class="col-lg-6">-->
+                                        <!--<input type="password" class="form-control" id="newPassword2"-->
+                                               <!--name="newPassword2">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="form-group">-->
+                                    <!--<div class="col-lg-offset-5 col-lg-10">-->
+                                        <!--<button type="submit" class="btn btn-primary">保存</button>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                    <!--</section>-->
+
+                <!--</div>-->
+            <!--</div>-->
+        <!--</section>-->
+        <!--&lt;!&ndash;body wrapper end&ndash;&gt;-->
+
+        <!--<div th:replace="component/footer::footer"></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; main content end&ndash;&gt;-->
+
+<!--</section>-->
+
+<!--&lt;!&ndash; Placed js at the end of the document so the pages load faster &ndash;&gt;-->
+<!--<script src="/js/jquery-1.10.2.min.js"></script>-->
+<!--<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>-->
+<!--<script src="/js/jquery-migrate-1.2.1.min.js"></script>-->
+<!--<script src="/js/bootstrap.min.js"></script>-->
+<!--<script src="/js/modernizr.min.js"></script>-->
+<!--<script src="/js/jquery.nicescroll.js"></script>-->
+
+<!--&lt;!&ndash;common scripts for all pages&ndash;&gt;-->
+<!--<script src="/js/scripts.js"></script>-->
+
+<!--&lt;!&ndash;form&ndash;&gt;-->
+<!--<script src="/js/jquery.validate.min.js"></script>-->
+<!--<script src="/js/messages_zh.min.js"></script>-->
+<!--<script src="/js/form.js"></script>-->
+
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <link rel="shortcut icon" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
 
     <title>广告商后台</title>
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!--common-->
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet">
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-icon-style.css">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="sticky-header">
 
-<section>
+<body>
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<div th:replace="component/header::header"></div>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** SIDE NAVBAR *****-->
     <div th:replace="component/left_nav::left-nav('setting')"></div>
 
-    <!-- main content start-->
-    <div class="main-content">
-        <div th:replace="component/header::header"></div>
+    <div class="content-inner">
 
-        <!--body wrapper start-->
-        <section class="wrapper">
-            <div class="row">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <header class="panel-heading">基本信息</header>
-                        <div class="panel-body">
-                            <form th:action="@{/user/saveUserInfo}" th:method="post" th:object="${user}"
-                                  class="form-horizontal" role="form">
+        <div class="row">
+            <div class="col-md-12">
+
+                <!--***** USER INFO *****-->
+                <div class="card form">
+                    <div class="card-header">
+                        <h3><i class="fa fa-user-circle"></i> 用户信息</h3>
+                    </div>
+                    <br>
+                    <form th:action="@{/user/saveUserInfo}" th:method="post" th:object="${user}"
+                          class="form-horizontal" role="form">
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="col-lg-3 col-sm-3 control-label">用户名</label>
-                                    <div class="col-lg-6" style="margin-top: 7px;"
-                                         th:text="${session.user.username}"></div>
+                                    <label>用户名</label>
+                                    <div class="col-lg-6" th:text="${session.user.username}" style="line-height: 38px;"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label th:for="mobile" class="col-lg-3 col-sm-3 control-label">手机号码</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" th:field="*{mobile}">
-                                    </div>
+                                    <label th:for="mobile">手机号码</label>
+                                    <input class="form-control" th:field="*{mobile}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label th:for="email">电子邮箱</label>
+                                    <input class="form-control" th:field="*{email}">
                                 </div>
                                 <div class="form-group">
-                                    <label th:for="email" class="col-lg-3 col-sm-3 control-label">电子邮箱</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" th:field="*{email}">
-                                    </div>
+                                    <label th:for="qq">QQ</label>
+                                    <input class="form-control" th:field="*{qq}">
                                 </div>
-                                <div class="form-group">
-                                    <label th:for="qq" class="col-lg-3 col-sm-3 control-label">QQ</label>
-                                    <div class="col-lg-6">
-                                        <input class="form-control" th:field="*{qq}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-5 col-lg-10">
-                                        <button type="submit" class="btn btn-primary">保存</button>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </section>
-
+                        <button type="submit" class="btn btn-general btn-blue mr-2">保存</button>
+                    </form>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
-                    <section class="panel">
-                        <header class="panel-heading">修改密码</header>
-                        <div class="panel-body">
-                            <form id="passwordForm" th:action="@{/user/editPassword}" th:method="post"
-                                  class="form-horizontal" role="form">
+
+                <!--***** PRODUCT INFO *****-->
+                <div class="card form">
+                    <div class="card-header">
+                        <h3><i class="fa fa-archive"></i> 修改密码</h3>
+                    </div>
+                    <br>
+                    <form id="passwordForm" th:action="@{/user/editPassword}" th:method="post"
+                          class="form-horizontal" role="form">
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="oldPassword" class="col-lg-3 col-sm-3 control-label">旧密码</label>
                                     <div class="col-lg-6">
@@ -103,41 +254,29 @@
                                                name="newPassword2">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-lg-offset-5 col-lg-10">
-                                        <button type="submit" class="btn btn-primary">保存</button>
-                                    </div>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </section>
-
+                        <button type="submit" class="btn btn-general btn-blue mr-2">修改</button>
+                    </form>
                 </div>
             </div>
-        </section>
-        <!--body wrapper end-->
-
-        <div th:replace="component/footer::footer"></div>
+        </div>
     </div>
-    <!-- main content end-->
+</div>
 
-</section>
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="/js/jquery-1.10.2.min.js"></script>
-<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<!--Global Javascript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/tether.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/modernizr.min.js"></script>
-<script src="/js/jquery.nicescroll.js"></script>
-
-<!--common scripts for all pages-->
-<script src="/js/scripts.js"></script>
-
-<!--form-->
+<script src="/js/jquery.cookie.js"></script>
 <script src="/js/jquery.validate.min.js"></script>
-<script src="/js/messages_zh.min.js"></script>
-<script src="/js/form.js"></script>
+<script src="/js/front.js"></script>
+
+<!--Chart -->
+<script src="/js/highcharts.js"></script>
+<script src="/js/themes/gray.js"></script>
 
 </body>
+
 </html>

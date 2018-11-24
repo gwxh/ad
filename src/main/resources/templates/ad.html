@@ -1,113 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <link rel="shortcut icon" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
 
     <title>广告商后台</title>
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!--data table-->
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-icon-style.css">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/ui-elements/button.css">
     <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css"/>
-
-    <!--common-->
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
 </head>
-<body class="sticky-header">
 
-<section>
+<body>
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<div th:replace="component/header::header"></div>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** SIDE NAVBAR *****-->
     <div th:replace="component/left_nav::left-nav('ad')"></div>
 
-    <!-- main content start-->
-    <div class="main-content">
-        <div th:replace="component/header::header"></div>
-
-        <!--body wrapper start-->
-        <div class="wrapper">
-            <div class="row">
-                <div class="col-sm-12">
-                    <section class="panel">
-                        <header class="panel-heading">广告列表</header>
-                        <div class="panel-body">
-                            <div class="adv-table editable-table ">
-                                <div class="clearfix">
-                                    <div class="btn-group">
-                                        <a href="/user/createAd/0" class="btn btn-primary">
-                                            新增广告 <i class="fa fa-plus"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <table class="table table-hover general-table" id="adList">
-                                    <thead>
-                                    <tr>
-                                        <th>浏览</th>
-                                        <th>计划名称</th>
-                                        <th>广告名称</th>
-                                        <th>广告类型</th>
-                                        <th>广告地址</th>
-                                        <th>状态</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="ad : ${ads}">
-                                        <td><img th:src="${'/'+ad.param.image}" width="105" height="90"/></td>
-                                        <td th:text="${ad.plan.name}"></td>
-                                        <td th:text="${ad.name}"></td>
-                                        <td th:text="${ad.typeName}"></td>
-                                        <td th:text="${ad.url}"></td>
-                                        <td th:switch="${ad.status}">
-                                            <span th:case="0" class="label label-danger label-mini">新增待审</span>
-                                            <span th:case="1" class="label label-success label-mini">活动</span>
-                                            <span th:case="2" class="label label-info label-mini">开启</span>
-                                            <span th:case="3" class="label label-danger label-mini">修改待审</span>
-                                            <span th:case="4" class="label label-warning label-mini">已被锁定</span>
-                                        </td>
-                                        <td class="operate">
-                                            <!--<a th:href="@{/user/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>-->
-                                            <!--<a th:href="@{/user/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>-->
-                                            <a th:href="@{/user/editAd/{id}(id=${ad.id})}">修改</a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
+    <div class="content-inner">
+        <div class="tenth-button">
+            <a href="/user/createAd/0" class="btn btn-lg blue">新增广告</a>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-c2">
+                    <table class="table table-hover" id="adList">
+                        <thead>
+                        <tr>
+                            <th>浏览</th>
+                            <th>计划名称</th>
+                            <th>广告名称</th>
+                            <th>广告类型</th>
+                            <th>广告地址</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="ad : ${ads}">
+                            <td><img th:src="${'/'+ad.param.image}" width="105" height="90"/></td>
+                            <td th:text="${ad.plan.name}"></td>
+                            <td th:text="${ad.name}"></td>
+                            <td th:text="${ad.typeName}"></td>
+                            <td th:text="${ad.url}"></td>
+                            <td th:switch="${ad.status}">
+                                <span th:case="0" class="label label-danger label-mini">新增待审</span>
+                                <span th:case="1" class="label label-success label-mini">活动</span>
+                                <span th:case="2" class="label label-info label-mini">开启</span>
+                                <span th:case="3" class="label label-danger label-mini">修改待审</span>
+                                <span th:case="4" class="label label-warning label-mini">已被锁定</span>
+                            </td>
+                            <td class="operate">
+                                <!--<a th:href="@{/user/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>-->
+                                <!--<a th:href="@{/user/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>-->
+                                <a th:href="@{/user/editAd/{id}(id=${ad.id})}">修改</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <div th:replace="component/footer::footer"></div>
     </div>
-    <!-- main content end-->
+</div>
 
-</section>
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="/js/jquery-1.10.2.min.js"></script>
-<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<!--Global Javascript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/tether.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/modernizr.min.js"></script>
-<script src="/js/jquery.nicescroll.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/front.js"></script>
 
 <!--data table-->
 <script type="text/javascript" src="/js/data-tables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
-<script src="/js/dynamic_table_init.js"></script>
+<script src="/js/data-tables/dynamic_table_init.js"></script>
 
-<!--common scripts for all pages-->
-<script src="/js/scripts.js"></script>
 </body>
+
 </html>
