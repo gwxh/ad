@@ -4,9 +4,18 @@
 * ==========================================================
 */
 
+html{
+    height: 100%;
+}
+
 body {
     font-family: 'Roboto Condensed', sans-serif;
     overflow-x: hidden;
+    height: 100%;
+}
+
+.page-content{
+    height: 100%;
 }
 
 a,

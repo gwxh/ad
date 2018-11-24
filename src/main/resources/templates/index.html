@@ -1,130 +1,263 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--<meta charset="utf-8">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+<!--<meta name="keywords" content="">-->
+<!--<meta name="description" content="">-->
+<!--<link rel="shortcut icon" type="image/png">-->
+
+<!--<title>广告商后台</title>-->
+
+<!--&lt;!&ndash;common&ndash;&gt;-->
+<!--<link href="/css/style.css" rel="stylesheet">-->
+<!--<link href="/css/style-responsive.css" rel="stylesheet">-->
+
+<!--&lt;!&ndash; HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries &ndash;&gt;-->
+<!--&lt;!&ndash;[if lt IE 9]>-->
+<!--<script src="/js/html5shiv.js"></script>-->
+<!--<script src="/js/respond.min.js"></script>-->
+<!--<![endif]&ndash;&gt;-->
+<!--</head>-->
+<!--<body class="sticky-header">-->
+
+<!--<section>-->
+<!--<div th:replace="component/left_nav::left-nav('user')"></div>-->
+
+<!--&lt;!&ndash; main content start&ndash;&gt;-->
+<!--<div class="main-content">-->
+<!--<div th:replace="component/header::header"></div>-->
+
+<!--&lt;!&ndash; page heading start&ndash;&gt;-->
+<!--<div class="page-heading">-->
+<!--<div class="row state-info">-->
+<!--<div class="col-sm-3">-->
+<!--<section class="panel">-->
+<!--<div class="panel-body">-->
+<!--<div class="summary">-->
+<!--<span>账户余额</span>-->
+<!--<h3 class="red-txt">-->
+<!--<span th:replace="util/currency::format(${userAmount})"></span>-->
+<!--</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--</div>-->
+<!--<div class="col-sm-3">-->
+<!--<section class="panel">-->
+<!--<div class="panel-body">-->
+<!--<div class="summary">-->
+<!--<span>当日支付</span>-->
+<!--<h3 class="green-txt">-->
+<!--<span th:replace="util/currency::format(${todayConsumeAmount})"></span>-->
+<!--</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--</div>-->
+<!--<div class="col-sm-3">-->
+<!--<section class="panel">-->
+<!--<div class="panel-body">-->
+<!--<div class="summary">-->
+<!--<span>昨日支付</span>-->
+<!--<h3 class="green-txt">-->
+<!--<span th:replace="util/currency::format(${yesterdayConsumeAmount})"></span>-->
+<!--</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--</div>-->
+<!--<div class="col-sm-3">-->
+<!--<section class="panel">-->
+<!--<div class="panel-body">-->
+<!--<div class="summary">-->
+<!--<span>当月支付</span>-->
+<!--<h3 class="green-txt">-->
+<!--<span th:replace="util/currency::format(${monthConsumeAmount})"></span>-->
+<!--</h3>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; page heading end&ndash;&gt;-->
+
+<!--&lt;!&ndash;body wrapper start&ndash;&gt;-->
+<!--<div class="wrapper">-->
+<!--<div class="row">-->
+<!--<div class="col-sm-12">-->
+<!--<section class="panel">-->
+<!--<header class="panel-heading">-->
+<!--数据报告-->
+<!--<span class="tools pull-right">-->
+<!--<a href="">更多数据</a>-->
+<!--</span>-->
+<!--</header>-->
+<!--<div class="panel-body">-->
+<!--<input id="logJson" type="hidden" th:value="${logJson}">-->
+<!--<div class="chart">-->
+<!--<div id="container"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;body wrapper end&ndash;&gt;-->
+
+<!--<div th:replace="component/footer::footer"></div>-->
+<!--</div>-->
+<!--&lt;!&ndash; main content end&ndash;&gt;-->
+
+<!--</section>-->
+
+<!--&lt;!&ndash; Placed js at the end of the document so the pages load faster &ndash;&gt;-->
+<!--<script src="/js/jquery-1.10.2.min.js"></script>-->
+<!--<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>-->
+<!--<script src="/js/jquery-migrate-1.2.1.min.js"></script>-->
+<!--<script src="/js/bootstrap.min.js"></script>-->
+<!--<script src="/js/modernizr.min.js"></script>-->
+<!--<script src="/js/jquery.nicescroll.js"></script>-->
+
+<!--&lt;!&ndash;common scripts for all pages&ndash;&gt;-->
+<!--<script src="/js/scripts.js"></script>-->
+
+<!--<script src="/js/highcharts.js"></script>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <link rel="shortcut icon" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
 
     <title>广告商后台</title>
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!--common-->
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/style-responsive.css" rel="stylesheet">
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-icon-style.css">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/js/html5shiv.js"></script>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="sticky-header">
 
-<section>
+<body>
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<div th:replace="component/header::header"></div>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** SIDE NAVBAR *****-->
     <div th:replace="component/left_nav::left-nav('user')"></div>
 
-    <!-- main content start-->
-    <div class="main-content">
-        <div th:replace="component/header::header"></div>
+    <div class="content-inner">
 
-        <!-- page heading start-->
-        <div class="page-heading">
-            <div class="row state-info">
-                <div class="col-sm-3">
-                    <section class="panel">
-                        <div class="panel-body">
-                            <div class="summary">
-                                <span>账户余额</span>
-                                <h3 class="red-txt">
-                                    <span th:replace="util/currency::format(${userAmount})"></span>
-                                </h3>
-                            </div>
+        <!--***** REPORT-1 *****-->
+        <div class="row" id="report1">
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="text-left report1-cont">
+                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i>
+                                <span th:replace="util/currency::format(${userAmount})"></span>
+                            </h2>
+                            <span class="text-muted">账户余额</span>
                         </div>
-                    </section>
+
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <section class="panel">
-                        <div class="panel-body">
-                            <div class="summary">
-                                <span>当日支付</span>
-                                <h3 class="green-txt">
-                                    <span th:replace="util/currency::format(${todayConsumeAmount})"></span>
-                                </h3>
-                            </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="text-left report1-cont">
+                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i>
+                                <span th:replace="util/currency::format(${todayConsumeAmount})"></span>
+                            </h2>
+                            <span class="text-muted">当日支付</span>
                         </div>
-                    </section>
+
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <section class="panel">
-                        <div class="panel-body">
-                            <div class="summary">
-                                <span>昨日支付</span>
-                                <h3 class="green-txt">
-                                    <span th:replace="util/currency::format(${yesterdayConsumeAmount})"></span>
-                                </h3>
-                            </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="text-left report1-cont">
+                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i>
+                                <span th:replace="util/currency::format(${yesterdayConsumeAmount})"></span>
+                            </h2>
+                            <span class="text-muted">昨日支付</span>
                         </div>
-                    </section>
+
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <section class="panel">
-                        <div class="panel-body">
-                            <div class="summary">
-                                <span>当月支付</span>
-                                <h3 class="green-txt">
-                                    <span th:replace="util/currency::format(${monthConsumeAmount})"></span>
-                                </h3>
-                            </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="text-left report1-cont">
+                            <h2 class="font-light m-b-0"><i class="ti-arrow-up text-success"></i>
+                                <span th:replace="util/currency::format(${monthConsumeAmount})"></span>
+                            </h2>
+                            <span class="text-muted">当月支付</span>
                         </div>
-                    </section>
+
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- page heading end-->
 
-        <!--body wrapper start-->
-        <div class="wrapper">
-            <div class="row">
-                <div class="col-sm-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            数据报告
-                            <span class="tools pull-right">
-                                <a href="">更多数据</a>
-                            </span>
-                        </header>
-                        <div class="panel-body">
-                            <input id="logJson" type="hidden" th:value="${logJson}">
-                            <div class="chart">
-                                <div id="container"></div>
-                            </div>
+        <!--***** REPORT-2 *****-->
+        <div class="row" id="report2">
+            <div class="col-md-12">
+                <input id="logJson" type="hidden" th:value="${logJson}">
+                <div class="card card-c1">
+                    <div class="card-header card-chart" data-background-color="orange">
+                        <div id="container"></div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="fa fa-clock-o"></i> 数据报告
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--body wrapper end-->
-
-        <div th:replace="component/footer::footer"></div>
     </div>
-    <!-- main content end-->
+</div>
 
-</section>
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="/js/jquery-1.10.2.min.js"></script>
-<script src="/js/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="/js/jquery-migrate-1.2.1.min.js"></script>
+<!--Global Javascript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/tether.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
-<script src="/js/modernizr.min.js"></script>
-<script src="/js/jquery.nicescroll.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/front.js"></script>
 
-<!--common scripts for all pages-->
-<script src="/js/scripts.js"></script>
-
+<!--Chart -->
 <script src="/js/highcharts.js"></script>
-
+<script src="/js/themes/gray.js"></script>
 <script>
     $(function () {
         var logJson = $("#logJson").val();
@@ -137,7 +270,7 @@
             execArray.push(log[i].exec);
             cpcArray.push(log[i].cpc);
         }
-        var chart = Highcharts.chart('container', {
+        Highcharts.chart('container', {
             title: {
                 text: '当月效果报表'
             },
@@ -168,7 +301,12 @@
             }, {
                 name: 'cpc',
                 data: cpcArray
-            }]
+            }],
+            credits: {
+
+                enabled: false
+
+            }
         });
     });
 
@@ -182,4 +320,5 @@
 </script>
 
 </body>
+
 </html>
