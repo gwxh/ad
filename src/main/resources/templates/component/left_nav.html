@@ -9,16 +9,16 @@
             <a href="/"><i class="fa fa-calendar-home"></i>首页</a>
         </li>
         <li th:class="${flag=='plan'?'active':''}">
-            <a href="/"><i class="fa fa-calendar-plus-o"></i>计划管理</a>
+            <a href="/user/plan"><i class="fa fa-calendar-plus-o"></i>计划管理</a>
         </li>
         <li th:class="${flag=='ad'?'active':''}">
-            <a href="/"><i class="fa fa-desktop"></i>广告管理</a>
+            <a href="/user/ad"><i class="fa fa-desktop"></i>广告管理</a>
         </li>
         <li th:class="${flag=='data'?'active':''}">
-            <a href="/"><i class="fa fa-eye"></i>报表中心</a>
+            <a href="/user/data"><i class="fa fa-eye"></i>报表中心</a>
         </li>
         <li th:class="${flag=='setting'?'active':''}">
-            <a href="/"><i class="fa fa-gear"></i>个人中心</a>
+            <a href="/user/setting"><i class="fa fa-gear"></i>个人中心</a>
         </li>
         <li>
             <a href="/user/logout"><i class="fa fa-power-off"></i>退出</a>
