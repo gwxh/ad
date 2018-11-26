@@ -1,26 +1,42 @@
 package com.dsp.ad.entity;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user_consume_log")
 public class UserConsumeLog {
 
-    @EmbeddedId
-    private UserConsumeLogPrimaryKey userConsumeLogPK;
-
-    @Column
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int uid;
+    private int type;
     private int amount;
+    private int time;
+    private String note;
 
-    public UserConsumeLogPrimaryKey getUserConsumeLogPK() {
-        return userConsumeLogPK;
+    public int getId() {
+        return id;
     }
 
-    public void setUserConsumeLogPK(UserConsumeLogPrimaryKey userConsumeLogPK) {
-        this.userConsumeLogPK = userConsumeLogPK;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getAmount() {
@@ -29,5 +45,21 @@ public class UserConsumeLog {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

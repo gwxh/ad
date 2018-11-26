@@ -6,6 +6,7 @@ import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.TaskEnum;
+import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.TaskService;
@@ -155,12 +156,12 @@ public class ScheduledTask {
                 log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
             }
             userRepository.consume(userId, userAdsConsume);
-            UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(today, userId);
-            Optional<UserConsumeLog> optionalConsumeLog = userConsumeLogRepository.findById(userConsumeLogPK);
-            UserConsumeLog consumeLog = optionalConsumeLog.orElseGet(UserConsumeLog::new);
-            int userConsume = consumeLog.getAmount() + userAdsConsume;
-            consumeLog.setUserConsumeLogPK(userConsumeLogPK);
-            consumeLog.setAmount(userConsume);
+
+            UserConsumeLog consumeLog = new UserConsumeLog();
+            consumeLog.setUid(userId);
+            consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
+            consumeLog.setAmount(userAdsConsume);
+            consumeLog.setTime(TimeUtil.now());
             userConsumeLogRepository.save(consumeLog);
         }
     }

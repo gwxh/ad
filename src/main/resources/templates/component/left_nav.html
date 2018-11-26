@@ -20,6 +20,9 @@
         <li th:class="${flag=='setting'?'active':''}">
             <a href="/user/setting"><i class="fa fa-gear"></i>个人中心</a>
         </li>
+        <li th:class="${flag=='price'?'active':''}">
+            <a href="/user/consumeLog"><i class="fa fa-star"></i>消费明细</a>
+        </li>
         <li>
             <a href="/user/logout"><i class="fa fa-power-off"></i>退出</a>
         </li>

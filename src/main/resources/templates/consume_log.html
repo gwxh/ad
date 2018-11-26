@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <title>广告商后台</title>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <!-- global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-icon-style.css">
+    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
+
+    <!-- Core stylesheets -->
+    <link rel="stylesheet" href="/css/ui-elements/card.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/ui-elements/button.css">
+    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css"/>
+</head>
+
+<body>
+
+<!--====================================================
+                         MAIN NAVBAR
+======================================================-->
+<div th:replace="component/header::header"></div>
+
+<!--====================================================
+                        PAGE CONTENT
+======================================================-->
+<div class="page-content d-flex align-items-stretch">
+
+    <!--***** SIDE NAVBAR *****-->
+    <div th:replace="component/left_nav::left-nav('data')"></div>
+
+    <div class="content-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-c2">
+                    <table class="table table-hover" id="logList">
+                        <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>收支</th>
+                            <th>备注</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="log : ${logs}">
+                            <td th:text="${log.date}"></td>
+                            <td th:text="${log.typeName}"></td>
+                            <td th:text="${#numbers.formatInteger(log.amount,3,'COMMA')}"></td>
+                            <td th:text="${log.note}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Global Javascript -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/popper/popper.min.js"></script>
+<script src="/js/tether.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
+<script src="/js/front.js"></script>
+
+<!--data table-->
+<script type="text/javascript" src="/js/data-tables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
+<script src="/js/data-tables/dynamic_table_init.js"></script>
+
+</body>
+
+</html>

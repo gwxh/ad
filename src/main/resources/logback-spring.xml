@@ -6,7 +6,7 @@
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %msg %c%n"/>
 
     <!-- 日志目录 -->
-    <property name="LOG_HOME_DEV" value="H:/logs/ad"/>
+    <property name="LOG_HOME_DEV" value="/app/logs"/>
     <property name="LOG_HOME" value="/app/logs"/>
 
 

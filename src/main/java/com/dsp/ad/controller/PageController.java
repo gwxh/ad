@@ -1,10 +1,7 @@
 package com.dsp.ad.controller;
 
 import com.dsp.ad.entity.User;
-import com.dsp.ad.entity.ext.ExtAd;
-import com.dsp.ad.entity.ext.ExtAdLog;
-import com.dsp.ad.entity.ext.ExtPlan;
-import com.dsp.ad.entity.ext.ExtUser;
+import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
@@ -82,9 +79,16 @@ public class PageController {
 
     @RequestMapping("/user/data")
     public String toDataPage(Model model, @SessionAttribute ExtUser user) {
-        List<ExtAdLog> logs = userService.selectUserConsumeLogs(user.getId());
+        List<ExtAdLog> logs = userService.selectAdConsumeLogs(user.getId());
         model.addAttribute("logs", logs);
         return "data";
+    }
+
+    @RequestMapping("/user/consumeLog")
+    public String toConsumeLogPage(Model model, @SessionAttribute ExtUser user) {
+        List<ExtConsumeLog> logs = userService.selectUserConsumeLogs(user.getId());
+        model.addAttribute("logs", logs);
+        return "consume_log";
     }
 
     @RequestMapping("/user/setting")
@@ -140,6 +144,10 @@ public class PageController {
         }
         model.addAttribute("types", types);
     }
+
+
+    // //////////////////////////// 后台 ////////////////////////////////////
+
 
     private final static String MGR_INDEX = "/mgr/index";
     public final static String REDIRECT_MGR_INDEX = REDIRECT + MGR_INDEX;

@@ -3,16 +3,12 @@ package com.dsp.ad.service.impl;
 import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
-import com.dsp.ad.entity.ext.ExtAd;
-import com.dsp.ad.entity.ext.ExtAdLog;
-import com.dsp.ad.entity.ext.ExtPlan;
-import com.dsp.ad.entity.ext.ExtUser;
+import com.dsp.ad.entity.UserConsumeLog;
+import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
-import com.dsp.ad.repository.AdLogRepository;
-import com.dsp.ad.repository.AdRepository;
-import com.dsp.ad.repository.PlanRepository;
-import com.dsp.ad.repository.UserRepository;
+import com.dsp.ad.enums.UserConsumeLogEnum;
+import com.dsp.ad.repository.*;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.TimeUtil;
@@ -38,6 +34,8 @@ public class UserServiceImpl implements UserService {
     private PlanRepository planRepository;
     @Autowired
     private AdRepository adRepository;
+    @Autowired
+    private UserConsumeLogRepository userConsumeLogRepository;
 
     @Override
     public User selectUserByName(String username) {
@@ -200,7 +198,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ExtAdLog> selectUserConsumeLogs(int userId) {
+    public List<ExtAdLog> selectAdConsumeLogs(int userId) {
         long totalExec = 0, totalCpc = 0, totalAmount = 0;
 
         List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogs(userId);
@@ -224,5 +222,20 @@ public class UserServiceImpl implements UserService {
         extAdLogs.add(totalLog);
         Collections.reverse(extAdLogs);
         return extAdLogs;
+    }
+
+    @Override
+    public List<ExtConsumeLog> selectUserConsumeLogs(int uid) {
+        List<UserConsumeLog> logs = userConsumeLogRepository.findByUid(uid);
+        List<ExtConsumeLog> extLogs = new ArrayList<>();
+        for (UserConsumeLog log : logs) {
+            ExtConsumeLog extLog = new ExtConsumeLog();
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
+            extLog.setDate(TimeUtil.toDate(localDateTime, "yyyy-MM-dd hh:mm:ss"));
+            extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
+            extLog.setAmount(log.getAmount());
+            extLog.setNote(log.getNote());
+        }
+        return null;
     }
 }
