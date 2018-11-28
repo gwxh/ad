@@ -58,7 +58,7 @@
                         <tr th:each="log : ${logs}">
                             <td th:text="${log.date}"></td>
                             <td th:text="${log.typeName}"></td>
-                            <td th:text="${#numbers.formatInteger(log.amount,3,'COMMA')}"></td>
+                            <td><span th:replace="util/currency::format(${log.amount})"></span></td>
                             <td th:text="${log.note}"></td>
                         </tr>
                         </tbody>

@@ -78,6 +78,17 @@ public class AdminController {
         return PageController.REDIRECT_MGR_INDEX;
     }
 
+    @PostMapping("/userRecharge")
+    public String userRecharge(int uid, int amount, String note, RedirectAttributes attributes) {
+        ExtUser u = adminService.selectUserById(uid);
+        if (u == null) {
+            attributes.addFlashAttribute("msg", "广告商不存在！");
+            return PageController.REDIRECT_MGR_INDEX;
+        }
+        adminService.userRecharge(u, amount * 100, note);
+        return PageController.REDIRECT_MGR_INDEX;
+    }
+
     @PostMapping("/editUser")
     public String editUser(ExtUser userInfo) {
         adminService.editUser(userInfo);

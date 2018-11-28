@@ -9,7 +9,7 @@ public class ExtConsumeLog {
     private String date;
     private Integer time;
     private String typeName;
-    private int amount;
+    private double amount;
     private String note;
 
     public String getDate() {
@@ -36,11 +36,11 @@ public class ExtConsumeLog {
         this.typeName = typeName;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

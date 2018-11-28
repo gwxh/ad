@@ -233,9 +233,10 @@ public class UserServiceImpl implements UserService {
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
             extLog.setDate(TimeUtil.toDate(localDateTime, "yyyy-MM-dd hh:mm:ss"));
             extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
-            extLog.setAmount(log.getAmount());
+            extLog.setAmount(log.getAmount()/100d);
             extLog.setNote(log.getNote());
+            extLogs.add(extLog);
         }
-        return null;
+        return extLogs;
     }
 }

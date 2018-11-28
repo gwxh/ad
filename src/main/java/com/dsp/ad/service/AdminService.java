@@ -16,6 +16,8 @@ public interface AdminService {
 
     ExtUser selectUserById(int userId);
 
+    void userRecharge(ExtUser user,int amount,String note);
+
     void createUser(ExtUser user);
 
     void editUser(ExtUser user);

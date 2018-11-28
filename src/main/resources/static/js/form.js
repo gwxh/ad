@@ -147,10 +147,15 @@ $(function () {
             },
             password: {
                 required: true
-            },
-            money: {
+            }
+        }
+    });
+
+    $("#rechargeForm").validate({
+        rules: {
+            amount: {
                 required: true,
-                digits: true,
+                number: true,
                 min: 1
             }
         }

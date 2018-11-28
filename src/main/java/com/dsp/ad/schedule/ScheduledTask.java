@@ -160,7 +160,7 @@ public class ScheduledTask {
             UserConsumeLog consumeLog = new UserConsumeLog();
             consumeLog.setUid(userId);
             consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
-            consumeLog.setAmount(userAdsConsume);
+            consumeLog.setAmount(-userAdsConsume);
             consumeLog.setTime(TimeUtil.now());
             userConsumeLogRepository.save(consumeLog);
         }

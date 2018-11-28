@@ -6,6 +6,7 @@ import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
+import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.enums.UserEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
@@ -31,7 +32,8 @@ public class AdminServiceImpl implements AdminService {
     private PlanRepository planRepository;
     @Autowired
     private AdRepository adRepository;
-
+    @Autowired
+    private UserConsumeLogRepository userConsumeLogRepository;
     @Autowired
     private TaskService taskService;
 
@@ -50,6 +52,18 @@ public class AdminServiceImpl implements AdminService {
     public ExtUser selectUserById(int userId) {
         Optional<User> userOptional = userRepository.findById(userId);
         return userOptional.map(ExtUser::new).orElse(null);
+    }
+
+    @Override
+    public void userRecharge(ExtUser user, int amount, String note) {
+        userRepository.recharge(user.getId(), amount);
+        UserConsumeLog consumeLog = new UserConsumeLog();
+        consumeLog.setUid(user.getId());
+        consumeLog.setType(UserConsumeLogEnum.Type.RECHARGE.value);
+        consumeLog.setAmount(amount);
+        consumeLog.setTime(TimeUtil.now());
+        consumeLog.setNote(note);
+        userConsumeLogRepository.save(consumeLog);
     }
 
     @Override

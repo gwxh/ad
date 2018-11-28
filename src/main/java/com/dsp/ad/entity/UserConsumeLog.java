@@ -9,10 +9,15 @@ public class UserConsumeLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = false)
     private int uid;
+    @Column(nullable = false)
     private int type;
+    @Column(nullable = false)
     private int amount;
+    @Column(nullable = false)
     private int time;
+    @Column(nullable = false)
     private String note;
 
     public int getId() {
