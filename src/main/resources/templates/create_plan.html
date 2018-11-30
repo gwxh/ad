@@ -375,16 +375,10 @@
                                         </label>
                                     </div>
                                     <label class="checkbox-inline">
-                                        <input type="checkbox" name="device" value="1">电脑桌面
-                                    </label>
-                                    <label class="checkbox-inline">
                                         <input type="checkbox" name="device" value="2">苹果IOS
                                     </label>
                                     <label class="checkbox-inline">
                                         <input type="checkbox" name="device" value="3">Android
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" name="device" value="4">微软WP
                                     </label>
                                 </div>
                             </div>
@@ -1324,6 +1318,25 @@
 <script src="/js/form-data.js"></script>
 <script src="/js/messages_zh.min.js"></script>
 
+<script>
+    $(function () {
+        var value =parseInt($("input[name='param.media']:checked").val());
+        mediaRadioChoose(value);
+
+        $("[name='param.media']").change(function () {
+            value = parseInt($(this).val());
+            mediaRadioChoose(value);
+        });
+
+        function mediaRadioChoose(value) {
+            if (value > 0) {
+                $("#media").slideDown();
+            } else {
+                $("#media").slideUp();
+            }
+        }
+    })
+</script>
 </body>
 
 </html>

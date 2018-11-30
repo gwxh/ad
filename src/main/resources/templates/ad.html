@@ -62,7 +62,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="ad : ${ads}">
-                            <td><img th:src="${'/'+ad.param.image}" width="105" height="90"/></td>
+                            <td><img th:src="${'/'+ad.param.image}" class="adImg"/></td>
                             <td th:text="${ad.plan.name}"></td>
                             <td th:text="${ad.name}"></td>
                             <td th:text="${ad.typeName}"></td>

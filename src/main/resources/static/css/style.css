@@ -22,6 +22,11 @@
     margin-left: 20px;
 }
 
+.adImg{
+    max-width: 200px;
+    max-height: 200px;
+}
+
 /*--------------------------------
         DYNAMIC TABLE STYLE
 ----------------------------------*/
