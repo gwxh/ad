@@ -10,6 +10,7 @@ import com.dsp.ad.enums.PlanEnum;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.MD5Util;
+import com.dsp.ad.util.TimeUtil;
 import com.dsp.ad.util.result.LLBResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -185,9 +186,10 @@ public class AdminController {
         return PageController.REDIRECT_MGR_ADS;
     }
 
-    @RequestMapping("/startAd/{adId}")
-    public String startAd(RedirectAttributes attributes, @PathVariable int adId) {
-        ExtAd ad = adminService.selectAdById(adId);
+    @RequestMapping("/startAd")
+    public String startAd(RedirectAttributes attributes, int aid, String startTime) {
+        int start = TimeUtil.getTimestamp(startTime.split(":"));
+        ExtAd ad = adminService.selectAdById(aid);
         if (ad == null) {
             attributes.addFlashAttribute("msg", "广告不存在");
             return PageController.REDIRECT_MGR_ADS;
@@ -202,7 +204,7 @@ public class AdminController {
             attributes.addFlashAttribute("msg", "广告商余额不足");
             return PageController.REDIRECT_MGR_ADS;
         }
-        LLBResult result = adminService.startAd(ad);
+        LLBResult result = adminService.startAd(ad, start);
         if (result == null) {
             attributes.addFlashAttribute("msg", "广告开启失败");
             return PageController.REDIRECT_MGR_ADS;

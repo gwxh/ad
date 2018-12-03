@@ -68,7 +68,9 @@
                                         <span th:case="4" class="label label-warning label-mini">已被锁定</span>
                                     </td>
                                     <td class="operate">
-                                        <a th:href="@{/mgr/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启</a>
+                                        <a style="cursor: pointer;"
+                                           data-toggle="modal" data-target="#startModal"
+                                           th:onclick="'javascript:setAid('+${ad.id}+')' ">开启</a>
                                         <a th:href="@{/mgr/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭</a>
                                         <a th:href="@{/mgr/toAd/{id}(id=${ad.id})}" th:target="_blank">修改</a>
                                         <a th:href="@{/mgr/disableAd/{id}(id=${ad.id})}">锁定</a>
@@ -77,6 +79,38 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                            <div class="modal fade" id="startModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content" style="width:400px;">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                &times;
+                                            </button>
+                                            <h4 class="modal-title">
+                                                开启广告
+                                            </h4>
+                                        </div>
+                                        <form id="startForm" th:action="@{/mgr/startAd}"
+                                              th:method="post" role="form">
+                                            <input id="aid" name="aid" type="hidden"/>
+                                            <div class="modal-body">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <label for="startTime" class="col-md-4">开始时间</label>
+                                                        <div class="col-md-8">
+                                                            <input id="startTime" name="startTime" class="form-control" readonly/>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- /.box-body -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">开始</button>
+                                            </div>
+                                        </form>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,6 +133,28 @@
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/messages_zh.min.js"></script>
 <script src="/js/form.js"></script>
+
+<script src="/js/laydate/laydate.js"></script>
+
+<script>
+    var date = new Date();
+    var seconds = date.getSeconds();
+    var minutes = date.getMinutes();
+    var hours = date.getHours();
+    var value = hours+":"+minutes+":"+seconds;
+
+
+    laydate.render({
+        elem: '#startTime',
+        type: 'time',
+        theme: '#1E9FFF',
+        value: value
+    });
+
+    function setAid(aid) {
+        $("#aid").val(aid)
+    }
+</script>
 
 <script th:replace="component/msg::msg"></script>
 </body>

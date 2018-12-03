@@ -52,7 +52,7 @@ public interface AdminService {
 
     void deleteAd(ExtAd extAd);
 
-    LLBResult startAd(ExtAd extAd);
+    LLBResult startAd(ExtAd extAd,int start);
 
     LLBResult stopAd(ExtAd extAd);
 }

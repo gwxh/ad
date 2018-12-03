@@ -12,7 +12,7 @@ public interface TaskService {
 
     LLBResult viewTask(ExtAd ad);
 
-    LLBResult startTask(ExtAd ad);
+    LLBResult startTask(ExtAd ad,int start);
 
     LLBResult stopTask(ExtAd ad);
 

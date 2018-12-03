@@ -252,8 +252,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public LLBResult startAd(ExtAd extAd) {
-        LLBResult result = taskService.startTask(extAd);
+    public LLBResult startAd(ExtAd extAd, int start) {
+        LLBResult result = taskService.startTask(extAd, start);
         if (result.isSuccess()) {
             adRepository.updateStatus(extAd.getId(), AdEnum.Status.RUNNING.value);
         }

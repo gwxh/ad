@@ -57,12 +57,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public LLBResult startTask(ExtAd ad) {
+    public LLBResult startTask(ExtAd ad, int start) {
         Map<String, String> taskMap = taskMap(ad);
+        final int now = TimeUtil.now();
+        if (start < now) {
+            start = now;
+        }
+        taskMap.put("startTime", String.valueOf(start));
         ExtPlan extPlan = ad.getPlan();
         int plan = calcPlan(extPlan.getUnitPrice(), extPlan.getTotalPrice());
         if (extPlan.getParam().getSpeed() == 0) {
-            int stopTime = TimeUtil.now() + calcDuration(plan);
+            int stopTime = now + calcDuration(plan);
             taskMap.put("endTime", String.valueOf(stopTime));
         }
         String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);

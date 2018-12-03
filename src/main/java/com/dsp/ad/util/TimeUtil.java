@@ -46,6 +46,19 @@ public class TimeUtil {
         return df.format(localDateTime);
     }
 
+    public static int getTimestamp(String[] strings) {
+        int hour = Integer.parseInt(strings[0]);
+        int minute = Integer.parseInt(strings[1]);
+        int second = Integer.parseInt(strings[2]);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.SECOND, second);
+        calendar.set(Calendar.MINUTE, minute);
+        return (int) (calendar.getTimeInMillis() / 1000);
+    }
+
     public static void main(String[] args) {
         System.out.println(day());
     }
