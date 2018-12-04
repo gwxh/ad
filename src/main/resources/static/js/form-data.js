@@ -145,6 +145,7 @@ $(function () {
         });
     }
 
+    var count = 0;
     for (var i = 1; i < 8; i++) {
         for (var j = 0; j <= 23; j++) {
             $("#day" + i + " .hour").append('<label class="checkbox-inline"><input type="checkbox" name="d' + i + '" value="' + j + '">' + j+'</label>');
@@ -155,6 +156,7 @@ $(function () {
             var d = JSON.parse(dJson);
             for (var j = 0; j < d.length; j++) {
                 $("input[name=d" + i + "][value=" + d[j] + "]").attr("checked", "checked");
+                count++;
             }
         }
         $("#d" + i + "CheckAll").click(function () {
@@ -165,5 +167,8 @@ $(function () {
                 $("[name=d" + value + "]").attr("checked", false);
             }
         });
+    }
+    if(count>0){
+        $("#time2").click();
     }
 });

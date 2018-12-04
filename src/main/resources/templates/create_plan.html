@@ -1212,87 +1212,104 @@
                         </div>
                         <div class="time">
                             <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周一</label>
-                                <div id="day1" class="col-lg-9">
-                                    <input id="d1" type="hidden" th:field="*{param.d1}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d1CheckAll" type="checkbox" name="all" value="1">全选
-                                        </label>
+                                <div class="col-lg-9">
+                                    <div class="radio">
+                                        <div class="col-lg-3">
+                                            <label><input type="radio" value="0" id="time1" name="param.time"
+                                                          checked="checked">
+                                                不限时间</label>
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <label><input type="radio" value="1" id="time2" name="param.time">
+                                                定制时间</label>
+                                        </div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周二</label>
-                                <div id="day2" class="col-lg-9">
-                                    <input id="d2" type="hidden" th:field="*{param.d2}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d2CheckAll" type="checkbox" name="all" value="2">全选
-                                        </label>
+                            <div id="timeArea" style="display:none;">
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周一</label>
+                                    <div id="day1" class="col-lg-9">
+                                        <input id="d1" type="hidden" th:field="*{param.d1}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d1CheckAll" type="checkbox" name="all" value="1">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周三</label>
-                                <div id="day3" class="col-lg-9">
-                                    <input id="d3" type="hidden" th:field="*{param.d3}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d3CheckAll" type="checkbox" name="all" value="3">全选
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周二</label>
+                                    <div id="day2" class="col-lg-9">
+                                        <input id="d2" type="hidden" th:field="*{param.d2}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d2CheckAll" type="checkbox" name="all" value="2">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周四</label>
-                                <div id="day4" class="col-lg-9">
-                                    <input id="d4" type="hidden" th:field="*{param.d4}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d4CheckAll" type="checkbox" name="all" value="4">全选
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周三</label>
+                                    <div id="day3" class="col-lg-9">
+                                        <input id="d3" type="hidden" th:field="*{param.d3}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d3CheckAll" type="checkbox" name="all" value="3">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周五</label>
-                                <div id="day5" class="col-lg-9">
-                                    <input id="d5" type="hidden" th:field="*{param.d5}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d5CheckAll" type="checkbox" name="all" value="5">全选
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周四</label>
+                                    <div id="day4" class="col-lg-9">
+                                        <input id="d4" type="hidden" th:field="*{param.d4}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d4CheckAll" type="checkbox" name="all" value="4">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周六</label>
-                                <div id="day6" class="col-lg-9">
-                                    <input id="d6" type="hidden" th:field="*{param.d6}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d6CheckAll" type="checkbox" name="all" value="6">全选
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周五</label>
+                                    <div id="day5" class="col-lg-9">
+                                        <input id="d5" type="hidden" th:field="*{param.d5}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d5CheckAll" type="checkbox" name="all" value="5">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-1 col-sm-1 control-label">周日</label>
-                                <div id="day7" class="col-lg-9">
-                                    <input id="d7" type="hidden" th:field="*{param.d7}">
-                                    <div class="input-group m-bot15">
-                                        <label class="checkbox-inline">
-                                            <input id="d7CheckAll" type="checkbox" name="all" value="7">全选
-                                        </label>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周六</label>
+                                    <div id="day6" class="col-lg-9">
+                                        <input id="d6" type="hidden" th:field="*{param.d6}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d6CheckAll" type="checkbox" name="all" value="6">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
                                     </div>
-                                    <div class="input-group m-bot15 hour"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-lg-1 col-sm-1 control-label">周日</label>
+                                    <div id="day7" class="col-lg-9">
+                                        <input id="d7" type="hidden" th:field="*{param.d7}">
+                                        <div class="input-group m-bot15">
+                                            <label class="checkbox-inline">
+                                                <input id="d7CheckAll" type="checkbox" name="all" value="7">全选
+                                            </label>
+                                        </div>
+                                        <div class="input-group m-bot15 hour"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1314,18 +1331,19 @@
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/front.js"></script>
 
-<script src="/js/form.js"></script>
-<script src="/js/form-data.js"></script>
-<script src="/js/messages_zh.min.js"></script>
-
 <script>
     $(function () {
-        var value =parseInt($("input[name='param.media']:checked").val());
+        var value = parseInt($("input[name='param.media']:checked").val());
         mediaRadioChoose(value);
 
         $("[name='param.media']").change(function () {
             value = parseInt($(this).val());
             mediaRadioChoose(value);
+        });
+
+        $("[name='param.time']").change(function () {
+            value = parseInt($(this).val());
+            timeRadioChoose(value);
         });
 
         function mediaRadioChoose(value) {
@@ -1335,8 +1353,19 @@
                 $("#media").slideUp();
             }
         }
+
+        function timeRadioChoose(value){
+            if (value > 0) {
+                $("#timeArea").slideDown();
+            } else {
+                $("#timeArea").slideUp();
+            }
+        }
     })
 </script>
+<script src="/js/form.js"></script>
+<script src="/js/form-data.js"></script>
+<script src="/js/messages_zh.min.js"></script>
 </body>
 
 </html>

@@ -53,8 +53,7 @@ remotes {
 task upgrade(dependsOn: bootJar) {
 	doLast {
 		String localFile = "build/libs/${project.name}.jar"
-		String remoteDir = "/app/upgrade"
-		String remoteFile = "${remoteDir}/${project.name}.jar.${new Date().format('yyyy-MM-dd-HHmmss')}"
+		String remoteFile = "/app/new-${project.name}.jar"
 
 		ant.checksum property: 'md5', file: localFile
 		println "local |$ant.md5  $localFile"
@@ -73,7 +72,6 @@ task upgrade(dependsOn: bootJar) {
 
 		ssh.run {
 			session(remotes.prodServer) {
-				execute "cp -f ${remoteFile} ${remoteDir}/../new-${project.name}.jar"
 				execute "/app/restart.sh"
 			}
 		}
