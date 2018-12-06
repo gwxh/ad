@@ -31,22 +31,25 @@
 <section class="hero-area">
     <div class="overlay"></div>
     <div class="container">
-        <div class="row">
+        <div class="row" style="padding-top: 130px;">
             <div class="col-md-12 ">
                 <div class="contact-h-cont">
-                    <h3 class="text-center">广告商登录</h3><br>
+                    <h3 class="text-center" style="color:#FFF;">聚力广告平台</h3><br>
                     <form th:action="@{/user/login}"  th:method="post">
                         <p th:if="${msg!=null}" th:text="|${msg}!|" style="color:#FF6C60;">登录错误</p>
                         <div class="form-group">
-                            <label for="username">用户名：</label>
-                            <input type="text" class="form-control" id="username" name="username">
+                            <input type="text" class="form-control input-text" id="username" name="username" placeholder="账号">
                         </div>
                         <div class="form-group">
-                            <label for="password">密码：</label>
-                            <input class="form-control" type="password" id="password" name="password">
+                            <input class="form-control input-text" type="password" id="password" name="password" placeholder="密码">
                         </div>
-                        <button class="btn btn-general btn-blue" role="button" type="submit"><i fa fa-right-arrow></i>登录</button>
+                        <button class="btn btn-general btn-blue" role="button" type="submit" style="width: 100%;"><i fa fa-right-arrow></i>登录</button>
                     </form>
+                    <div class="pp" style="margin-top: 20px;">
+                        <img src="/img/ppsp.png"/>
+                        <img src="/img/ppty.png" style="margin-left: 35px;"/>
+                        <img src="/img/ppzs.png" style="margin-left: 35px;"/>
+                    </div>
                 </div>
             </div>
         </div>
