@@ -12,7 +12,7 @@ spring:
     static-locations: classpath:/META-INF/resources/,\
       classpath:/resources/,classpath:/static/,classpath:/public/,file:${upload-image-path}
 
-upload-image-path: /app/upload/
+upload-image-path: /app/juli/upload/
 
 
 
