@@ -53,7 +53,7 @@ remotes {
 task upgrade(dependsOn: bootJar) {
 	doLast {
 		String localFile = "build/libs/${project.name}.jar"
-		String remoteFile = "/app/juli/new-sd.jar"
+		String remoteFile = "/app/shandian/new-sd.jar"
 
 		ant.checksum property: 'md5', file: localFile
 		println "local |$ant.md5  $localFile"
