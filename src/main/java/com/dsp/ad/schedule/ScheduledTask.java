@@ -138,7 +138,7 @@ public class ScheduledTask {
                 int randPv = rand.nextInt(6) + 1;
                 int exec = adLog.getCpc() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
-                adLog.setUserId(userId);
+                adLog.setUid(userId);
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);

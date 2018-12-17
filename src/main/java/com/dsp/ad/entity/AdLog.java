@@ -10,6 +10,8 @@ public class AdLog {
     private AdLogPrimaryKey adLogPK;
 
     @Column(nullable = false)
+    private int uid;
+    @Column(nullable = false)
     private int exec;
     @Column(nullable = false)
     private int cpc;
@@ -18,6 +20,14 @@ public class AdLog {
 
     public AdLogPrimaryKey getAdLogPK() {
         return adLogPK;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public void setAdLogPK(AdLogPrimaryKey adLogPK) {
