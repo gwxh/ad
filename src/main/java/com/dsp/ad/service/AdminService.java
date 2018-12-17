@@ -16,6 +16,8 @@ public interface AdminService {
 
     ExtUser selectUserById(int userId);
 
+    void userRecharge(ExtUser user, int amount, String note);
+
     void createUser(ExtUser user);
 
     void editUser(ExtUser user);
@@ -50,7 +52,7 @@ public interface AdminService {
 
     void deleteAd(ExtAd extAd);
 
-    LLBResult startAd(ExtAd extAd);
+    LLBResult startAd(ExtAd extAd, int start);
 
     LLBResult stopAd(ExtAd extAd);
 }

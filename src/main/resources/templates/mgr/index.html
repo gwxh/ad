@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>管理后台</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/fonts/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/mgr/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/mgr/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/mgr/ionicons.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/mgr/AdminLTE.css" rel="stylesheet" type="text/css"/>
 
@@ -40,7 +40,7 @@
                     <div class="box">
                         <div class="box-header">
                             <div class="box-tools">
-                                <button class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#createModal">
                                     <i class="fa fa-plus"></i> 新增会员
                                 </button>
                             </div>
@@ -77,6 +77,9 @@
                                         <span th:case="1" class="label label-info label-mini">活动</span>
                                     </td>
                                     <td>
+                                        <a style="cursor: pointer;"
+                                           data-toggle="modal" data-target="#rechargeModal"
+                                           th:onclick="'javascript:setUid('+${user.id}+')' ">充值</a>
                                         <a th:href="@{/mgr/editUser/{id}(id=${user.id})}">修改&nbsp;</a>
                                         <a th:href="@{/mgr/deleteUser/{id}(id=${user.id})}">删除&nbsp;</a>
                                         <a th:href="${user.status==1}?@{/mgr/disableUser/{id}(id=${user.id})}:
@@ -96,7 +99,7 @@
 
 
 <!-- 模态框（Modal） -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -119,10 +122,6 @@
                         <div class="form-group">
                             <label th:for="password">广告商密码</label>
                             <input type="password" class="form-control" th:field="*{password}">
-                        </div>
-                        <div class="form-group">
-                            <label th:for="amount">余额</label>
-                            <input class="form-control" th:field="*{amount}">
                         </div>
                         <div class="form-group">
                             <label th:for="note">备注</label>
@@ -150,19 +149,59 @@
     </div><!-- /.modal -->
 </div>
 
-<script src="/js/jquery-1.10.2.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<div class="modal fade" id="rechargeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    用户充值
+                </h4>
+            </div>
+            <form id="rechargeForm" th:action="@{/mgr/userRecharge}"
+                  th:method="post" role="form">
+                <input id="uid" name="uid" type="hidden"/>
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="amount">充值金额</label>
+                            <input id="amount" name="amount" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="rechargeNote">备注</label>
+                            <textarea id="rechargeNote" name="note" class="form-control"></textarea>
+                        </div>
+                    </div><!-- /.box-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">充值</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<script src="/js/mgr/jquery-1.10.2.min.js"></script>
+<script src="/js/mgr/bootstrap.min.js"></script>
 <script src="/js/mgr/app.js" type="text/javascript"></script>
 
 <!--data table-->
 <script type="text/javascript" src="/js/data-tables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/js/data-tables/DT_bootstrap.js"></script>
-<script src="/js/dynamic_table_init.js"></script>
+<script src="/js/data-tables/dynamic_table_init.js"></script>
 
 <!--form-->
 <script src="/js/jquery.validate.min.js"></script>
 <script src="/js/messages_zh.min.js"></script>
 <script src="/js/form.js"></script>
 <script th:replace="component/msg::msg"></script>
+
+<script>
+    function setUid(uid) {
+        $("#uid").val(uid)
+    }
+</script>
 </body>
 </html>

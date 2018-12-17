@@ -131,31 +131,31 @@ public class UserController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping("/startAd/{adId}")
-    public String startAd(RedirectAttributes attributes, @PathVariable int adId) {
-        ExtAd ad = adminService.selectAdById(adId);
-        if (ad == null) {
-            attributes.addFlashAttribute("msg", "广告不存在");
-            return PageController.REDIRECT_USER_AD;
-        }
-        ExtUser user = adminService.selectUserById(ad.getUserId());
-        if (user == null) {
-            attributes.addFlashAttribute("msg", "广告商不存在");
-            return PageController.REDIRECT_USER_AD;
-        }
-        double price = ad.getPlan().getTotalPrice();
-        if (user.getAmount() < price) {
-            attributes.addFlashAttribute("msg", "广告商余额不足");
-            return PageController.REDIRECT_USER_AD;
-        }
-        LLBResult result = adminService.startAd(ad);
-        if (result == null) {
-            attributes.addFlashAttribute("msg", "广告开启失败");
-            return PageController.REDIRECT_USER_AD;
-        }
-        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
-        return PageController.REDIRECT_USER_AD;
-    }
+    //@RequestMapping("/startAd/{adId}")
+    //public String startAd(RedirectAttributes attributes, @PathVariable int adId) {
+    //    ExtAd ad = adminService.selectAdById(adId);
+    //    if (ad == null) {
+    //        attributes.addFlashAttribute("msg", "广告不存在");
+    //        return PageController.REDIRECT_USER_AD;
+    //    }
+    //    ExtUser user = adminService.selectUserById(ad.getUserId());
+    //    if (user == null) {
+    //        attributes.addFlashAttribute("msg", "广告商不存在");
+    //        return PageController.REDIRECT_USER_AD;
+    //    }
+    //    double price = ad.getPlan().getTotalPrice();
+    //    if (user.getAmount() < price) {
+    //        attributes.addFlashAttribute("msg", "广告商余额不足");
+    //        return PageController.REDIRECT_USER_AD;
+    //    }
+    //    LLBResult result = adminService.startAd(ad,startAd());
+    //    if (result == null) {
+    //        attributes.addFlashAttribute("msg", "广告开启失败");
+    //        return PageController.REDIRECT_USER_AD;
+    //    }
+    //    attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+    //    return PageController.REDIRECT_USER_AD;
+    //}
 
     @RequestMapping("/stopAd/{adId}")
     public String stopAd(RedirectAttributes attributes, @PathVariable int adId) {

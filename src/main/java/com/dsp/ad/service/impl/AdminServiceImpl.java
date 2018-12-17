@@ -1,11 +1,13 @@
 package com.dsp.ad.service.impl;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
+import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.enums.UserEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
@@ -31,7 +33,8 @@ public class AdminServiceImpl implements AdminService {
     private PlanRepository planRepository;
     @Autowired
     private AdRepository adRepository;
-
+    @Autowired
+    private UserConsumeLogRepository userConsumeLogRepository;
     @Autowired
     private TaskService taskService;
 
@@ -42,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ExtUser> selectAllUser() {
-        List<User> users = userRepository.selectUsers();
+        List<User> users = userRepository.selectUsers(C.SID);
         return users.stream().map(ExtUser::new).collect(Collectors.toList());
     }
 
@@ -53,11 +56,24 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public void userRecharge(ExtUser user, int amount, String note) {
+        userRepository.recharge(user.getId(), amount);
+        UserConsumeLog consumeLog = new UserConsumeLog();
+        consumeLog.setUid(user.getId());
+        consumeLog.setType(UserConsumeLogEnum.Type.RECHARGE.value);
+        consumeLog.setAmount(amount);
+        consumeLog.setTime(TimeUtil.now());
+        consumeLog.setNote(note);
+        userConsumeLogRepository.save(consumeLog);
+    }
+
+    @Override
     public void createUser(ExtUser userInfo) {
         User user = new User();
         user.setUsername(userInfo.getUsername());
         String encryptPwd = MD5Util.md5(userInfo.getPassword());
         int amount = (int) (userInfo.getAmount() * 100);
+        user.setSid(C.SID);
         user.setPassword(encryptPwd);
         user.setAmount(amount);
         user.setStatus(UserEnum.Status.ENABLE.value);
@@ -127,7 +143,7 @@ public class AdminServiceImpl implements AdminService {
 
     private ExtPlan newExtPlan(Plan plan) {
         ExtPlan extPlan = new ExtPlan(plan);
-        ExtUser extUser = selectUserById(plan.getUserId());
+        ExtUser extUser = selectUserById(plan.getUid());
         extPlan.setUser(extUser);
         return extPlan;
     }
@@ -181,9 +197,9 @@ public class AdminServiceImpl implements AdminService {
 
     private ExtAd newExtAd(Ad ad) {
         ExtAd extAd = new ExtAd(ad);
-        ExtPlan extPlan = selectPlanById(ad.getPlanId());
+        ExtPlan extPlan = selectPlanById(ad.getPid());
         extAd.setPlan(extPlan);
-        ExtUser extUser = selectUserById(ad.getUserId());
+        ExtUser extUser = selectUserById(ad.getUid());
         extAd.setUser(extUser);
         return extAd;
     }
@@ -209,7 +225,7 @@ public class AdminServiceImpl implements AdminService {
                 break;
             case EDIT_CHECK:
                 Optional<Task> taskOptional = taskRepository.findById(extAd.getId());
-                if (taskOptional.isPresent() && taskOptional.get().getTaskId() > 0) {
+                if (taskOptional.isPresent() && taskOptional.get().getTid() > 0) {
                     result = taskService.modifyTask(extAd);
                 } else {
                     result = taskService.createTask(extAd);
@@ -238,8 +254,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public LLBResult startAd(ExtAd extAd) {
-        LLBResult result = taskService.startTask(extAd);
+    public LLBResult startAd(ExtAd extAd, int start) {
+        LLBResult result = taskService.startTask(extAd, start);
         if (result.isSuccess()) {
             adRepository.updateStatus(extAd.getId(), AdEnum.Status.RUNNING.value);
         }

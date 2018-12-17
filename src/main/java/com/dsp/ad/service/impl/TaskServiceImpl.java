@@ -57,12 +57,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public LLBResult startTask(ExtAd ad) {
+    public LLBResult startTask(ExtAd ad, int start) {
         Map<String, String> taskMap = taskMap(ad);
+        final int now = TimeUtil.now();
+        if (start < now) {
+            start = now;
+        }
+        taskMap.put("startTime", String.valueOf(start));
         ExtPlan extPlan = ad.getPlan();
         int plan = calcPlan(extPlan.getUnitPrice(), extPlan.getTotalPrice());
         if (extPlan.getParam().getSpeed() == 0) {
-            int stopTime = TimeUtil.now() + calcDuration(plan);
+            int stopTime = now + calcDuration(plan);
             taskMap.put("endTime", String.valueOf(stopTime));
         }
         String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);
@@ -112,7 +117,7 @@ public class TaskServiceImpl implements TaskService {
             return null;
         }
         Task task = taskOptional.get();
-        return String.valueOf(task.getTaskId());
+        return String.valueOf(task.getTid());
     }
 
     private LLBResult getResult(String result) {
@@ -132,11 +137,11 @@ public class TaskServiceImpl implements TaskService {
         LLBResult llbResult = getResult(result);
         if (llbResult != null) {
             Task task = new Task();
-            task.setAdId(ad.getId());
+            task.setAid(ad.getId());
             int plan = Integer.parseInt(taskInfoMap.get("plan"));
             task.setPlan(plan);
             task.setResult(llbResult.getStatus().getDetail());
-            task.setTaskId(llbResult.getResult().getTaskId());
+            task.setTid(llbResult.getResult().getTaskId());
             task.setStatus(TaskEnum.Status.TASK_STOP.value);
             taskRepository.save(task);
         }

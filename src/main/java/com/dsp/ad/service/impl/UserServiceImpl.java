@@ -1,18 +1,15 @@
 package com.dsp.ad.service.impl;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
-import com.dsp.ad.entity.ext.ExtAd;
-import com.dsp.ad.entity.ext.ExtAdLog;
-import com.dsp.ad.entity.ext.ExtPlan;
-import com.dsp.ad.entity.ext.ExtUser;
+import com.dsp.ad.entity.UserConsumeLog;
+import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
-import com.dsp.ad.repository.AdLogRepository;
-import com.dsp.ad.repository.AdRepository;
-import com.dsp.ad.repository.PlanRepository;
-import com.dsp.ad.repository.UserRepository;
+import com.dsp.ad.enums.UserConsumeLogEnum;
+import com.dsp.ad.repository.*;
 import com.dsp.ad.service.TaskService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.TimeUtil;
@@ -38,10 +35,12 @@ public class UserServiceImpl implements UserService {
     private PlanRepository planRepository;
     @Autowired
     private AdRepository adRepository;
+    @Autowired
+    private UserConsumeLogRepository userConsumeLogRepository;
 
     @Override
     public User selectUserByName(String username) {
-        return userRepository.selectUserByName(username);
+        return userRepository.selectUserByName(C.SID, username);
     }
 
     @Override
@@ -52,7 +51,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public int createPlan(ExtUser user, ExtPlan extPlan) {
         Plan plan = new Plan();
-        plan.setUserId(user.getId());
+        plan.setSid(C.SID);
+        plan.setUid(user.getId());
         plan.setName(extPlan.getName());
         plan.setUnitPrice((int) (extPlan.getUnitPrice() * 100));
         plan.setTotalPrice((int) (extPlan.getTotalPrice() * 100));
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Plan findPlanById(int planId,int userId) {
+    public Plan findPlanById(int planId, int userId) {
         return planRepository.selectPlan(planId, userId);
     }
 
@@ -103,8 +103,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createAd(ExtUser user, ExtAd extAd) {
         Ad ad = new Ad();
-        ad.setUserId(user.getId());
-        ad.setPlanId(extAd.getPlanId());
+        ad.setSid(C.SID);
+        ad.setUid(user.getId());
+        ad.setPid(extAd.getPlanId());
         ad.setName(extAd.getName());
         ad.setType(extAd.getType());
         ad.setUrl(extAd.getUrl());
@@ -121,7 +122,7 @@ public class UserServiceImpl implements UserService {
     public void editAd(ExtUser user, ExtAd extAd) {
         Ad ad = adRepository.selectAd(extAd.getId(), user.getId());
         ad.setName(ad.getName());
-        ad.setPlanId(extAd.getPlanId());
+        ad.setPid(extAd.getPlanId());
         ad.setName(extAd.getName());
         ad.setType(extAd.getType());
         ad.setUrl(extAd.getUrl());
@@ -146,7 +147,7 @@ public class UserServiceImpl implements UserService {
 
     private ExtAd newExtAd(Ad ad) {
         ExtAd extAd = new ExtAd(ad);
-        ExtPlan extPlan = selectPlan(ad.getPlanId(), ad.getUserId());
+        ExtPlan extPlan = selectPlan(ad.getPid(), ad.getUid());
         extAd.setPlan(extPlan);
         return extAd;
     }
@@ -200,7 +201,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ExtAdLog> selectUserConsumeLogs(int userId) {
+    public List<ExtAdLog> selectAdConsumeLogs(int userId) {
         long totalExec = 0, totalCpc = 0, totalAmount = 0;
 
         List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogs(userId);
@@ -224,5 +225,21 @@ public class UserServiceImpl implements UserService {
         extAdLogs.add(totalLog);
         Collections.reverse(extAdLogs);
         return extAdLogs;
+    }
+
+    @Override
+    public List<ExtConsumeLog> selectUserConsumeLogs(int uid) {
+        List<UserConsumeLog> logs = userConsumeLogRepository.findByUid(uid);
+        List<ExtConsumeLog> extLogs = new ArrayList<>();
+        for (UserConsumeLog log : logs) {
+            ExtConsumeLog extLog = new ExtConsumeLog();
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
+            extLog.setDate(TimeUtil.toDate(localDateTime, "yyyy-MM-dd hh:mm:ss"));
+            extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
+            extLog.setAmount(log.getAmount() / 100d);
+            extLog.setNote(log.getNote());
+            extLogs.add(extLog);
+        }
+        return extLogs;
     }
 }
