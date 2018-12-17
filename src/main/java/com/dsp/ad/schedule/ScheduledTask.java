@@ -1,5 +1,6 @@
 package com.dsp.ad.schedule;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
@@ -49,7 +50,7 @@ public class ScheduledTask {
     @Scheduled(cron = "59 * * * * ?")
     private void calcUserConsume() {
         int today = TimeUtil.day();
-        List<Ad> ads = adRepository.selectAdsByStartStatus();
+        List<Ad> ads = adRepository.selectAdsByStartStatus(C.SID);
         if (!ads.isEmpty()) {
             log.info("获取到{}条任务", ads.size());
         }

@@ -12,11 +12,11 @@ import java.util.List;
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Integer> {
 
-    @Query("from Ad a where a.status in (1,2) order by a.id desc")
-    List<Ad> selectAllAds();
+    @Query("from Ad a where a.sid=?1 and a.status in (1,2) order by a.id desc")
+    List<Ad> selectAllAds(int sid);
 
-    @Query("from Ad a where a.status not in (1,2,5) order by a.id desc")
-    List<Ad> selectAllAuditAds();
+    @Query("from Ad a where a.sid=?1 and a.status not in (1,2,5) order by a.id desc")
+    List<Ad> selectAllAuditAds(int sid);
 
     @Query("from Ad a where a.uid=?1 and a.status<>5 order by a.id desc")
     List<Ad> selectAds(int uid);
@@ -32,6 +32,6 @@ public interface AdRepository extends JpaRepository<Ad, Integer> {
     @Query("from Ad a where a.pid=?1")
     List<Ad> selectAdsByPlan(int pid);
 
-    @Query("from Ad a where a.status =2")
-    List<Ad> selectAdsByStartStatus();
+    @Query("from Ad a where a.sid=?1 and a.status =2")
+    List<Ad> selectAdsByStartStatus(int sid);
 }
