@@ -12,11 +12,11 @@ import java.util.List;
 @Repository
 public interface PlanRepository extends JpaRepository<Plan, Integer> {
 
-    @Query("from Plan p where p.status=1 order by p.id desc")
-    List<Plan> selectAllPlans();
+    @Query("from Plan p where p.sid=?1 and p.status=1 order by p.id desc")
+    List<Plan> selectAllPlans(int sid);
 
-    @Query("from Plan p where p.status not in (1,4) order by p.id desc")
-    List<Plan> selectAllAuditPlans();
+    @Query("from Plan p where p.sid=?1 and p.status not in (1,4) order by p.id desc")
+    List<Plan> selectAllAuditPlans(int sid);
 
     @Query("from Plan p where p.uid=?1 and p.status <>4 order by p.id desc")
     List<Plan> selectPlans(int uid);

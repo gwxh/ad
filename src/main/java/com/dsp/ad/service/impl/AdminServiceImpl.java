@@ -131,13 +131,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ExtPlan> selectAllPlans() {
-        List<Plan> plans = planRepository.selectAllPlans();
+        List<Plan> plans = planRepository.selectAllPlans(C.SID);
         return plans.stream().map(this::newExtPlan).collect(Collectors.toList());
     }
 
     @Override
     public List<ExtPlan> selectAllAuditPlans() {
-        List<Plan> plans = planRepository.selectAllAuditPlans();
+        List<Plan> plans = planRepository.selectAllAuditPlans(C.SID);
         return plans.stream().map(this::newExtPlan).collect(Collectors.toList());
     }
 
@@ -185,13 +185,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ExtAd> selectAllAds() {
-        List<Ad> ads = adRepository.selectAllAds();
+        List<Ad> ads = adRepository.selectAllAds(C.SID);
         return ads.stream().map(this::newExtAd).collect(Collectors.toList());
     }
 
     @Override
     public List<ExtAd> selectAllAuditAds() {
-        List<Ad> ads = adRepository.selectAllAuditAds();
+        List<Ad> ads = adRepository.selectAllAuditAds(C.SID);
         return ads.stream().map(this::newExtAd).collect(Collectors.toList());
     }
 
