@@ -201,7 +201,7 @@ public class PageController {
     @RequestMapping("/mgr/ads")
     public String toMgrAdsPage(Model model, @ModelAttribute("msg") String msg) {
         List<ExtAd> extAds = adminService.selectAllAds();
-        model.addAttribute("ads", extAds);
+         model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
         return "mgr/ads";
     }

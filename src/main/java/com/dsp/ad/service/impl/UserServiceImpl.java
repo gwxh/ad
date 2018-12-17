@@ -1,5 +1,6 @@
 package com.dsp.ad.service.impl;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Plan;
 import com.dsp.ad.entity.User;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User selectUserByName(String username) {
-        return userRepository.selectUserByName(username);
+        return userRepository.selectUserByName(C.SID, username);
     }
 
     @Override
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int createPlan(ExtUser user, ExtPlan extPlan) {
         Plan plan = new Plan();
+        plan.setSid(C.SID);
         plan.setUid(user.getId());
         plan.setName(extPlan.getName());
         plan.setUnitPrice((int) (extPlan.getUnitPrice() * 100));
@@ -68,7 +70,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Plan findPlanById(int planId,int userId) {
+    public Plan findPlanById(int planId, int userId) {
         return planRepository.selectPlan(planId, userId);
     }
 
@@ -101,6 +103,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createAd(ExtUser user, ExtAd extAd) {
         Ad ad = new Ad();
+        ad.setSid(C.SID);
         ad.setUid(user.getId());
         ad.setPid(extAd.getPlanId());
         ad.setName(extAd.getName());
@@ -233,7 +236,7 @@ public class UserServiceImpl implements UserService {
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
             extLog.setDate(TimeUtil.toDate(localDateTime, "yyyy-MM-dd hh:mm:ss"));
             extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
-            extLog.setAmount(log.getAmount()/100d);
+            extLog.setAmount(log.getAmount() / 100d);
             extLog.setNote(log.getNote());
             extLogs.add(extLog);
         }

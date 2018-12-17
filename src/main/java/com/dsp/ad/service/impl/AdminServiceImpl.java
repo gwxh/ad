@@ -1,5 +1,6 @@
 package com.dsp.ad.service.impl;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
@@ -44,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<ExtUser> selectAllUser() {
-        List<User> users = userRepository.selectUsers();
+        List<User> users = userRepository.selectUsers(C.SID);
         return users.stream().map(ExtUser::new).collect(Collectors.toList());
     }
 
@@ -72,6 +73,7 @@ public class AdminServiceImpl implements AdminService {
         user.setUsername(userInfo.getUsername());
         String encryptPwd = MD5Util.md5(userInfo.getPassword());
         int amount = (int) (userInfo.getAmount() * 100);
+        user.setSid(C.SID);
         user.setPassword(encryptPwd);
         user.setAmount(amount);
         user.setStatus(UserEnum.Status.ENABLE.value);
@@ -197,7 +199,7 @@ public class AdminServiceImpl implements AdminService {
         ExtAd extAd = new ExtAd(ad);
         ExtPlan extPlan = selectPlanById(ad.getPid());
         extAd.setPlan(extPlan);
-        ExtUser extUser = selectUserById(ad.getPid());
+        ExtUser extUser = selectUserById(ad.getUid());
         extAd.setUser(extUser);
         return extAd;
     }

@@ -28,3 +28,6 @@ CHANGE COLUMN `ad_id` `aid` int(11) NOT NULL FIRST,
 CHANGE COLUMN `task_id` `tid` int(10) NOT NULL AFTER `aid`,
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`aid`) USING BTREE;
+
+ALTER TABLE `ad`.`ad_log`
+ADD COLUMN `uid` int(11) NOT NULL AFTER `aid`;

@@ -2931,7 +2931,7 @@ Component: timeline
 .skin-blue .sidebar > .sidebar-menu > li > a:hover,
 .skin-blue .sidebar > .sidebar-menu > li.active > a {
     color: #222;
-    background: #f9f9f9;
+    background: #fff;
 }
 
 .skin-blue .sidebar > .sidebar-menu > li > .treeview-menu {

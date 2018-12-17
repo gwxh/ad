@@ -1,6 +1,9 @@
 package com.dsp.ad.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="ad_log")
@@ -8,6 +11,9 @@ public class AdLog {
 
     @EmbeddedId
     private AdLogPrimaryKey adLogPK;
+
+    @Column(nullable = false)
+    private int uid;
 
     @Column(nullable = false)
     private int exec;
@@ -18,6 +24,14 @@ public class AdLog {
 
     public AdLogPrimaryKey getAdLogPK() {
         return adLogPK;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public void setAdLogPK(AdLogPrimaryKey adLogPK) {
