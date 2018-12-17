@@ -6,9 +6,9 @@ import javax.persistence.*;
 public class Task {
 
     @Id
-    private int adId;
+    private int aid;
     @Column(nullable = false)
-    private long taskId;
+    private long tid;
     @Column(nullable = false)
     private int plan;
     @Column(nullable = false)
@@ -16,12 +16,20 @@ public class Task {
     @Column(nullable = false)
     private String result;
 
-    public long getTaskId() {
-        return taskId;
+    public int getAid() {
+        return aid;
     }
 
-    public void setTaskId(long taskId) {
-        this.taskId = taskId;
+    public void setAid(int aid) {
+        this.aid = aid;
+    }
+
+    public long getTid() {
+        return tid;
+    }
+
+    public void setTid(long tid) {
+        this.tid = tid;
     }
 
     public int getPlan() {
@@ -30,14 +38,6 @@ public class Task {
 
     public void setPlan(int plan) {
         this.plan = plan;
-    }
-
-    public int getAdId() {
-        return adId;
-    }
-
-    public void setAdId(int adId) {
-        this.adId = adId;
     }
 
     public String getResult() {

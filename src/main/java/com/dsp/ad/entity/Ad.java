@@ -11,8 +11,9 @@ public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
-    private int planId;
+    private int sid;
+    private int uid;
+    private int pid;
     private String name;
     private int type;
     private String url;
@@ -29,20 +30,28 @@ public class Ad {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getSid() {
+        return sid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
-    public int getPlanId() {
-        return planId;
+    public int getUid() {
+        return uid;
     }
 
-    public void setPlanId(int planId) {
-        this.planId = planId;
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     public String getName() {

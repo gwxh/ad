@@ -1,0 +1,30 @@
+ALTER TABLE `ad`.`user`
+ADD COLUMN `sid` int(11) NOT NULL AFTER `id`;
+
+ALTER TABLE `ad`.`plan`
+ADD COLUMN `sid` int(11) NOT NULL AFTER `id`,
+CHANGE COLUMN `user_id` `uid` int(11) NOT NULL AFTER `sid`;
+
+ALTER TABLE `ad`.`plan_log`
+CHANGE COLUMN `record_time` `day` int(11) NOT NULL FIRST,
+CHANGE COLUMN `plan_id` `pid` int(11) NOT NULL AFTER `day`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`day`, `pid`) USING BTREE;
+
+ALTER TABLE `ad`.`ad`
+ADD COLUMN `sid` int(11) NOT NULL AFTER `id`,
+CHANGE COLUMN `user_id` `uid` int(11) NOT NULL AFTER `sid`,
+CHANGE COLUMN `plan_id` `pid` int(11) NOT NULL AFTER `uid`;
+
+ALTER TABLE `ad`.`ad_log`
+DROP COLUMN `user_id`,
+CHANGE COLUMN `record_time` `day` int(11) NOT NULL FIRST,
+CHANGE COLUMN `ad_id` `aid` int(11) NOT NULL AFTER `day`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`day`, `aid`) USING BTREE;
+
+ALTER TABLE `ad`.`task`
+CHANGE COLUMN `ad_id` `aid` int(11) NOT NULL FIRST,
+CHANGE COLUMN `task_id` `tid` int(10) NOT NULL AFTER `aid`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`aid`) USING BTREE;

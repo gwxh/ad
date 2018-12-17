@@ -35,8 +35,8 @@ public class ExtAd {
 
     public ExtAd(Ad ad) {
         this.id = ad.getId();
-        this.userId = ad.getUserId();
-        this.planId = ad.getPlanId();
+        this.userId = ad.getUid();
+        this.planId = ad.getPid();
         this.name = ad.getName();
         this.type = ad.getType();
         this.url = ad.getUrl();

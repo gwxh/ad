@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int createPlan(ExtUser user, ExtPlan extPlan) {
         Plan plan = new Plan();
-        plan.setUserId(user.getId());
+        plan.setUid(user.getId());
         plan.setName(extPlan.getName());
         plan.setUnitPrice((int) (extPlan.getUnitPrice() * 100));
         plan.setTotalPrice((int) (extPlan.getTotalPrice() * 100));
@@ -101,8 +101,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createAd(ExtUser user, ExtAd extAd) {
         Ad ad = new Ad();
-        ad.setUserId(user.getId());
-        ad.setPlanId(extAd.getPlanId());
+        ad.setUid(user.getId());
+        ad.setPid(extAd.getPlanId());
         ad.setName(extAd.getName());
         ad.setType(extAd.getType());
         ad.setUrl(extAd.getUrl());
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     public void editAd(ExtUser user, ExtAd extAd) {
         Ad ad = adRepository.selectAd(extAd.getId(), user.getId());
         ad.setName(ad.getName());
-        ad.setPlanId(extAd.getPlanId());
+        ad.setPid(extAd.getPlanId());
         ad.setName(extAd.getName());
         ad.setType(extAd.getType());
         ad.setUrl(extAd.getUrl());
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 
     private ExtAd newExtAd(Ad ad) {
         ExtAd extAd = new ExtAd(ad);
-        ExtPlan extPlan = selectPlan(ad.getPlanId(), ad.getUserId());
+        ExtPlan extPlan = selectPlan(ad.getPid(), ad.getUid());
         extAd.setPlan(extPlan);
         return extAd;
     }

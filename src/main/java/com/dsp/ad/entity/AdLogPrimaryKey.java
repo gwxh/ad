@@ -6,31 +6,27 @@ import java.io.Serializable;
 @Embeddable
 public class AdLogPrimaryKey implements Serializable {
 
-    private Integer recordTime;
-    private Integer adId;
+    private Integer day;
+    private Integer aid;
 
-    public AdLogPrimaryKey(Integer recordTime, Integer adId) {
-        this.recordTime = recordTime;
-        this.adId = adId;
+    public AdLogPrimaryKey(Integer day, Integer aid) {
+        this.day = day;
+        this.aid = aid;
     }
 
-    public AdLogPrimaryKey() {
-
+    public Integer getDay() {
+        return day;
     }
 
-    public Integer getRecordTime() {
-        return recordTime;
+    public void setDay(Integer day) {
+        this.day = day;
     }
 
-    public void setRecordTime(Integer recordTime) {
-        this.recordTime = recordTime;
+    public Integer getAid() {
+        return aid;
     }
 
-    public Integer getAdId() {
-        return adId;
-    }
-
-    public void setAdId(Integer adId) {
-        this.adId = adId;
+    public void setAid(Integer aid) {
+        this.aid = aid;
     }
 }

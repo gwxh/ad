@@ -1,3 +1,5 @@
+server:
+  port: 8000
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -11,8 +13,8 @@ spring:
   resources:
     static-locations: classpath:/META-INF/resources/,\
       classpath:/resources/,classpath:/static/,classpath:/public/,file:${upload-image-path}
-
 upload-image-path: /app/juli/upload/
+
 
 
 

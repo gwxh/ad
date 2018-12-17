@@ -6,31 +6,27 @@ import java.io.Serializable;
 @Embeddable
 public class PlanLogPrimaryKey implements Serializable {
 
-    private Integer recordTime;
-    private Integer planId;
+    private Integer day;
+    private Integer pid;
 
-    public PlanLogPrimaryKey() {
+    public PlanLogPrimaryKey(Integer day, Integer pid) {
+        this.day = day;
+        this.pid = pid;
     }
 
-    public PlanLogPrimaryKey(Integer recordTime, Integer planId) {
-
-        this.recordTime = recordTime;
-        this.planId = planId;
+    public Integer getDay() {
+        return day;
     }
 
-    public Integer getRecordTime() {
-        return recordTime;
+    public void setDay(Integer day) {
+        this.day = day;
     }
 
-    public void setRecordTime(Integer recordTime) {
-        this.recordTime = recordTime;
+    public Integer getPid() {
+        return pid;
     }
 
-    public Integer getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(Integer planId) {
-        this.planId = planId;
+    public void setPid(Integer pid) {
+        this.pid = pid;
     }
 }

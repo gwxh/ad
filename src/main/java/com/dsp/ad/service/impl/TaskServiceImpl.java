@@ -117,7 +117,7 @@ public class TaskServiceImpl implements TaskService {
             return null;
         }
         Task task = taskOptional.get();
-        return String.valueOf(task.getTaskId());
+        return String.valueOf(task.getTid());
     }
 
     private LLBResult getResult(String result) {
@@ -137,11 +137,11 @@ public class TaskServiceImpl implements TaskService {
         LLBResult llbResult = getResult(result);
         if (llbResult != null) {
             Task task = new Task();
-            task.setAdId(ad.getId());
+            task.setAid(ad.getId());
             int plan = Integer.parseInt(taskInfoMap.get("plan"));
             task.setPlan(plan);
             task.setResult(llbResult.getStatus().getDetail());
-            task.setTaskId(llbResult.getResult().getTaskId());
+            task.setTid(llbResult.getResult().getTaskId());
             task.setStatus(TaskEnum.Status.TASK_STOP.value);
             taskRepository.save(task);
         }

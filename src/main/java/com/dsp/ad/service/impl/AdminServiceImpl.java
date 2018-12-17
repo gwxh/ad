@@ -141,7 +141,7 @@ public class AdminServiceImpl implements AdminService {
 
     private ExtPlan newExtPlan(Plan plan) {
         ExtPlan extPlan = new ExtPlan(plan);
-        ExtUser extUser = selectUserById(plan.getUserId());
+        ExtUser extUser = selectUserById(plan.getUid());
         extPlan.setUser(extUser);
         return extPlan;
     }
@@ -195,9 +195,9 @@ public class AdminServiceImpl implements AdminService {
 
     private ExtAd newExtAd(Ad ad) {
         ExtAd extAd = new ExtAd(ad);
-        ExtPlan extPlan = selectPlanById(ad.getPlanId());
+        ExtPlan extPlan = selectPlanById(ad.getPid());
         extAd.setPlan(extPlan);
-        ExtUser extUser = selectUserById(ad.getUserId());
+        ExtUser extUser = selectUserById(ad.getPid());
         extAd.setUser(extUser);
         return extAd;
     }
@@ -223,7 +223,7 @@ public class AdminServiceImpl implements AdminService {
                 break;
             case EDIT_CHECK:
                 Optional<Task> taskOptional = taskRepository.findById(extAd.getId());
-                if (taskOptional.isPresent() && taskOptional.get().getTaskId() > 0) {
+                if (taskOptional.isPresent() && taskOptional.get().getTid() > 0) {
                     result = taskService.modifyTask(extAd);
                 } else {
                     result = taskService.createTask(extAd);

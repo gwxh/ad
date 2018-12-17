@@ -25,7 +25,7 @@ public class ExtPlan {
         this.totalPrice = plan.getTotalPrice() / 100d;
         this.status = plan.getStatus();
         this.param = PlanParam.fromJson(plan.getParam());
-        this.userId = plan.getUserId();
+        this.userId = plan.getUid();
     }
 
     public int getId() {

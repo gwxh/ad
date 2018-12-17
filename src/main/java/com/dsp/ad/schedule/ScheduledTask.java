@@ -135,11 +135,9 @@ public class ScheduledTask {
                 }
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
-                Random rand = new Random();
                 int randPv = (int) ((Math.random()*21)+10);
                 int exec = adLog.getCpc() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
-                adLog.setUserId(userId);
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
@@ -171,13 +169,14 @@ public class ScheduledTask {
         for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(ad);
             needStopTask(extAd);
-            ExtPlan extPlan = adminService.selectPlanById(ad.getPlanId());
+            ExtPlan extPlan = adminService.selectPlanById(ad.getPid());
             extAd.setPlan(extPlan);
-            List<ExtAd> extAds = userAdsMap.get(ad.getUserId());
+            int uid = ad.getUid();
+            List<ExtAd> extAds = userAdsMap.get(uid);
             if (extAds == null) {
                 extAds = new ArrayList<>();
             }
-            userAdsMap.put(ad.getUserId(), extAds);
+            userAdsMap.put(uid, extAds);
             extAds.add(extAd);
         }
         if (!userAdsMap.isEmpty()) {
