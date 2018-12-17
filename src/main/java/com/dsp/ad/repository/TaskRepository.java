@@ -12,6 +12,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     @Transactional
     @Modifying
-    @Query("update Task t set t.status=?2 where t.adId=?1")
-    int updateStatus(int adId, int status);
+    @Query("update Task t set t.status=?2 where t.aid=?1")
+    int updateStatus(int aid, int status);
 }

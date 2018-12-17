@@ -8,7 +8,8 @@ public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int userId;
+    private int sid;
+    private int uid;
     private String name;
     private int unitPrice;
     private int totalPrice;
@@ -25,12 +26,20 @@ public class Plan {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getSid() {
+        return sid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public String getName() {

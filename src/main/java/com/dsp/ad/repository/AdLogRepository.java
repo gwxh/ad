@@ -12,12 +12,12 @@ import java.util.List;
 @Repository
 public interface AdLogRepository extends JpaRepository<AdLog, AdLogPrimaryKey> {
 
-    @Query("select sum(a.amount) from AdLog a where a.adLogPK.recordTime = ?1 and a.userId=?2")
-    Integer selectUserAdsLogByDay(int day, int userId);
+    @Query("select sum(a.amount) from AdLog a where a.adLogPK.day = ?1 and a.uid=?2")
+    Integer selectUserAdsLogByDay(int day, int uid);
 
-    @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.adLogPK.recordTime,sum(a.exec),sum(a.cpc),sum(a.amount)) from AdLog a where a.adLogPK.recordTime >= ?1 and a.adLogPK.recordTime<?2 and a.userId=?3 group by a.adLogPK.recordTime")
-    List<ExtAdLog> selectUserAdsLogByMonth(int startDay, int endDay, int userId);
+    @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.adLogPK.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from AdLog a where a.adLogPK.day >= ?1 and a.adLogPK.day<?2 and a.uid=?3 group by a.adLogPK.day")
+    List<ExtAdLog> selectUserAdsLogByMonth(int startDay, int endDay, int uid);
 
-    @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.adLogPK.recordTime,sum(a.exec),sum(a.cpc),sum(a.amount)) from AdLog a where a.userId=?1 group by a.adLogPK.recordTime order by a.adLogPK.recordTime desc")
-    List<ExtAdLog> selectUserAdsLogs(int userId);
+    @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.adLogPK.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from AdLog a where a.uid=?1 group by a.adLogPK.day order by a.adLogPK.day desc")
+    List<ExtAdLog> selectUserAdsLogs(int uid);
 }

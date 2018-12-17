@@ -9,9 +9,6 @@ public class AdLog {
     @EmbeddedId
     private AdLogPrimaryKey adLogPK;
 
-    @Column
-    private int userId;
-
     @Column(nullable = false)
     private int exec;
     @Column(nullable = false)
@@ -21,14 +18,6 @@ public class AdLog {
 
     public AdLogPrimaryKey getAdLogPK() {
         return adLogPK;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public void setAdLogPK(AdLogPrimaryKey adLogPK) {
