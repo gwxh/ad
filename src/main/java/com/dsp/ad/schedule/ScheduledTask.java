@@ -6,6 +6,7 @@ import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.TaskEnum;
+import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.TaskService;
@@ -134,11 +135,9 @@ public class ScheduledTask {
                 }
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
-                Random rand = new Random();
-                int randPv = rand.nextInt(6) + 1;
+                int randPv = (int) ((Math.random()*21)+10);
                 int exec = adLog.getCpc() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
-                adLog.setUid(userId);
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
@@ -155,12 +154,12 @@ public class ScheduledTask {
                 log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
             }
             userRepository.consume(userId, userAdsConsume);
-            UserConsumeLogPrimaryKey userConsumeLogPK = new UserConsumeLogPrimaryKey(today, userId);
-            Optional<UserConsumeLog> optionalConsumeLog = userConsumeLogRepository.findById(userConsumeLogPK);
-            UserConsumeLog consumeLog = optionalConsumeLog.orElseGet(UserConsumeLog::new);
-            int userConsume = consumeLog.getAmount() + userAdsConsume;
-            consumeLog.setUserConsumeLogPK(userConsumeLogPK);
-            consumeLog.setAmount(userConsume);
+
+            UserConsumeLog consumeLog = new UserConsumeLog();
+            consumeLog.setUid(userId);
+            consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
+            consumeLog.setAmount(-userAdsConsume);
+            consumeLog.setTime(TimeUtil.now());
             userConsumeLogRepository.save(consumeLog);
         }
     }
@@ -170,13 +169,14 @@ public class ScheduledTask {
         for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(ad);
             needStopTask(extAd);
-            ExtPlan extPlan = adminService.selectPlanById(ad.getPlanId());
+            ExtPlan extPlan = adminService.selectPlanById(ad.getPid());
             extAd.setPlan(extPlan);
-            List<ExtAd> extAds = userAdsMap.get(ad.getUserId());
+            int uid = ad.getUid();
+            List<ExtAd> extAds = userAdsMap.get(uid);
             if (extAds == null) {
                 extAds = new ArrayList<>();
             }
-            userAdsMap.put(ad.getUserId(), extAds);
+            userAdsMap.put(uid, extAds);
             extAds.add(extAd);
         }
         if (!userAdsMap.isEmpty()) {
