@@ -1,9 +1,11 @@
 package com.dsp.ad.controller;
 
+import com.dsp.ad.entity.AdTypeEntity;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.service.AdminService;
+import com.dsp.ad.service.SiteService;
 import com.dsp.ad.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +39,8 @@ public class PageController {
     private UserService userService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private SiteService siteService;
 
     @RequestMapping("/")
     public String index(Model model, @SessionAttribute ExtUser user) throws JsonProcessingException {
@@ -143,6 +147,8 @@ public class PageController {
             types.put(type.value, type.text);
         }
         model.addAttribute("types", types);
+        final List<AdTypeEntity> adTypeList = siteService.queryAdTypeList();
+        model.addAttribute("adTypeList", adTypeList);
     }
 
 
@@ -215,5 +221,10 @@ public class PageController {
         model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
         return "mgr/audit_ads";
+    }
+
+    @RequestMapping("/mgr/setting")
+    public String toMgrSettingPage(Model model) {
+        return "mgr/setting";
     }
 }

@@ -2,10 +2,7 @@ package com.dsp.ad.entity.ext;
 
 import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.subentity.AdParam;
-import com.dsp.ad.enums.AdEnum;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Objects;
 
 public class ExtAd {
 
@@ -42,7 +39,6 @@ public class ExtAd {
         this.url = ad.getUrl();
         this.param = AdParam.fromJson(ad.getParam());
         this.status = ad.getStatus();
-        this.typeName = Objects.requireNonNull(AdEnum.Type.valueOf(type)).text;
     }
 
     public int getId() {

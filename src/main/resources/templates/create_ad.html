@@ -73,18 +73,18 @@
                 <div class="form-group row">
                     <label class="col-form-label">广告类型</label>
                     <div class="col-lg-6">
-                        <select id="type" class="form-control" th:field="*{type}">
+                        <select id="type" class="form-control" th:field="*{param.type}">
                             <option value="0">请选择广告类型</option>
-                            <option th:each="type : ${types}" th:value="${type.key}"
-                                    th:text="${type.value}"></option>
+                            <option th:each="type : ${adTypeList}" th:value="${type.id}"
+                                    th:text="${type.name}"></option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-form-label">尺寸模板</label>
                     <div class="col-lg-6">
-                        <select id="size" class="form-control" th:field="*{param.size}">
-                            <option value="">请选择尺寸模板</option>
+                        <select id="size" class="form-control" th:field="*{param.imgSize}">
+                            <option value="0">请选择尺寸模板</option>
                         </select>
                     </div>
                 </div>
@@ -113,36 +113,41 @@
 <script src="/js/form.js"></script>
 <script src="/js/messages_zh.min.js"></script>
 
-<script>
+<script th:inline="javascript">
     $(function () {
         var typeSelectEle = $("#type");
-        var value = parseInt(typeSelectEle.val());
-        if (value > 0) {
-            chooseSelect(value)
-        }
+        initSizeSelect(typeSelectEle)
         typeSelectEle.change(function () {
-            value = parseInt($(this).val());
-            chooseSelect(value);
+            initSizeSelect(typeSelectEle)
         });
 
-        function chooseSelect(value) {
-            var sizeSelectEle = $("#size").empty();
-            switch (value) {
-                case 1:
-                    sizeSelectEle.append("<option value='750*750'>图片-750*750</option>");
-                    break;
-                case 2:
-                    sizeSelectEle.append("<option value='640*100'>图片-640*100</option>");
-                    break;
-                case 3:
-                    sizeSelectEle.append("<option value='720*1280'>图片-720*1280</option>");
-                    break;
-                default:
-                    sizeSelectEle.append("<option>请选择尺寸模板</option>");
-                    break;
+        function initSizeSelect(typeSelectEle) {
+            var value = parseInt(typeSelectEle.val());
+            if (value > 0) {
+                $.ajax({
+                    cache: true,
+                    type: "post",
+                    url: "/site/queryAdImgSizeList",
+                    data: {"type": value},
+                    success: function (data) {
+                        $("#size").empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $("#size").append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
+                        }
+                    },
+                    error: function () {
+                        alert("获取数据失败，请重新刷新！");
+                    }
+                })
+            } else {
+                resetSizeSelect()
             }
         }
-    });
+
+        function resetSizeSelect() {
+            $("#size").empty().append("<option>请选择尺寸模板</option>");
+        }
+    })
 </script>
 
 </body>

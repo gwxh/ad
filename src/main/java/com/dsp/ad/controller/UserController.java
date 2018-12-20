@@ -115,6 +115,7 @@ public class UserController {
             return pageController.toCreateAd(model, user, ad.getPlanId());
         }
         ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
+        ad.setType(ad.getParam().getType());
         userService.createAd(user, ad);
         return PageController.REDIRECT_USER_AD;
     }
@@ -124,6 +125,7 @@ public class UserController {
         if (!StringUtils.isEmpty(ad.getImageFile().getOriginalFilename())) {
             ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
         }
+        ad.setType(ad.getParam().getType());
         userService.editAd(user, ad);
         return PageController.REDIRECT_USER_AD;
     }

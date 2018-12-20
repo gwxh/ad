@@ -15,7 +15,10 @@ public class AdParam {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Logger LOGGER = LoggerFactory.getLogger(AdParam.class);
 
+    private int type;
     private String image;
+    private int imgSize;
+    @Deprecated
     private String size;
 
     public static AdParam fromJson(String json) {
@@ -44,6 +47,22 @@ public class AdParam {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getImgSize() {
+        return imgSize;
+    }
+
+    public void setImgSize(int imgSize) {
+        this.imgSize = imgSize;
     }
 
     public String getSize() {

@@ -5,7 +5,7 @@
 <aside class="left-side sidebar-offcanvas">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <!-- sidebar menu: : style can be fo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            und in sidebar.less -->
         <ul class="sidebar-menu">
             <li th:class="${flag=='user'?'active':''}">
                 <a href="/mgr/">
@@ -35,6 +35,12 @@
                 <a href="/mgr/audit_ads">
                     <i class="fa fa-bookmark"></i>
                     <span>待审广告</span>
+                </a>
+            </li>
+            <li th:class="${flag=='setting'?'active':''}">
+                <a href="/mgr/setting">
+                    <i class="fa fa-gear"></i>
+                    <span>网站设置</span>
                 </a>
             </li>
         </ul>
