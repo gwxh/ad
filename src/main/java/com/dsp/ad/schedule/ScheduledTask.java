@@ -153,16 +153,15 @@ public class ScheduledTask {
             }
             if (userAdsConsume > 0) {
                 log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
+                userRepository.consume(userId, userAdsConsume);
+                UserConsumeLog consumeLog = new UserConsumeLog();
+                consumeLog.setUid(userId);
+                consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
+                consumeLog.setAmount(-userAdsConsume);
+                consumeLog.setTime(TimeUtil.now());
+                consumeLog.setNote("");
+                userConsumeLogRepository.save(consumeLog);
             }
-            userRepository.consume(userId, userAdsConsume);
-
-            UserConsumeLog consumeLog = new UserConsumeLog();
-            consumeLog.setUid(userId);
-            consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
-            consumeLog.setAmount(-userAdsConsume);
-            consumeLog.setTime(TimeUtil.now());
-            consumeLog.setNote("");
-            userConsumeLogRepository.save(consumeLog);
         }
     }
 
