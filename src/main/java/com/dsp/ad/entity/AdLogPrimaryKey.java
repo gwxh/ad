@@ -29,4 +29,8 @@ public class AdLogPrimaryKey implements Serializable {
     public void setAid(Integer aid) {
         this.aid = aid;
     }
+
+    public AdLogPrimaryKey(){
+
+    }
 }

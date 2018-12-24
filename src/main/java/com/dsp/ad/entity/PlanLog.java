@@ -35,7 +35,6 @@ public class PlanLog {
     }
 
     public PlanLogPrimaryKey getPlanLogPk() {
-
         return planLogPk;
     }
 
