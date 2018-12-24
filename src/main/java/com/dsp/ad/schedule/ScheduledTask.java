@@ -136,7 +136,7 @@ public class ScheduledTask {
                 }
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
-                int randPv = (int) ((Math.random()*21)+10);
+                int randPv = (int) ((Math.random() * 21) + 10);
                 int exec = adLog.getCpc() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
                 adLog.setExec(exec);
@@ -161,6 +161,7 @@ public class ScheduledTask {
             consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
             consumeLog.setAmount(-userAdsConsume);
             consumeLog.setTime(TimeUtil.now());
+            consumeLog.setNote("");
             userConsumeLogRepository.save(consumeLog);
         }
     }
