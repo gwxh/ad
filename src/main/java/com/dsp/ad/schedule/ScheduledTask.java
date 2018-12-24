@@ -32,8 +32,6 @@ public class ScheduledTask {
     private AdminService adminService;
 
     @Autowired
-    private PlanRepository planRepository;
-    @Autowired
     private AdRepository adRepository;
     @Autowired
     private UserConsumeLogRepository userConsumeLogRepository;
