@@ -2,6 +2,7 @@ package com.dsp.ad.service;
 
 import com.dsp.ad.entity.AdImgSizeEntity;
 import com.dsp.ad.entity.AdTypeEntity;
+import com.dsp.ad.entity.ext.ExtAdImgSize;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public interface SiteService {
 
     List<AdTypeEntity> queryAdTypeList();
+
+    List<ExtAdImgSize> queryAdImgSizeList();
 
     List<AdImgSizeEntity> queryAdImgSizeList(int type);
 }

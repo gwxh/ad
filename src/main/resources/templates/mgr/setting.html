@@ -34,6 +34,81 @@
 
         <!-- Main content -->
         <section class="content">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="box-tools">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#addTypeModal">
+                                    <i class="fa fa-plus"></i> 新增广告类型
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-hover general-table">
+                                <thead>
+                                <tr>
+                                    <th>广告类型</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="type : ${adTypeList}">
+                                    <td th:text="${type.name}"></td>
+                                    <td>
+                                        <a th:href="@{/mgr/editUser/{id}(id=${type.id})}">修改&nbsp;</a>
+                                        <a th:href="@{/mgr/deleteUser/{id}(id=${type.id})}">删除&nbsp;</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="addTypeModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="box-tools">
+
+                                <button class="btn btn-info" data-toggle="modal" data-target="#addSizeModal">
+                                    <i class="fa fa-plus"></i> 新增尺寸模板
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-hover general-table">
+                                <thead>
+                                <tr>
+                                    <th>广告类型</th>
+                                    <th>尺寸模板</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="size : ${adImgSizeList}">
+                                    <td th:text="${size.typeName}"></td>
+                                    <td th:text="${size.imgSize}"></td>
+                                    <td>
+                                        <a th:href="@{/mgr/editUser/{id}(id=${size.id})}">修改&nbsp;</a>
+                                        <a th:href="@{/mgr/deleteUser/{id}(id=${size.id})}">删除&nbsp;</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section><!-- /.content -->
     </aside><!-- /.right-side -->
 </div><!-- ./wrapper -->

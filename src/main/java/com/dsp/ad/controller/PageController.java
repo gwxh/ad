@@ -207,7 +207,7 @@ public class PageController {
     @RequestMapping("/mgr/ads")
     public String toMgrAdsPage(Model model, @ModelAttribute("msg") String msg) {
         List<ExtAd> extAds = adminService.selectAllAds();
-         model.addAttribute("ads", extAds);
+        model.addAttribute("ads", extAds);
         model.addAttribute("msg", msg);
         return "mgr/ads";
     }
@@ -223,8 +223,15 @@ public class PageController {
         return "mgr/audit_ads";
     }
 
+    public static final String MGR_SETTING = "/mgr/setting";
+    public static final String REDIRECT_SETTING = REDIRECT + MGR_SETTING;
+
     @RequestMapping("/mgr/setting")
     public String toMgrSettingPage(Model model) {
+        final List<AdTypeEntity> adTypeList = siteService.queryAdTypeList();
+        model.addAttribute("adTypeList", adTypeList);
+        final List<ExtAdImgSize> adImgSizeList = siteService.queryAdImgSizeList();
+        model.addAttribute("adImgSizeList", adImgSizeList);
         return "mgr/setting";
     }
 }

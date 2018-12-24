@@ -11,5 +11,7 @@ import java.util.List;
  */
 public interface AdImgSizeRepository extends JpaRepository<AdImgSizeEntity, Integer> {
 
+    List<AdImgSizeEntity> findBySid(int sid);
+
     List<AdImgSizeEntity> findBySidAndType(int sid, int type);
 }
