@@ -142,6 +142,7 @@ public class ScheduledTask {
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
+                adLog.setUid(userId);
                 adLogRepository.save(adLog);
 
                 userAdsConsume += realConsumeAmount;
