@@ -73,7 +73,6 @@ task upgrade(dependsOn: bootJar) {
 		ssh.run {
 			session(remotes.prodServer) {
 				execute "/app/juli/restart.sh"
-				execute "/app/juli/start.sh"
 			}
 		}
 	}

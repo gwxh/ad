@@ -137,12 +137,15 @@ public class TaskServiceImpl implements TaskService {
     private LLBResult saveTask(ExtAd ad, String result, Map<String, String> taskInfoMap) {
         LLBResult llbResult = getResult(result);
         if (llbResult != null) {
-            Task task = new Task();
+            Optional<Task> optional = taskRepository.findById(ad.getId());
+            Task task = optional.orElse(new Task());
             task.setAid(ad.getId());
             int plan = Integer.parseInt(taskInfoMap.get("plan"));
             task.setPlan(plan);
             task.setResult(llbResult.getStatus().getDetail());
-            task.setTid(llbResult.getResult().getTaskId());
+            if (llbResult.getResult().getTaskId() > 0) {
+                task.setTid(llbResult.getResult().getTaskId());
+            }
             task.setStatus(TaskEnum.Status.TASK_STOP.value);
             taskRepository.save(task);
         }
