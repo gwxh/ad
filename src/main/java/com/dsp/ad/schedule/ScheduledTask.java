@@ -135,7 +135,7 @@ public class ScheduledTask {
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
                 int randPv = (int) ((Math.random() * 21) + 10);
-                int exec = adLog.getCpc() + realExec * randPv;
+                int exec = adLog.getExec() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
