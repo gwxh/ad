@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 
@@ -63,11 +64,11 @@ public class TaskServiceImpl implements TaskService {
         if (start < now) {
             start = now;
         }
-        taskMap.put("startTime", String.valueOf(start));
+        Objects.requireNonNull(taskMap).put("startTime", String.valueOf(start));
         ExtPlan extPlan = ad.getPlan();
         int plan = calcPlan(extPlan.getUnitPrice(), extPlan.getTotalPrice());
         if (extPlan.getParam().getSpeed() == 0) {
-            int stopTime = now + calcDuration(plan);
+            int stopTime = start + calcDuration(plan);
             taskMap.put("endTime", String.valueOf(stopTime));
         }
         String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);
