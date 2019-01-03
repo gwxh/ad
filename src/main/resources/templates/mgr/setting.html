@@ -39,7 +39,7 @@
                     <div class="box">
                         <div class="box-header">
                             <div class="box-tools">
-                                <button class="btn btn-info" data-toggle="modal" data-target="#addTypeModal">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#saveTypeModal">
                                     <i class="fa fa-plus"></i> 新增广告类型
                                 </button>
                             </div>
@@ -56,8 +56,8 @@
                                 <tr th:each="type : ${adTypeList}">
                                     <td th:text="${type.name}"></td>
                                     <td>
-                                        <a th:href="@{/mgr/editUser/{id}(id=${type.id})}">修改&nbsp;</a>
-                                        <a th:href="@{/mgr/deleteUser/{id}(id=${type.id})}">删除&nbsp;</a>
+                                        <!--<a th:href="@{/mgr/editUser/{id}(id=${type.id})}">修改&nbsp;</a>-->
+                                        <a th:href="@{/ad/deleteAdType/{id}(id=${type.id})}">删除&nbsp;</a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -66,10 +66,24 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="addTypeModal">
+                <div class="modal fade" id="saveTypeModal">
                     <div class="modal-dialog">
                         <div class="modal-content">
-
+                            <form id="saveTypeForm" th:action="@{/ad/saveAdType}"
+                                  th:method="post" role="form">
+                                <input id="tid" name="id" type="hidden" value="0"/>
+                                <div class="modal-body">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="typeName">广告类型</label>
+                                            <input id="typeName" name="name" class="form-control"/>
+                                        </div>
+                                    </div><!-- /.box-body -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">保存</button>
+                                </div>
+                            </form>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal -->
                 </div>
@@ -79,7 +93,7 @@
                         <div class="box-header">
                             <div class="box-tools">
 
-                                <button class="btn btn-info" data-toggle="modal" data-target="#addSizeModal">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#saveSizeModal">
                                     <i class="fa fa-plus"></i> 新增尺寸模板
                                 </button>
                             </div>
@@ -98,14 +112,44 @@
                                     <td th:text="${size.typeName}"></td>
                                     <td th:text="${size.imgSize}"></td>
                                     <td>
-                                        <a th:href="@{/mgr/editUser/{id}(id=${size.id})}">修改&nbsp;</a>
-                                        <a th:href="@{/mgr/deleteUser/{id}(id=${size.id})}">删除&nbsp;</a>
+                                        <!--<a th:href="@{/mgr/editUser/{id}(id=${size.id})}">修改&nbsp;</a>-->
+                                        <a th:href="@{/ad/deleteAdImgSize/{id}(id=${size.id})}">删除&nbsp;</a>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                </div>
+
+                <div class="modal fade" id="saveSizeModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="saveSizeForm" th:action="@{/ad/saveAdImgSize}"
+                                  th:method="post" role="form">
+                                <input id="sid" name="id" type="hidden" value="0"/>
+                                <div class="modal-body">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="type">广告类型</label>
+                                            <select id="type" name="type" class="form-control">
+                                                <option value="0">请选择广告类型</option>
+                                                <option th:each="type : ${adTypeList}" th:value="${type.id}"
+                                                        th:text="${type.name}"></option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sizeName">尺寸模板</label>
+                                            <input id="sizeName" name="name" class="form-control"/>
+                                        </div>
+                                    </div><!-- /.box-body -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">保存</button>
+                                </div>
+                            </form>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal -->
                 </div>
             </div>
 
@@ -117,6 +161,14 @@
 <script src="/js/mgr/jquery-1.10.2.min.js"></script>
 <script src="/js/mgr/bootstrap.min.js"></script>
 <script src="/js/mgr/app.js" type="text/javascript"></script>
+<script>
+    function setTid(id) {
+        $("#tid").val(id)
+    }
 
+    function setSid(id) {
+        $("#sid").val(id)
+    }
+</script>
 </body>
 </html>

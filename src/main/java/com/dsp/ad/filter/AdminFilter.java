@@ -13,12 +13,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter(urlPatterns = "/mgr/*")
+@WebFilter(urlPatterns = {"/mgr/*", "/ad/*"})
 @Order(value = 2)
 public class AdminFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout")));
+            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout", ".*/fonts/.*")));
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
