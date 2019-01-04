@@ -1,6 +1,8 @@
 package com.dsp.ad.controller;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.AdTypeEntity;
+import com.dsp.ad.entity.PlanAttributeEntity;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
@@ -232,6 +234,8 @@ public class PageController {
         model.addAttribute("adTypeList", adTypeList);
         final List<ExtAdImgSize> adImgSizeList = siteService.queryAdImgSizeList();
         model.addAttribute("adImgSizeList", adImgSizeList);
+        final List<PlanAttributeEntity> planAttributeList = siteService.queryPlanAttributes(C.SID, 1);
+        model.addAttribute("planAttributeList", planAttributeList);
         return "mgr/setting";
     }
 }
