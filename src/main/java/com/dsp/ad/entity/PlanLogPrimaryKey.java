@@ -29,4 +29,6 @@ public class PlanLogPrimaryKey implements Serializable {
     public void setPid(Integer pid) {
         this.pid = pid;
     }
+
+    public PlanLogPrimaryKey(){}
 }

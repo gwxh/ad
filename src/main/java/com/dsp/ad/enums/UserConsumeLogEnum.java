@@ -9,7 +9,7 @@ public interface UserConsumeLogEnum {
     enum Type {
         UNKNOWN(0, "未知"),
         RECHARGE(1, "充值"),
-        TASK_COST(2, "任务扣费")
+        TASK_COST(2, "广告消耗")
         //
         ;
 

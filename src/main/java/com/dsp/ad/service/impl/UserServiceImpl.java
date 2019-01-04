@@ -1,10 +1,7 @@
 package com.dsp.ad.service.impl;
 
 import com.dsp.ad.config.C;
-import com.dsp.ad.entity.Ad;
-import com.dsp.ad.entity.Plan;
-import com.dsp.ad.entity.User;
-import com.dsp.ad.entity.UserConsumeLog;
+import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
@@ -24,6 +21,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private PlanRepository planRepository;
     @Autowired
     private AdRepository adRepository;
+    @Autowired
+    private AdTypeRepository adTypeRepository;
     @Autowired
     private UserConsumeLogRepository userConsumeLogRepository;
 
@@ -112,6 +112,7 @@ public class UserServiceImpl implements UserService {
         ad.setParam(extAd.getParam().toJson());
         ad.setCreateTime(TimeUtil.now());
         ad.setStatus(AdEnum.Status.CREATE_CHECK.value);
+        ad.setType(extAd.getType());
         adRepository.save(ad);
     }
 
@@ -128,6 +129,7 @@ public class UserServiceImpl implements UserService {
         ad.setUrl(extAd.getUrl());
         ad.setParam(extAd.getParam().toJson());
         ad.setUpdateTime(TimeUtil.now());
+        ad.setType(extAd.getType());
         ad.setStatus(AdEnum.Status.EDIT_CHECK.value);
         adRepository.save(ad);
         taskService.stopTask(new ExtAd(ad));
@@ -147,6 +149,8 @@ public class UserServiceImpl implements UserService {
 
     private ExtAd newExtAd(Ad ad) {
         ExtAd extAd = new ExtAd(ad);
+        Optional<AdTypeEntity> optional = adTypeRepository.findById(extAd.getType());
+        optional.ifPresent(adTypeEntity -> extAd.setTypeName(adTypeEntity.getName()));
         ExtPlan extPlan = selectPlan(ad.getPid(), ad.getUid());
         extAd.setPlan(extPlan);
         return extAd;

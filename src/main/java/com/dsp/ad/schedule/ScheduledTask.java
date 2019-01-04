@@ -32,8 +32,6 @@ public class ScheduledTask {
     private AdminService adminService;
 
     @Autowired
-    private PlanRepository planRepository;
-    @Autowired
     private AdRepository adRepository;
     @Autowired
     private UserConsumeLogRepository userConsumeLogRepository;
@@ -136,12 +134,13 @@ public class ScheduledTask {
                 }
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
-                int randPv = (int) ((Math.random()*21)+10);
-                int exec = adLog.getCpc() + realExec * randPv;
+                int randPv = (int) ((Math.random() * 21) + 10);
+                int exec = adLog.getExec() + realExec * randPv;
                 adLog.setAdLogPK(adLogPK);
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
+                adLog.setUid(userId);
                 adLogRepository.save(adLog);
 
                 userAdsConsume += realConsumeAmount;
@@ -153,15 +152,15 @@ public class ScheduledTask {
             }
             if (userAdsConsume > 0) {
                 log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
+                userRepository.consume(userId, userAdsConsume);
+                UserConsumeLog consumeLog = new UserConsumeLog();
+                consumeLog.setUid(userId);
+                consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
+                consumeLog.setAmount(-userAdsConsume);
+                consumeLog.setTime(TimeUtil.now());
+                consumeLog.setNote("");
+                userConsumeLogRepository.save(consumeLog);
             }
-            userRepository.consume(userId, userAdsConsume);
-
-            UserConsumeLog consumeLog = new UserConsumeLog();
-            consumeLog.setUid(userId);
-            consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
-            consumeLog.setAmount(-userAdsConsume);
-            consumeLog.setTime(TimeUtil.now());
-            userConsumeLogRepository.save(consumeLog);
         }
     }
 

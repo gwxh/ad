@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 
@@ -63,11 +64,11 @@ public class TaskServiceImpl implements TaskService {
         if (start < now) {
             start = now;
         }
-        taskMap.put("startTime", String.valueOf(start));
+        Objects.requireNonNull(taskMap).put("startTime", String.valueOf(start));
         ExtPlan extPlan = ad.getPlan();
         int plan = calcPlan(extPlan.getUnitPrice(), extPlan.getTotalPrice());
         if (extPlan.getParam().getSpeed() == 0) {
-            int stopTime = now + calcDuration(plan);
+            int stopTime = start + calcDuration(plan);
             taskMap.put("endTime", String.valueOf(stopTime));
         }
         String result = HttpUtil.post(LLB.START_TASK_URL, taskMap);
@@ -136,12 +137,15 @@ public class TaskServiceImpl implements TaskService {
     private LLBResult saveTask(ExtAd ad, String result, Map<String, String> taskInfoMap) {
         LLBResult llbResult = getResult(result);
         if (llbResult != null) {
-            Task task = new Task();
+            Optional<Task> optional = taskRepository.findById(ad.getId());
+            Task task = optional.orElse(new Task());
             task.setAid(ad.getId());
             int plan = Integer.parseInt(taskInfoMap.get("plan"));
             task.setPlan(plan);
             task.setResult(llbResult.getStatus().getDetail());
-            task.setTid(llbResult.getResult().getTaskId());
+            if (llbResult.getResult().getTaskId() > 0) {
+                task.setTid(llbResult.getResult().getTaskId());
+            }
             task.setStatus(TaskEnum.Status.TASK_STOP.value);
             taskRepository.save(task);
         }

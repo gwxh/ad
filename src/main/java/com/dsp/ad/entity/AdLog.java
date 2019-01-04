@@ -1,6 +1,9 @@
 package com.dsp.ad.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="ad_log")
@@ -11,6 +14,7 @@ public class AdLog {
 
     @Column(nullable = false)
     private int uid;
+
     @Column(nullable = false)
     private int exec;
     @Column(nullable = false)
