@@ -1,5 +1,6 @@
 package com.dsp.ad.controller;
 
+import com.dsp.ad.config.C;
 import com.dsp.ad.entity.AdImgSizeEntity;
 import com.dsp.ad.entity.PlanAttributeEntity;
 import com.dsp.ad.service.SiteService;
@@ -53,6 +54,7 @@ public class SiteController {
 
     @PostMapping("/savePlanAttribute")
     public String savePlanAttribute(PlanAttributeEntity entity) {
+        entity.setSid(C.SID);
         siteService.savePlanAttribute(entity);
         return PageController.REDIRECT_SETTING;
     }

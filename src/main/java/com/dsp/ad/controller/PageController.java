@@ -236,6 +236,8 @@ public class PageController {
         model.addAttribute("adImgSizeList", adImgSizeList);
         final List<PlanAttributeEntity> planAttributeList = siteService.queryPlanAttributes(C.SID, 1);
         model.addAttribute("planAttributeList", planAttributeList);
+        PlanAttributeEntity planAttribute = new PlanAttributeEntity();
+        model.addAttribute("planAttribute", planAttribute);
         return "mgr/setting";
     }
 }
