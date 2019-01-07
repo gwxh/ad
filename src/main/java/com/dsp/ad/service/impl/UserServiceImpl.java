@@ -169,8 +169,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public double selectUserYesterdayConsumeAmount(int uid) {
-        int startTime = TimeUtil.month();
-        int endTime = TimeUtil.month(1);
+        int startTime = TimeUtil.day(-1);
+        int endTime = TimeUtil.day();
         Integer amount = userConsumeLogRepository.selectUserConsumeLogByDay(startTime, endTime, uid, UserConsumeLogEnum.Type.TASK_COST.value);
         if (amount == null) {
             return 0;
@@ -193,8 +193,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public double selectUserMonthConsumeAmount(int uid) {
-        int startTime = TimeUtil.day(-1);
-        int endTime = TimeUtil.day();
+        int startTime = TimeUtil.month();
+        int endTime = TimeUtil.month(1);
         Integer amount = userConsumeLogRepository.selectUserConsumeLogByDay(startTime, endTime, uid, UserConsumeLogEnum.Type.TASK_COST.value);
         if (amount == null) {
             return 0;
