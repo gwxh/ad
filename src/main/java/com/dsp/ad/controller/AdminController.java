@@ -96,21 +96,21 @@ public class AdminController {
         return PageController.REDIRECT_MGR_INDEX;
     }
 
-    @RequestMapping("/disableUser/{userId}")
-    public String disableUser(@PathVariable int userId) {
-        adminService.disableUser(userId);
+    @RequestMapping("/disableUser/{uid}")
+    public String disableUser(@PathVariable int uid) {
+        adminService.disableUser(uid);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
-    @RequestMapping("/enableUser/{userId}")
-    public String enableUser(@PathVariable int userId) {
-        adminService.enableUser(userId);
+    @RequestMapping("/enableUser/{uid}")
+    public String enableUser(@PathVariable int uid) {
+        adminService.enableUser(uid);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
-    @RequestMapping("/deleteUser/{userId}")
-    public String deleteUser(@PathVariable int userId) {
-        adminService.deleteUser(userId);
+    @RequestMapping("/deleteUser/{uid}")
+    public String deleteUser(@PathVariable int uid) {
+        adminService.deleteUser(uid);
         return PageController.REDIRECT_MGR_INDEX;
     }
 
@@ -229,9 +229,9 @@ public class AdminController {
         return PageController.REDIRECT_MGR_ADS;
     }
 
-    @RequestMapping("/toUser/{userId}")
-    public String toUser(HttpSession session, @PathVariable int userId) {
-        ExtUser user = adminService.selectUserById(userId);
+    @RequestMapping("/toUser/{uid}")
+    public String toUser(HttpSession session, @PathVariable int uid) {
+        ExtUser user = adminService.selectUserById(uid);
         if (user == null) {
             return PageController.REDIRECT_MGR_INDEX;
         }

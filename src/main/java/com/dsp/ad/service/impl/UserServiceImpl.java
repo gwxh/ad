@@ -64,19 +64,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ExtPlan> selectPlans(int userId) {
-        List<Plan> plans = planRepository.selectPlans(userId);
+    public List<ExtPlan> selectPlans(int uid) {
+        List<Plan> plans = planRepository.selectPlans(uid);
         return plans.stream().map(ExtPlan::new).collect(Collectors.toList());
     }
 
     @Override
-    public Plan findPlanById(int planId, int userId) {
-        return planRepository.selectPlan(planId, userId);
+    public Plan findPlanById(int planId, int uid) {
+        return planRepository.selectPlan(planId, uid);
     }
 
     @Override
-    public ExtPlan selectPlan(int planId, int userId) {
-        Plan plan = planRepository.selectPlan(planId, userId);
+    public ExtPlan selectPlan(int planId, int uid) {
+        Plan plan = planRepository.selectPlan(planId, uid);
         return new ExtPlan(plan);
     }
 
@@ -136,14 +136,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ExtAd> selectAds(int userId) {
-        List<Ad> ads = adRepository.selectAds(userId);
+    public List<ExtAd> selectAds(int uid) {
+        List<Ad> ads = adRepository.selectAds(uid);
         return ads.stream().map(this::newExtAd).collect(Collectors.toList());
     }
 
     @Override
-    public ExtAd selectAd(int adId, int userId) {
-        Ad ad = adRepository.selectAd(adId, userId);
+    public ExtAd selectAd(int adId, int uid) {
+        Ad ad = adRepository.selectAd(adId, uid);
         return newExtAd(ad);
     }
 
@@ -156,59 +156,57 @@ public class UserServiceImpl implements UserService {
         return extAd;
     }
 
+    @Override
+    public double selectUserTodayConsumeAmount(int uid) {
+        int startTime = TimeUtil.day();
+        int endTime = TimeUtil.day(1);
+        Integer amount = userConsumeLogRepository.selectUserConsumeLogByDay(startTime, endTime, uid, UserConsumeLogEnum.Type.TASK_COST.value);
+        if (amount == null) {
+            return 0;
+        }
+        return amount / 100d;
+    }
+
+    @Override
+    public double selectUserYesterdayConsumeAmount(int uid) {
+        int startTime = TimeUtil.month();
+        int endTime = TimeUtil.month(1);
+        Integer amount = userConsumeLogRepository.selectUserConsumeLogByDay(startTime, endTime, uid, UserConsumeLogEnum.Type.TASK_COST.value);
+        if (amount == null) {
+            return 0;
+        }
+        return amount / 100d;
+    }
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
     @Autowired
     private AdLogRepository adLogRepository;
 
     @Override
-    public double selectUserTodayConsumeAmount(int userId) {
-        int day = TimeUtil.day();
-        Integer amount = adLogRepository.selectUserAdsLogByDay(day, userId);
-        if (amount == null) {
-            return 0;
-        }
-        return amount / 100d;
-    }
-
-    @Override
-    public double selectUserYesterdayConsumeAmount(int userId) {
-        int yesterday = TimeUtil.day(-1);
-        Integer amount = adLogRepository.selectUserAdsLogByDay(yesterday, userId);
-        if (amount == null) {
-            return 0;
-        }
-        return amount / 100d;
-    }
-
-    private int monthConsumeAmount;
-
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
-    @Override
-    public String selectUserMonthConsumeLogJson(int userId) throws JsonProcessingException {
-        monthConsumeAmount = 0;
+    public String selectUserMonthConsumeLogJson(int uid) throws JsonProcessingException {
         int month = TimeUtil.month();
         int nextMonth = TimeUtil.month(1);
-        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogByMonth(month, nextMonth, userId);
-        for (ExtAdLog extAdLog : extAdLogs) {
-            if (extAdLog.getRecordTime() == null) {
-                extAdLogs = new ArrayList<>();
-                break;
-            }
-            monthConsumeAmount += extAdLog.getAmount();
-        }
+        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogByMonth(month, nextMonth, uid);
         return OBJECT_MAPPER.writeValueAsString(extAdLogs);
     }
 
     @Override
-    public double selectUserMonthConsumeAmount(int userId) {
-        return monthConsumeAmount / 100d;
+    public double selectUserMonthConsumeAmount(int uid) {
+        int startTime = TimeUtil.day(-1);
+        int endTime = TimeUtil.day();
+        Integer amount = userConsumeLogRepository.selectUserConsumeLogByDay(startTime, endTime, uid, UserConsumeLogEnum.Type.TASK_COST.value);
+        if (amount == null) {
+            return 0;
+        }
+        return amount / 100d;
     }
 
     @Override
-    public List<ExtAdLog> selectAdConsumeLogs(int userId) {
+    public List<ExtAdLog> selectAdConsumeLogs(int uid) {
         long totalExec = 0, totalCpc = 0, totalAmount = 0;
 
-        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogs(userId);
+        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogs(uid);
 
         for (ExtAdLog extAdLog : extAdLogs) {
             if (extAdLog.getRecordTime() == null) {
@@ -233,12 +231,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<ExtConsumeLog> selectUserConsumeLogs(int uid) {
-        List<UserConsumeLog> logs = userConsumeLogRepository.findByUid(uid);
+        List<UserConsumeLogEntity> logs = userConsumeLogRepository.findByUid(uid);
         List<ExtConsumeLog> extLogs = new ArrayList<>();
-        for (UserConsumeLog log : logs) {
+        for (UserConsumeLogEntity log : logs) {
             ExtConsumeLog extLog = new ExtConsumeLog();
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
-            extLog.setDate(TimeUtil.toDate(localDateTime, "yyyy-MM-dd hh:mm:ss"));
+            extLog.setDate(TimeUtil.toDate(localDateTime, "YYYY-MM-DD HH:mm:SS"));
             extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
             extLog.setAmount(log.getAmount() / 100d);
             extLog.setNote(log.getNote());

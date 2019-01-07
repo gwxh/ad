@@ -17,29 +17,29 @@ public interface UserService {
 
     void editPlan(ExtUser user, ExtPlan extPlan);
 
-    List<ExtPlan> selectPlans(int userId);
+    List<ExtPlan> selectPlans(int uid);
 
-    Plan findPlanById(int planId, int userId);
+    Plan findPlanById(int planId, int uid);
 
-    ExtPlan selectPlan(int planId, int userId);
+    ExtPlan selectPlan(int planId, int uid);
 
     void createAd(ExtUser user, ExtAd extAd);
 
     void editAd(ExtUser user, ExtAd extAd);
 
-    List<ExtAd> selectAds(int userId);
+    List<ExtAd> selectAds(int uid);
 
-    ExtAd selectAd(int adId, int userId);
+    ExtAd selectAd(int adId, int uid);
 
-    double selectUserTodayConsumeAmount(int userId);
+    double selectUserTodayConsumeAmount(int uid);
 
-    double selectUserYesterdayConsumeAmount(int userId);
+    double selectUserYesterdayConsumeAmount(int uid);
 
-    String selectUserMonthConsumeLogJson(int userId) throws JsonProcessingException;
+    String selectUserMonthConsumeLogJson(int uid) throws JsonProcessingException;
 
-    double selectUserMonthConsumeAmount(int userId);
+    double selectUserMonthConsumeAmount(int uid);
 
-    List<ExtAdLog> selectAdConsumeLogs(int userId);
+    List<ExtAdLog> selectAdConsumeLogs(int uid);
 
     List<ExtConsumeLog> selectUserConsumeLogs(int uid);
 }

@@ -11,7 +11,7 @@ public class ExtPlan {
     private double totalPrice;
     private PlanParam param = new PlanParam();
     private int status;
-    private int userId;
+    private int uid;
 
     private ExtUser user = new ExtUser();
 
@@ -25,7 +25,7 @@ public class ExtPlan {
         this.totalPrice = plan.getTotalPrice() / 100d;
         this.status = plan.getStatus();
         this.param = PlanParam.fromJson(plan.getParam());
-        this.userId = plan.getUid();
+        this.uid = plan.getUid();
     }
 
     public int getId() {
@@ -85,10 +85,10 @@ public class ExtPlan {
     }
 
     public int getUserId() {
-        return userId;
+        return uid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int uid) {
+        this.uid = uid;
     }
 }

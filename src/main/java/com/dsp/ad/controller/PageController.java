@@ -46,17 +46,17 @@ public class PageController {
 
     @RequestMapping("/")
     public String index(Model model, @SessionAttribute ExtUser user) throws JsonProcessingException {
-        int userId = user.getId();
-        user = adminService.selectUserById(userId);
-        double todayConsumeAmount = userService.selectUserTodayConsumeAmount(userId);
-        double yesterdayConsumeAmount = userService.selectUserYesterdayConsumeAmount(userId);
-        String logJson = userService.selectUserMonthConsumeLogJson(userId);
-        double monthConsumeAmount = userService.selectUserMonthConsumeAmount(userId);
+        int uid = user.getId();
+        user = adminService.selectUserById(uid);
+        double todayConsumeAmount = userService.selectUserTodayConsumeAmount(uid);
+        double yesterdayConsumeAmount = userService.selectUserYesterdayConsumeAmount(uid);
+        String logJson = userService.selectUserMonthConsumeLogJson(uid);
+        double monthConsumeAmount = userService.selectUserMonthConsumeAmount(uid);
         model.addAttribute("userAmount", user.getAmount());
         model.addAttribute("todayConsumeAmount", todayConsumeAmount);
         model.addAttribute("yesterdayConsumeAmount", yesterdayConsumeAmount);
-        model.addAttribute("logJson", logJson);
         model.addAttribute("monthConsumeAmount", monthConsumeAmount);
+        model.addAttribute("logJson", logJson);
         return "index";
     }
 
@@ -176,9 +176,9 @@ public class PageController {
         return "mgr/login";
     }
 
-    @RequestMapping("/mgr/editUser/{userId}")
-    public String toMgrEditUserPage(Model model, @PathVariable int userId) {
-        ExtUser user = adminService.selectUserById(userId);
+    @RequestMapping("/mgr/editUser/{uid}")
+    public String toMgrEditUserPage(Model model, @PathVariable int uid) {
+        ExtUser user = adminService.selectUserById(uid);
         model.addAttribute("user", user);
         return "mgr/edit_user";
     }

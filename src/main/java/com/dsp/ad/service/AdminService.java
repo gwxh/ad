@@ -14,7 +14,7 @@ public interface AdminService {
 
     List<ExtUser> selectAllUser();
 
-    ExtUser selectUserById(int userId);
+    ExtUser selectUserById(int uid);
 
     void userRecharge(ExtUser user,int amount,String note);
 
@@ -22,11 +22,11 @@ public interface AdminService {
 
     void editUser(ExtUser user);
 
-    void disableUser(int userId);
+    void disableUser(int uid);
 
-    void enableUser(int userId);
+    void enableUser(int uid);
 
-    void deleteUser(int userId);
+    void deleteUser(int uid);
 
     List<ExtPlan> selectAllPlans();
 

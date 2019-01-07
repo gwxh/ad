@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ExtAd {
 
     private int id;
-    private int userId;
+    private int uid;
     private int planId;
     private String name;
     private int type;
@@ -32,7 +32,7 @@ public class ExtAd {
 
     public ExtAd(Ad ad) {
         this.id = ad.getId();
-        this.userId = ad.getUid();
+        this.uid = ad.getUid();
         this.planId = ad.getPid();
         this.name = ad.getName();
         this.type = ad.getType();
@@ -50,11 +50,11 @@ public class ExtAd {
     }
 
     public int getUserId() {
-        return userId;
+        return uid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int uid) {
+        this.uid = uid;
     }
 
     public int getPlanId() {
