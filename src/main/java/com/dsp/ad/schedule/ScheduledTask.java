@@ -55,21 +55,21 @@ public class ScheduledTask {
         Map<Integer, List<ExtAd>> userAdsMap = initUserAdsMap(ads);
 
         for (Map.Entry<Integer, List<ExtAd>> entry : userAdsMap.entrySet()) {
-            Integer userId = entry.getKey();
-            ExtUser extUser = adminService.selectUserById(userId);
+            Integer uid = entry.getKey();
+            ExtUser extUser = adminService.selectUserById(uid);
             if (extUser.getAmount() <= 0) {
-                log.info("用户<{}>没钱了!", userId);
+                log.info("用户<{}>没钱了!", uid);
                 continue;
             }
             int userAmount = (int) (extUser.getAmount() * 100);
-            log.info("用户<{}>余额：{}元", userId, extUser.getAmount());
+            log.info("用户<{}>余额：{}元", uid, extUser.getAmount());
 
             List<ExtAd> extAds = entry.getValue();
             int userAdsConsume = 0;
             boolean noMoney = false;
             for (ExtAd extAd : extAds) {
                 if (noMoney) {
-                    log.info("用户<{}>没钱了!", userId);
+                    log.info("用户<{}>没钱了!", uid);
                     break;
                 }
                 LLBExecResult execResult = taskService.selectTaskExec(extAd);
@@ -130,7 +130,7 @@ public class ScheduledTask {
                 if (realConsumeAmount > userAmount) {
                     realConsumeAmount = userAmount;
                     noMoney = true;
-                    log.info("用户<{}>余额已用完", userId);
+                    log.info("用户<{}>余额已用完", uid);
                 }
 
                 int adAmount = adLog.getAmount() + realConsumeAmount;
@@ -140,21 +140,21 @@ public class ScheduledTask {
                 adLog.setExec(exec);
                 adLog.setCpc(todayExecResult.getToday());
                 adLog.setAmount(adAmount);
-                adLog.setUid(userId);
+                adLog.setUid(uid);
                 adLogRepository.save(adLog);
 
                 userAdsConsume += realConsumeAmount;
             }
             if (userAdsConsume > userAmount) {
-                log.info("用户<{}>实际消费了{}了元", userId, userAdsConsume / 100d);
+                log.info("用户<{}>实际消费了{}了元", uid, userAdsConsume / 100d);
                 userAdsConsume = userAmount;
-                log.info("由于余额不足，扣除用户<{}>所有余额:<{}>元", userId, userAdsConsume / 100d);
+                log.info("由于余额不足，扣除用户<{}>所有余额:<{}>元", uid, userAdsConsume / 100d);
             }
             if (userAdsConsume > 0) {
-                log.info("用户<{}>消费了{}元", userId, userAdsConsume / 100d);
-                userRepository.consume(userId, userAdsConsume);
-                UserConsumeLog consumeLog = new UserConsumeLog();
-                consumeLog.setUid(userId);
+                log.info("用户<{}>消费了{}元", uid, userAdsConsume / 100d);
+                userRepository.consume(uid, userAdsConsume);
+                UserConsumeLogEntity consumeLog = new UserConsumeLogEntity();
+                consumeLog.setUid(uid);
                 consumeLog.setType(UserConsumeLogEnum.Type.TASK_COST.value);
                 consumeLog.setAmount(-userAdsConsume);
                 consumeLog.setTime(TimeUtil.now());

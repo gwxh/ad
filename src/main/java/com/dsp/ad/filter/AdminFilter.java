@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@WebFilter(urlPatterns = {"/mgr/*", "/site/*"})
+@WebFilter(urlPatterns = {"/mgr/*", "/ad/*"})
 @Order(value = 2)
 public class AdminFilter implements Filter {
 

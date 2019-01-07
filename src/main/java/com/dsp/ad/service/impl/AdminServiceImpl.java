@@ -50,15 +50,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ExtUser selectUserById(int userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+    public ExtUser selectUserById(int uid) {
+        Optional<User> userOptional = userRepository.findById(uid);
         return userOptional.map(ExtUser::new).orElse(null);
     }
 
     @Override
     public void userRecharge(ExtUser user, int amount, String note) {
         userRepository.recharge(user.getId(), amount);
-        UserConsumeLog consumeLog = new UserConsumeLog();
+        UserConsumeLogEntity consumeLog = new UserConsumeLogEntity();
         consumeLog.setUid(user.getId());
         consumeLog.setType(UserConsumeLogEnum.Type.RECHARGE.value);
         consumeLog.setAmount(amount);
@@ -106,26 +106,26 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void disableUser(int userId) {
-        ExtUser user = selectUserById(userId);
+    public void disableUser(int uid) {
+        ExtUser user = selectUserById(uid);
         if (user != null) {
-            userRepository.updateStatus(userId, UserEnum.Status.DISABLE.value);
+            userRepository.updateStatus(uid, UserEnum.Status.DISABLE.value);
         }
     }
 
     @Override
-    public void enableUser(int userId) {
-        ExtUser user = selectUserById(userId);
+    public void enableUser(int uid) {
+        ExtUser user = selectUserById(uid);
         if (user != null) {
-            userRepository.updateStatus(userId, UserEnum.Status.ENABLE.value);
+            userRepository.updateStatus(uid, UserEnum.Status.ENABLE.value);
         }
     }
 
     @Override
-    public void deleteUser(int userId) {
-        ExtUser user = selectUserById(userId);
+    public void deleteUser(int uid) {
+        ExtUser user = selectUserById(uid);
         if (user != null) {
-            userRepository.updateStatus(userId, UserEnum.Status.DELETE.value);
+            userRepository.updateStatus(uid, UserEnum.Status.DELETE.value);
         }
     }
 
