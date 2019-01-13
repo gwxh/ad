@@ -9,57 +9,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
 
-    <title>聚点自助广告</title>
+    <title>达维安广告</title>
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!-- global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/font-icon-style.css">
-    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
-
-    <!-- Core stylesheets -->
-    <link rel="stylesheet" href="/css/pages/login.css">
+    <link href="/css/dwa/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/dwa/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="/css/dwa/style.min.css" rel="stylesheet" />
+    <link href="/css/dwa/style-responsive.min.css" rel="stylesheet" />
+    <link href="/css/dwa/retina.css" rel="stylesheet" />
 </head>
 
+<!--<body>-->
+
+<!--&lt;!&ndash;====================================================-->
+                        <!--PAGE CONTENT-->
+<!--======================================================&ndash;&gt;-->
+<!--<section class="hero-area">-->
+    <!--<div class="overlay"></div>-->
+    <!--<div class="container">-->
+        <!--<div class="row" style="padding-top: 130px;">-->
+            <!--<div class="col-md-12 ">-->
+                <!--<div class="contact-h-cont">-->
+                    <!--<h3 class="text-center" style="color:#FFF;">聚力广告平台</h3><br>-->
+                    <!--<form th:action="@{/user/login}"  th:method="post">-->
+                        <!--<p th:if="${msg!=null}" th:text="|${msg}!|" style="color:#FF6C60;">登录错误</p>-->
+                        <!--<div class="form-group">-->
+                            <!--<input type="text" class="form-control input-text" id="username" name="username" placeholder="账号">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<input class="form-control input-text" type="password" id="password" name="password" placeholder="密码">-->
+                        <!--</div>-->
+                        <!--<button class="btn btn-general btn-blue" role="button" type="submit" style="width: 100%;"><i fa fa-right-arrow></i>登录</button>-->
+                    <!--</form>-->
+                    <!--<div class="pp" style="margin-top: 20px;">-->
+                        <!--<img src="/img/ppsp.png"/>-->
+                        <!--<img src="/img/ppty.png" style="margin-left: 35px;"/>-->
+                        <!--<img src="/img/ppzs.png" style="margin-left: 35px;"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</section>-->
+
+<!--&lt;!&ndash;Global Javascript &ndash;&gt;-->
+<!--<script src="/js/jquery.min.js"></script>-->
+<!--<script src="/js/tether.min.js"></script>-->
+<!--<script src="/js/bootstrap.min.js"></script>-->
+<!--</body>-->
+
 <body>
+<div class="container-fluid-full">
+    <div class="row-fluid">
 
-<!--====================================================
-                        PAGE CONTENT
-======================================================-->
-<section class="hero-area">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row" style="padding-top: 130px;">
-            <div class="col-md-12 ">
-                <div class="contact-h-cont">
-                    <h3 class="text-center" style="color:#FFF;">聚力广告平台</h3><br>
-                    <form th:action="@{/user/login}"  th:method="post">
-                        <p th:if="${msg!=null}" th:text="|${msg}!|" style="color:#FF6C60;">登录错误</p>
-                        <div class="form-group">
-                            <input type="text" class="form-control input-text" id="username" name="username" placeholder="账号">
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control input-text" type="password" id="password" name="password" placeholder="密码">
-                        </div>
-                        <button class="btn btn-general btn-blue" role="button" type="submit" style="width: 100%;"><i fa fa-right-arrow></i>登录</button>
-                    </form>
-                    <div class="pp" style="margin-top: 20px;">
-                        <img src="/img/ppsp.png"/>
-                        <img src="/img/ppty.png" style="margin-left: 35px;"/>
-                        <img src="/img/ppzs.png" style="margin-left: 35px;"/>
-                    </div>
-                </div>
+        <div class="row-fluid">
+            <div class="login-box">
+                <h2 style="text-align: center;font-weight: bold;">达维安广告</h2>
+                <form th:action="@{/user/login}"  th:method="post"/>
+                <p th:if="${msg!=null}" th:text="|${msg}!|" style="color:#FF6C60;">登录错误</p>
+                <fieldset>
+
+                    <input class="input-large span12" name="username" id="username" type="text" placeholder="账号" />
+
+                    <input class="input-large span12" name="password" id="password" type="password" placeholder="密码" />
+
+                    <div class="clearfix"></div>
+
+                    <button type="submit" class="btn btn-primary span12">登录</button>
+                </fieldset>
+
+                </form>
             </div>
-        </div>
-    </div>
-</section>
+        </div><!--/row-->
 
-<!--Global Javascript -->
-<script src="/js/jquery.min.js"></script>
-<script src="/js/tether.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+    </div><!--/fluid-row-->
+
+</div><!--/.fluid-container-->
 </body>
 
 </html>
