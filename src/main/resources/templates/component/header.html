@@ -2,57 +2,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body th:fragment="header">
-<!-- header section start-->
-<header class="header">
-    <nav class="navbar navbar-expand-lg ">
-        <div class="container-fluid ">
-            <div class="navbar-holder d-flex align-items-center justify-content-between">
-                <div class="navbar-header">
-                    <a href="/" class="navbar-brand">
-                        <div class="brand-text brand-big hidden-lg-down">聚力自助广告</div>
-                        <div class="brand-text brand-small">聚力自助广告</div>
-                    </a>
-                    <a id="toggle-btn" href="#" class="menu-btn active">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </a>
-                </div>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="row-fluid">
+                <a class="brand span2" href="/"><span>达维安广告</span></a>
             </div>
-            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                <!-- Expand-->
-                <li class="nav-item d-flex align-items-center full_scr_exp"><a class="nav-link" href="#"><img
-                        src="/img/expand.png" onclick="toggleFullScreen(document.body)" class="img-fluid" alt=""></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a id="profile" class="nav-link logout" data-target="#" href="#"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
-                            src="/img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"
-                            style="height: 30px; width: 30px;"></a>
-                    <ul aria-labelledby="profile" class="dropdown-menu profile">
-                        <li>
-                            <a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                <div class="msg-profile"><img src="/img/avatar-2.jpg" alt="..."
-                                                              class="img-fluid rounded-circle"></div>
-                                <div class="msg-body">
-                                    <h3 class="h5">[[${session.user.username}]]</h3>
-                                </div>
-                            </a>
-                            <hr>
-                        </li>
-                        <li>
-                            <a rel="nofollow" href="/user/logout" class="dropdown-item">
-                                <div class="notification">
-                                    <div class="notification-content"><i class="fa fa-power-off"></i>Logout</div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <!-- start: Header Menu -->
+            <div class="nav-no-collapse header-nav">
+                <ul class="nav pull-right">
+                    <!-- start: User Dropdown -->
+                    <li class="dropdown">
+                        <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
+                            <div class="user">
+                                <span class="hello">Welcome!</span>
+                                <span class="name">[[${session.user.username}]]</span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-menu-title"></li>
+                            <li><a href="/user/logout"><i class="icon-off"></i> 退出</a></li>
+                        </ul>
+                    </li>
+                    <!-- end: User Dropdown -->
+                </ul>
+            </div>
+            <!-- end: Header Menu -->
+
         </div>
-    </nav>
-</header>
-<!-- header section end-->
+    </div>
+</div>
+
 </body>
 </html>
