@@ -12,90 +12,114 @@
     <title>广告商后台</title>
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <!-- global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/css/font-icon-style.css">
-    <link rel="stylesheet" href="/css/style.default.css" id="theme-stylesheet">
-
-    <!-- Core stylesheets -->
-    <link rel="stylesheet" href="/css/ui-elements/card.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/ui-elements/button.css">
-    <link rel="stylesheet" href="/js/data-tables/DT_bootstrap.css"/>
+    <link href="/css/dwa/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/dwa/bootstrap-responsive.min.css" rel="stylesheet"/>
+    <link href="/css/dwa/style.min.css" rel="stylesheet"/>
+    <link href="/css/dwa/style-responsive.min.css" rel="stylesheet"/>
+    <link href="/css/dwa/retina.css" rel="stylesheet"/>
 </head>
 
 <body>
 
-<!--====================================================
-                         MAIN NAVBAR
-======================================================-->
 <div th:replace="component/header::header"></div>
 
-<!--====================================================
-                        PAGE CONTENT
-======================================================-->
-<div class="page-content d-flex align-items-stretch">
+<div class="container-fluid-full">
+    <div class="row-fluid height100">
+        <div th:replace="component/left_nav::left-nav('ad')"></div>
 
-    <!--***** SIDE NAVBAR *****-->
-    <div th:replace="component/left_nav::left-nav('ad')"></div>
-
-    <div class="content-inner">
-        <div class="tenth-button">
-            <a href="/user/createAd/0" class="btn btn-lg blue">新增广告</a>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-c2">
-                    <table class="table table-hover" id="adList">
-                        <thead>
-                        <tr>
-                            <th>浏览</th>
-                            <th>计划名称</th>
-                            <th>广告名称</th>
-                            <th>广告类型</th>
-                            <th>广告地址</th>
-                            <th>状态</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="ad : ${ads}">
-                            <td><img th:src="${'/'+ad.param.image}" class="adImg"/></td>
-                            <td th:text="${ad.plan.name}"></td>
-                            <td th:text="${ad.name}"></td>
-                            <td th:text="${ad.typeName}"></td>
-                            <td th:text="${ad.url}"></td>
-                            <td th:switch="${ad.status}">
-                                <span th:case="0" class="label label-danger label-mini">新增待审</span>
-                                <span th:case="1" class="label label-success label-mini">活动</span>
-                                <span th:case="2" class="label label-info label-mini">开启</span>
-                                <span th:case="3" class="label label-danger label-mini">修改待审</span>
-                                <span th:case="4" class="label label-warning label-mini">已被锁定</span>
-                            </td>
-                            <td class="operate">
-                                <!--<a th:href="@{/user/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>-->
-                                <!--<a th:href="@{/user/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>-->
-                                <a th:href="@{/user/editAd/{id}(id=${ad.id})}">修改</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div id="content" class="span10">
+            <div class="row-fluid" style="margin-bottom: 10px;">
+                <a href="/user/createAd/0" class="btn btn-large btn-info">新增广告</a>
             </div>
+
+            <div class="row-fluid">
+                <div class="box span12">
+                    <div class="box-header" data-original-title="">
+                        <h2><i class="icon-calendar"></i><span class="break"></span>广告列表</h2>
+                    </div>
+                    <div class="box-content">
+                        <table class="table table-hover" id="adList">
+                            <thead>
+                            <tr>
+                                <th>浏览</th>
+                                <th>计划名称</th>
+                                <th>广告名称</th>
+                                <th>广告类型</th>
+                                <th>广告地址</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ad : ${ads}">
+                                <td><img th:src="${'/'+ad.param.image}" class="adImg"/></td>
+                                <td th:text="${ad.plan.name}"></td>
+                                <td th:text="${ad.name}"></td>
+                                <td th:text="${ad.typeName}"></td>
+                                <td th:text="${ad.url}"></td>
+                                <td th:switch="${ad.status}">
+                                    <span th:case="0" class="label label-danger label-mini">新增待审</span>
+                                    <span th:case="1" class="label label-success label-mini">活动</span>
+                                    <span th:case="2" class="label label-info label-mini">开启</span>
+                                    <span th:case="3" class="label label-danger label-mini">修改待审</span>
+                                    <span th:case="4" class="label label-warning label-mini">已被锁定</span>
+                                </td>
+                                <td class="operate">
+                                    <!--<a th:href="@{/user/startAd/{id}(id=${ad.id})}" th:if="${ad.status==1}">开启&nbsp;&nbsp;&nbsp;</a>-->
+                                    <!--<a th:href="@{/user/stopAd/{id}(id=${ad.id})}" th:if="${ad.status==2}">关闭&nbsp;&nbsp;&nbsp;</a>-->
+                                    <a th:href="@{/user/editAd/{id}(id=${ad.id})}">修改</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!--/span-->
+
+            </div><!--/row-->
         </div>
     </div>
 </div>
 
-<!--Global Javascript -->
-<script src="/js/jquery.min.js"></script>
-<script src="/js/popper/popper.min.js"></script>
-<script src="/js/tether.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.cookie.js"></script>
-<script src="/js/jquery.validate.min.js"></script>
-<script src="/js/front.js"></script>
+<!-- start: JavaScript-->
+<script src="/js/dwa/jquery-1.10.2.min.js"></script>
+<script src="/js/dwa/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/dwa/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/js/dwa/jquery.ui.touch-punch.js"></script>
+<script src="/js/dwa/modernizr.js"></script>
+<script src="/js/dwa/bootstrap.min.js"></script>
+<script src="/js/dwa/jquery.cookie.js"></script>
+<script src='/js/dwa/fullcalendar.min.js'></script>
+<script src="/js/dwa/excanvas.js"></script>
+<script src="/js/dwa/jquery.flot.js"></script>
+<script src="/js/dwa/jquery.flot.pie.js"></script>
+<script src="/js/dwa/jquery.flot.stack.js"></script>
+<script src="/js/dwa/jquery.flot.resize.min.js"></script>
+<script src="/js/dwa/jquery.flot.time.js"></script>
+
+<script src="/js/dwa/jquery.chosen.min.js"></script>
+<script src="/js/dwa/jquery.uniform.min.js"></script>
+<script src="/js/dwa/jquery.cleditor.min.js"></script>
+<script src="/js/dwa/jquery.noty.js"></script>
+<script src="/js/dwa/jquery.elfinder.min.js"></script>
+<script src="/js/dwa/jquery.raty.min.js"></script>
+<script src="/js/dwa/jquery.iphone.toggle.js"></script>
+<script src="/js/dwa/jquery.uploadify-3.1.min.js"></script>
+<script src="/js/dwa/jquery.gritter.min.js"></script>
+<script src="/js/dwa/jquery.imagesloaded.js"></script>
+<script src="/js/dwa/jquery.masonry.min.js"></script>
+<script src="/js/dwa/jquery.knob.modified.js"></script>
+<script src="/js/dwa/jquery.sparkline.min.js"></script>
+<script src="/js/dwa/counter.min.js"></script>
+<script src="/js/dwa/raphael.2.1.0.min.js"></script>
+<script src="/js/dwa/justgage.1.0.1.min.js"></script>
+<script src="/js/dwa/jquery.autosize.min.js"></script>
+<script src="/js/dwa/retina.js"></script>
+<script src="/js/dwa/jquery.placeholder.min.js"></script>
+<script src="/js/dwa/wizard.min.js"></script>
+<script src="/js/dwa/core.min.js"></script>
+<script src="/js/dwa/charts.min.js"></script>
+<script src="/js/dwa/custom.min.js"></script>
+<!-- end: JavaScript-->
 
 <!--data table-->
 <script type="text/javascript" src="/js/data-tables/jquery.dataTables.min.js"></script>

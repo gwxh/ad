@@ -18,7 +18,7 @@ import java.util.Set;
 public class AdminFilter implements Filter {
 
     private static final Set<String> ALLOWED_PATHS = Collections.unmodifiableSet(new HashSet<>(
-            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout", ".*/fonts/.*")));
+            Arrays.asList(".*/css/.*", ".*/images/.*", ".*/fonts/.*", ".*/js/.*", ".*/login", ".*/logout", ".*/fonts/.*","/site.*")));
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

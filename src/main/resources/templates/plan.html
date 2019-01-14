@@ -74,52 +74,6 @@
     </div>
 </div>
 
-<!--<div class="page-content d-flex align-items-stretch">-->
-
-    <!--&lt;!&ndash;***** SIDE NAVBAR *****&ndash;&gt;-->
-    <!--&lt;!&ndash;<div th:replace="component/left_nav::left-nav('plan')"></div>&ndash;&gt;-->
-
-    <!--<div class="content-inner">-->
-        <!--<div class="tenth-button">-->
-            <!--<a href="/user/createPlan" class="btn btn-lg blue">新增计划</a>-->
-        <!--</div>-->
-        <!--<div class="row">-->
-            <!--<div class="col-md-12">-->
-                <!--<div class="card card-c2">-->
-                    <!--<table id="planList" class="table table-hover">-->
-                        <!--<thead>-->
-                        <!--<tr>-->
-                            <!--<th>计划名称</th>-->
-                            <!--<th>单价</th>-->
-                            <!--<th>限额</th>-->
-                            <!--<th>状态</th>-->
-                            <!--<th>操作</th>-->
-                        <!--</tr>-->
-                        <!--</thead>-->
-                        <!--<tbody>-->
-                        <!--<tr th:each="plan : ${plans}">-->
-                            <!--<td th:text="${plan.name}"></td>-->
-                            <!--<td th:include="util/currency::format(${plan.unitPrice})"></td>-->
-                            <!--<td th:include="util/currency::format(${plan.totalPrice})"></td>-->
-                            <!--<td th:switch="${plan.status}">-->
-                                <!--<span th:case="0" class="label label-danger label-mini">新增待审</span>-->
-                                <!--<span th:case="1" class="label label-success label-mini">活动</span>-->
-                                <!--<span th:case="2" class="label label-danger label-mini">修改待审</span>-->
-                                <!--<span th:case="3" class="label label-warning label-mini">已被锁定</span>-->
-                            <!--</td>-->
-                            <!--<td class="operate">-->
-                                <!--<a th:href="@{/user/editPlan/{id}(id=${plan.id})}">修改</a>-->
-                                <!--<a th:href="@{/user/createAd/{id}(id=${plan.id})}">新增广告</a>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                        <!--</tbody>-->
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
-
 <!-- start: JavaScript-->
 <script src="/js/dwa/jquery-1.10.2.min.js"></script>
 <script src="/js/dwa/jquery-migrate-1.2.1.min.js"></script>
