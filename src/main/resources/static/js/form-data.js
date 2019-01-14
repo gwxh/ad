@@ -63,112 +63,86 @@ $(function () {
         }
     }
 
-    $("#areaCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=area]").attr("checked", true);
+    function switchCheckbox(ele, name) {
+        if (ele.checked) {
+            $("[name=" + name + "]").parent().attr("class", "checked");
+            $("[name=" + name + "]").attr("checked", true);
         } else {
-            $("[name=area]").attr("checked", false);
+            $("[name=" + name + "]").parent().removeAttr("class");
+            $("[name=" + name + "]").attr("checked", false);
         }
+    }
+
+    $("#areaCheckAll").click(function () {
+        switchCheckbox(this, "area")
     });
     $("#deviceCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=device]").attr("checked", true);
-        } else {
-            $("[name=device]").attr("checked", false);
-        }
+        switchCheckbox(this, "device")
     });
     $("#ageCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=age]").attr("checked", true);
-        } else {
-            $("[name=age]").attr("checked", false);
-        }
+        switchCheckbox(this, "age")
     });
     $("#incomeCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=income]").attr("checked", true);
-        } else {
-            $("[name=income]").attr("checked", false);
-        }
+        switchCheckbox(this, "income")
     });
     $("#consumptionCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=consumption]").attr("checked", true);
-        } else {
-            $("[name=consumption]").attr("checked", false);
-        }
+        switchCheckbox(this, "consumption")
     });
     $("#carCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=car]").attr("checked", true);
-        } else {
-            $("[name=car]").attr("checked", false);
-        }
+        switchCheckbox(this, "car")
     });
     $("#marryCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=marry]").attr("checked", true);
-        } else {
-            $("[name=marry]").attr("checked", false);
-        }
+        switchCheckbox(this, "marry")
     });
     $("#childCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=child]").attr("checked", true);
-        } else {
-            $("[name=child]").attr("checked", false);
-        }
+        switchCheckbox(this, "child")
     });
     $("#qualityCheckAll").click(function () {
-        if (this.checked) {
-            $("[name=quality]").attr("checked", true);
-        } else {
-            $("[name=quality]").attr("checked", false);
-        }
+        switchCheckbox(this, "quality")
     });
 
-    for (var i = 1; i < 26; i++) {
-        var mJson = $("#m" + i).val();
-        if (mJson !== "") {
-            var m = JSON.parse(mJson);
-            for (var j = 0; j < m.length; j++) {
-                $("input[name=m" + i + "][value=" + m[j] + "]").attr("checked", "checked");
-            }
-        }
-        $("#m" + i + "CheckAll").click(function () {
-            var value = $(this).val();
-            if (this.checked) {
-                $("[name=m" + value + "]").attr("checked", true);
-            } else {
-                $("[name=m" + value + "]").attr("checked", false);
-            }
-        });
-    }
-
-    var count = 0;
-    for (var i = 1; i < 8; i++) {
-        for (var j = 0; j <= 23; j++) {
-            $("#day" + i + " .hour").append('<label class="checkbox-inline"><input type="checkbox" name="d' + i + '" value="' + j + '">' + j+'</label>');
-        }
-
-        var dJson = $("#d" + i).val();
-        if (dJson !== "") {
-            var d = JSON.parse(dJson);
-            for (var j = 0; j < d.length; j++) {
-                $("input[name=d" + i + "][value=" + d[j] + "]").attr("checked", "checked");
-                count++;
-            }
-        }
-        $("#d" + i + "CheckAll").click(function () {
-            var value = $(this).val();
-            if (this.checked) {
-                $("[name=d" + value + "]").attr("checked", true);
-            } else {
-                $("[name=d" + value + "]").attr("checked", false);
-            }
-        });
-    }
-    if(count>0){
-        $("#time2").click();
-    }
+    // for (var i = 1; i < 26; i++) {
+    //     var mJson = $("#m" + i).val();
+    //     if (mJson !== "") {
+    //         var m = JSON.parse(mJson);
+    //         for (var j = 0; j < m.length; j++) {
+    //             $("input[name=m" + i + "][value=" + m[j] + "]").attr("checked", "checked");
+    //         }
+    //     }
+    //     $("#m" + i + "CheckAll").click(function () {
+    //         var value = $(this).val();
+    //         if (this.checked) {
+    //             $("[name=m" + value + "]").attr("checked", true);
+    //         } else {
+    //             $("[name=m" + value + "]").attr("checked", false);
+    //         }
+    //     });
+    // }
+    //
+    // var count = 0;
+    // for (var i = 1; i < 8; i++) {
+    //     for (var j = 0; j <= 23; j++) {
+    //         $("#day" + i + " .hour").append('<label class="checkbox-inline"><input type="checkbox" name="d' + i + '" value="' + j + '">' + j + '</label>');
+    //     }
+    //
+    //     var dJson = $("#d" + i).val();
+    //     if (dJson !== "") {
+    //         var d = JSON.parse(dJson);
+    //         for (var j = 0; j < d.length; j++) {
+    //             $("input[name=d" + i + "][value=" + d[j] + "]").attr("checked", "checked");
+    //             count++;
+    //         }
+    //     }
+    //     $("#d" + i + "CheckAll").click(function () {
+    //         var value = $(this).val();
+    //         if (this.checked) {
+    //             $("[name=d" + value + "]").attr("checked", true);
+    //         } else {
+    //             $("[name=d" + value + "]").attr("checked", false);
+    //         }
+    //     });
+    // }
+    // if (count > 0) {
+    //     $("#time2").click();
+    // }
 });
