@@ -49,14 +49,10 @@ public class PageController {
         int uid = user.getId();
         user = adminService.selectUserById(uid);
         double todayConsumeAmount = userService.selectUserTodayConsumeAmount(uid);
-        double yesterdayConsumeAmount = userService.selectUserYesterdayConsumeAmount(uid);
-        String logJson = userService.selectUserMonthConsumeLogJson(uid);
-        double monthConsumeAmount = userService.selectUserMonthConsumeAmount(uid);
         model.addAttribute("userAmount", user.getAmount());
         model.addAttribute("todayConsumeAmount", todayConsumeAmount);
-        model.addAttribute("yesterdayConsumeAmount", yesterdayConsumeAmount);
-        model.addAttribute("monthConsumeAmount", monthConsumeAmount);
-        model.addAttribute("logJson", logJson);
+        List<ExtAdLog> logs = userService.selectAdConsumeLogs(user.getId());
+        model.addAttribute("logs", logs);
         return "index";
     }
 

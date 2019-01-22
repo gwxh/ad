@@ -53,7 +53,7 @@ remotes {
 task upgrade(dependsOn: bootJar) {
 	doLast {
 		String localFile = "build/libs/${project.name}.jar"
-		String remoteFile = "/app/juli/new-${project.name}.jar"
+		String remoteFile = "/app/dwa/new-dwa.jar"
 
 		ant.checksum property: 'md5', file: localFile
 		println "local |$ant.md5  $localFile"
@@ -72,7 +72,7 @@ task upgrade(dependsOn: bootJar) {
 
 		ssh.run {
 			session(remotes.prodServer) {
-				execute "/app/juli/restart.sh"
+				execute "/app/dwa/restart.sh"
 			}
 		}
 	}

@@ -33,37 +33,54 @@
 
             <div class="row-fluid">
 
+                <div class="span3 smallstat box mobileHalf" ontablet="span6" ondesktop="span3">
+                    <i class="icon-money yellow"></i>
+                    <span class="title">今日消耗</span>
+                    <span class="value"><span th:replace="util/currency::format(${todayConsumeAmount})"></span></span>
+                </div>
+
                 <div class="span3 smallstat mobileHalf box" ontablet="span6" ondesktop="span3">
                     <i class="icon-money red"></i>
                     <span class="title">账户余额</span>
                     <span class="value"><span th:replace="util/currency::format(${userAmount})"></span></span>
                 </div>
 
-                <div class="span3 smallstat box mobileHalf" ontablet="span6" ondesktop="span3">
-                    <i class="icon-money yellow"></i>
-                    <span class="title">当日支付</span>
-                    <span class="value"><span th:replace="util/currency::format(${todayConsumeAmount})"></span></span>
+                <div class="span3 smallstat mobileHalf box" ontablet="span6" ondesktop="span3">
+                    <i class="icon-bar-chart blue"></i>
+                    <span>待审核 <span class="value">0</span></span>
+                    <span style="margin-left: 10px;">投放中 <span class="value">0</span></span>
+                    <br/>
+                    <span>未通过 <span class="value">0</span></span>
                 </div>
-
-                <div class="span3 smallstat box mobileHalf" ontablet="span6" ondesktop="span3">
-                    <i class="icon-money blue"></i>
-                    <span class="title">昨日支付</span>
-                    <span class="value"><span th:replace="util/currency::format(${yesterdayConsumeAmount})"></span></span>
-                </div>
-
-                <div class="span3 smallstat box mobileHalf noMargin" ontablet="span6" ondesktop="span3">
-                    <i class="icon-download-alt green"></i>
-                    <span class="title">当月支付</span>
-                    <span class="value"><span th:replace="util/currency::format(${monthConsumeAmount})"></span></span>
-                </div>
-
-
 
             </div>
 
             <div class="row-fluid">
-                <input id="logJson" type="hidden" th:value="${logJson}">
-                <div id="container"></div>
+                <div class="box span12">
+                    <div class="box-header" data-original-title="">
+                        <h2><i class="icon-tasks"></i><span class="break"></span>数据统计</h2>
+                    </div>
+                    <div class="box-content">
+                        <table class="table table-hover" id="logList">
+                            <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>网页浏览量</th>
+                                <th>cpc有效</th>
+                                <th>支付</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="log : ${logs}">
+                                <td th:text="${log.date}"></td>
+                                <td th:text="${#numbers.formatInteger(log.exec,3,'COMMA')}"></td>
+                                <td th:text="${#numbers.formatInteger(log.cpc,3,'COMMA')}"></td>
+                                <td th:include="util/currency::format(${log.amount/100})"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -113,69 +130,6 @@
 <script src="/js/dwa/charts.min.js"></script>
 <script src="/js/dwa/custom.min.js"></script>
 <!-- end: JavaScript-->
-
-<!--&lt;!&ndash;Chart &ndash;&gt;-->
-<script src="/js/highcharts.js"></script>
-<script>
-    $(function () {
-        var logJson = $("#logJson").val();
-        var log = JSON.parse(logJson);
-        var xArray = [];
-        var execArray = [];
-        var cpcArray = [];
-        for (var i in log) {
-            xArray.push(toDate(log[i].recordTime));
-            execArray.push(log[i].exec);
-            cpcArray.push(log[i].cpc);
-        }
-        Highcharts.chart('container', {
-            title: {
-                text: '当月效果报表'
-            },
-            xAxis: {
-                categories: xArray
-            },
-            yAxis: {
-                title: {
-                    text: ''
-                }
-            },
-            tooltip: {
-                crosshairs: true,
-                shared: true
-            },
-            plotOptions: {
-                spline: {
-                    marker: {
-                        radius: 4,
-                        lineColor: '#666666',
-                        lineWidth: 1
-                    }
-                }
-            },
-            series: [{
-                name: '网页浏览量',
-                data: execArray
-            }, {
-                name: 'cpc',
-                data: cpcArray
-            }],
-            credits: {
-
-                enabled: false
-
-            }
-        });
-    });
-
-    function toDate(timestamp) {
-        var date = new Date(timestamp * 1000);
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        var D = date.getDate();
-        return Y + M + D;
-    }
-</script>
 
 </body>
 
