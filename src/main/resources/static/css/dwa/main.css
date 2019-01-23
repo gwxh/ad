@@ -1,0 +1,16 @@
+.header{
+    min-width: 617px;
+    width: 100%;
+    height: 50px;
+    background-color: #1284c0;
+    position: relative;
+    z-index: 10000;
+}
+
+html, body, .height100 {
+    height: 100%;
+}
+
+.red {
+    color: #b94a48;
+}
