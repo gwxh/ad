@@ -45,33 +45,35 @@
                         <div class="box-content">
 
                             <fieldset>
+                                <!--<div class="control-group">-->
+                                    <!--<label class="control-label" th:for="name">计划名称</label>-->
+                                    <!--<div class="controls">-->
+                                        <!--<input class="input-xlarge focused" type="text" th:field="*{name}">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="control-group">-->
+                                    <!--<label class="control-label" th:for="unitPrice">计划单价</label>-->
+                                    <!--<div class="controls">-->
+                                        <!--<input class="input-xlarge focused" type="text" th:field="*{unitPrice}">-->
+                                        <!--<span class="red">元（最低单价为0.5元）</span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div class="control-group">
-                                    <label class="control-label" th:for="name">计划名称</label>
-                                    <div class="controls">
-                                        <input class="input-xlarge focused" type="text" th:field="*{name}">
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" th:for="unitPrice">计划单价</label>
-                                    <div class="controls">
-                                        <input class="input-xlarge focused" type="text" th:field="*{unitPrice}">
-                                        <span class="red">元（最低单价为0.5元）</span>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" th:for="totalPrice">计划限额</label>
+                                    <label class="control-label" th:for="totalPrice">日预算</label>
                                     <div class="controls">
                                         <input class="input-xlarge focused" type="text" th:field="*{totalPrice}">
                                         <span class="red">元（最低限额为500元）</span>
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label" th:for="*{param.speed}">投放速率</label>
+                                    <label class="control-label">平台</label>
                                     <div class="controls">
-                                        <select th:field="*{param.speed}">
-                                            <option value="0">匀速</option>
-                                            <option value="1">加速</option>
-                                        </select>
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="0" th:field="*{param.platform}">移动端
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="1" th:field="*{param.platform}">PC
+                                        </label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -83,7 +85,7 @@
                 <div class="row-fluid">
                     <div class="box span12">
                         <div class="box-header">
-                            <h2><i class="icon-edit"></i>基本属性</h2>
+                            <h2><i class="icon-edit"></i>广告计划</h2>
                             <div class="box-icon">
                                 <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
                                 <a href="#" class="btn-close"><i class="icon-remove"></i></a>
@@ -92,7 +94,233 @@
                         <div class="box-content">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label">投放地区</label>
+                                    <label class="control-label" th:for="name">计划名称</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{name}">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">渠道</label>
+                                    <input id="channel" type="hidden" th:field="*{param.channel}">
+                                    <div class="controls">
+                                        <input id="channelCheckAll" type="checkbox" name="all">全选<br/>
+                                        <div>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="4">安徽
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="10">北京
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="20">重庆
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="7">福建
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="21">贵州
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="6">广东
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="8">广西
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="28">甘肃
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="33">澳门
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="17">湖北
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="18">湖南
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="12">河北
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="14">河南
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="9">海南
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="2">江苏
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="25">吉林
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="5">江西
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="26">黑龙江
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="24">辽宁
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="29">宁夏
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="30">青海
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="13">山东
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="1">上海
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="15">山西
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="27">陕西
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="19">四川
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="16">内蒙古
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="11">天津
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="22">云南
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="3">浙江
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="31">台湾
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="channel" value="32">香港
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">系统</label>
+                                    <div class="controls">
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="0" th:field="*{param.system}">Android
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="1" th:field="*{param.system}">IOS
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div><!--/span-->
+
+                </div><!--/row-->
+
+                <div class="row-fluid">
+                    <div class="box span12">
+                        <div class="box-header">
+                            <h2><i class="icon-edit"></i>广告创意</h2>
+                            <div class="box-icon">
+                                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+                                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="*{param.style}">选择样式</label>
+                                    <div class="controls">
+                                        <select th:field="*{param.speed}">
+                                            <option value="0">请选择样式</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="name">创意标题</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{param.title}"
+                                               placeholder="请输入6-30字之间"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="name">商品链接</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{param.url}"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="url">上传素材</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="file" th:field="*{param.imageFile}"/>
+                                        <input id="imageName" type="hidden" th:field="*{param.image}"/>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">广告分类</label>
+                                    <input id="consumption" type="hidden" th:field="*{param.consumption}">
+                                    <div class="controls">
+                                        <input id="consumptionCheckAll" type="checkbox" name="all">全选<br/>
+                                        <div>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="consumption" value="0">低
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="consumption" value="1">中
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="consumption" value="2">偏高
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="checkbox" name="consumption" value="3">高
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div><!--/span-->
+
+                </div><!--/row-->
+
+                <div class="row-fluid">
+                    <div class="box span12">
+                        <div class="box-header">
+                            <h2><i class="icon-edit"></i>广告定向</h2>
+                            <div class="box-icon">
+                                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
+                                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
+                            </div>
+                        </div>
+                        <div class="box-content">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label">性别</label>
+                                    <div class="controls">
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="0" th:field="*{param.sex}">不限
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="1" th:field="*{param.sex}">男
+                                        </label>
+                                        <label class="checkbox inline">
+                                            <input type="radio" name="platform" value="2" th:field="*{param.sex}">女
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="control-group">
+                                    <label class="control-label">投放地域</label>
                                     <input id="area" type="hidden" th:field="*{param.area}">
                                     <div class="controls">
                                         <input id="areaCheckAll" type="checkbox" name="all">全选<br/>
@@ -198,160 +426,6 @@
                                             </label>
                                             <label class="checkbox inline">
                                                 <input type="checkbox" name="area" value="32">香港
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="border-top: 1px solid #e5e5e5;margin-bottom: 10px;"></div>
-                                <div class="control-group">
-                                    <label class="control-label">年龄</label>
-                                    <input id="age" type="hidden" th:field="*{param.age}">
-                                    <div class="controls">
-                                        <input id="ageCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="0">小于20岁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="1">20-24岁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="2">25-29岁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="3">30-34岁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="4">35-39岁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="5">40-49岁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="age" value="6">50岁以上
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="border-top: 1px solid #e5e5e5;margin-bottom: 10px;"></div>
-                                <div class="control-group">
-                                    <label class="control-label">收入</label>
-                                    <input id="income" type="hidden" th:field="*{param.income}">
-                                    <div class="controls">
-                                        <input id="incomeCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="0">2000以下
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="1">2000-4000
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="2">4000-6000
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="3">6000-10000
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="4">10000-12000
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="5">12000-15000
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="income" value="6">15000以上
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div><!--/span-->
-
-                </div><!--/row-->
-
-                <div class="row-fluid">
-                    <div class="box span12">
-                        <div class="box-header">
-                            <h2><i class="icon-edit"></i>财富属性</h2>
-                            <div class="box-icon">
-                                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-                                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-                            </div>
-                        </div>
-                        <div class="box-content">
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label">消费能力</label>
-                                    <input id="consumption" type="hidden" th:field="*{param.consumption}">
-                                    <div class="controls">
-                                        <input id="consumptionCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="0">低
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="1">中
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="2">偏高
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="3">高
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="border-top: 1px solid #e5e5e5;margin-bottom: 10px;"></div>
-                                <div class="control-group">
-                                    <label class="control-label">是否有车</label>
-                                    <input id="car" type="hidden" th:field="*{param.car}">
-                                    <div class="controls">
-                                        <input id="carCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="car" value="0">无车
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="car" value="1">有车
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                    </div><!--/span-->
-
-                </div><!--/row-->
-
-                <div class="row-fluid">
-                    <div class="box span12">
-                        <div class="box-header">
-                            <h2><i class="icon-edit"></i>人生阶段</h2>
-                            <div class="box-icon">
-                                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-                                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-                            </div>
-                        </div>
-                        <div class="box-content">
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label">是否已婚</label>
-                                    <input id="marry" type="hidden" th:field="*{param.marry}">
-                                    <div class="controls">
-                                        <input id="marryCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="marry" value="0">低
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="marry" value="1">中
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="marry" value="2">偏高
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="marry" value="3">高
                                             </label>
                                         </div>
                                     </div>
