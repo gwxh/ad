@@ -16,7 +16,7 @@
     <link href="/css/dwa/bootstrap-responsive.min.css" rel="stylesheet"/>
     <link href="/css/dwa/style.min.css" rel="stylesheet"/>
     <link href="/css/dwa/style-responsive.min.css" rel="stylesheet"/>
-    <link href="/css/dwa/retina.css" rel="stylesheet"/>
+    <link href="/css/jquery.multiselect2side.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -103,111 +103,11 @@
                                     <label class="control-label">渠道</label>
                                     <input id="channel" type="hidden" th:field="*{param.channel}">
                                     <div class="controls">
-                                        <input id="channelCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="4">安徽
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="10">北京
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="20">重庆
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="7">福建
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="21">贵州
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="6">广东
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="8">广西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="28">甘肃
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="33">澳门
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="17">湖北
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="18">湖南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="12">河北
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="14">河南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="9">海南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="2">江苏
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="25">吉林
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="5">江西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="26">黑龙江
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="24">辽宁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="29">宁夏
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="30">青海
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="13">山东
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="1">上海
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="15">山西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="27">陕西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="19">四川
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="16">内蒙古
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="11">天津
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="22">云南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="3">浙江
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="31">台湾
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="channel" value="32">香港
-                                            </label>
-                                        </div>
+                                        <select id="channelSelect" name="channelSelect" multiple='multiple'>
+                                            <option value="1">淘宝</option>
+                                            <option value="2">京东</option>
+                                            <option value="3">百度</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -569,6 +469,7 @@
 <script src="/js/dwa/core.min.js"></script>
 <script src="/js/dwa/charts.min.js"></script>
 <script src="/js/dwa/custom.min.js"></script>
+<script src="/js/jquery.multiselect2side.js"></script>
 
 <script>
     $(function () {
@@ -600,6 +501,14 @@
                 $("#timeArea").slideUp();
             }
         }
+
+        $('#channelSelect').multiselect2side({
+            search: "待选区　　搜索：" ,
+            selectedPosition: 'right',
+            moveOptions: false,
+            labelsx: '待选区',
+            labeldx: '已选区'
+        });
     })
 </script>
 
