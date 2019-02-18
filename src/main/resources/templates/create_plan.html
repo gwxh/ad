@@ -103,7 +103,7 @@
                                     <label class="control-label">渠道</label>
                                     <input id="channel" type="hidden" th:field="*{param.channel}">
                                     <div class="controls">
-                                        <select id="channelSelect" name="channelSelect" multiple='multiple'>
+                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">淘宝</option>
                                             <option value="2">京东</option>
                                             <option value="3">百度</option>
@@ -170,21 +170,17 @@
                                     <label class="control-label">广告分类</label>
                                     <input id="consumption" type="hidden" th:field="*{param.consumption}">
                                     <div class="controls">
-                                        <input id="consumptionCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="0">低
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="1">中
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="2">偏高
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="consumption" value="3">高
-                                            </label>
-                                        </div>
+                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                            <option value="1">家居</option>
+                                            <option value="2">健康</option>
+                                            <option value="3">母婴</option>
+                                            <option value="4">食品</option>
+                                            <option value="5">生活服务</option>
+                                            <option value="6">商务服务</option>
+                                            <option value="7">影音</option>
+                                            <option value="8">科技</option>
+                                            <option value="9">汽车</option>
+                                        </select>
                                     </div>
                                 </div>
                             </fieldset>
@@ -218,132 +214,155 @@
                                         </label>
                                     </div>
                                 </div>
-
                                 <div class="control-group">
-                                    <label class="control-label">投放地域</label>
+                                    <label class="control-label">投放区域</label>
                                     <input id="area" type="hidden" th:field="*{param.area}">
                                     <div class="controls">
-                                        <input id="areaCheckAll" type="checkbox" name="all">全选<br/>
+                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                            <option value="1">安徽</option>
+                                            <option value="2">北京</option>
+                                            <option value="3">重庆</option>
+                                            <option value="4">福建</option>
+                                            <option value="5">贵州</option>
+                                            <option value="6">广东</option>
+                                            <option value="7">广西</option>
+                                            <option value="8">甘肃</option>
+                                            <option value="9">澳门</option>
+                                            <option value="10">湖北</option>
+                                            <option value="11">湖南</option>
+                                            <option value="12">河北</option>
+                                            <option value="13">河南</option>
+                                            <option value="14">海南</option>
+                                            <option value="15">江苏</option>
+                                            <option value="16">吉林</option>
+                                            <option value="17">江西</option>
+                                            <option value="18">黑龙江</option>
+                                            <option value="19">辽宁</option>
+                                            <option value="20">宁夏</option>
+                                            <option value="21">青海</option>
+                                            <option value="22">山东</option>
+                                            <option value="23">上海</option>
+                                            <option value="24">山西</option>
+                                            <option value="25">陕西</option>
+                                            <option value="26">四川</option>
+                                            <option value="27">内蒙古</option>
+                                            <option value="28">天津</option>
+                                            <option value="29">云南</option>
+                                            <option value="30">浙江</option>
+                                            <option value="31">台湾</option>
+                                            <option value="32">香港</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">年龄</label>
+                                    <div class="controls">
                                         <div>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="4">安徽
+                                                <input type="radio" name="age" value="0" th:field="*{param.age}">不限
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="10">北京
+                                                <input type="radio" name="age" value="1" th:field="*{param.age}">0-17
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="20">重庆
+                                                <input type="radio" name="age" value="2" th:field="*{param.age}">18-24
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="7">福建
+                                                <input type="radio" name="age" value="3" th:field="*{param.age}">25-34
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="21">贵州
+                                                <input type="radio" name="age" value="4" th:field="*{param.age}">35-44
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="6">广东
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="8">广西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="28">甘肃
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="33">澳门
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="17">湖北
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="18">湖南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="12">河北
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="14">河南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="9">海南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="2">江苏
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="25">吉林
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="5">江西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="26">黑龙江
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="24">辽宁
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="29">宁夏
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="30">青海
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="13">山东
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="1">上海
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="15">山西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="27">陕西
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="19">四川
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="16">内蒙古
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="11">天津
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="22">云南
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="3">浙江
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="31">台湾
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="area" value="32">香港
+                                                <input type="radio" name="age" value="5" th:field="*{param.age}">45+
                                             </label>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="border-top: 1px solid #e5e5e5;margin-bottom: 10px;"></div>
                                 <div class="control-group">
-                                    <label class="control-label">是否已育</label>
-                                    <input id="child" type="hidden" th:field="*{param.child}">
+                                    <label class="control-label">网络环境</label>
                                     <div class="controls">
-                                        <input id="childCheckAll" type="checkbox" name="all">全选<br/>
                                         <div>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="child" value="0">无车
+                                                <input type="radio" name="network" value="0" th:field="*{param.network}">不限
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="child" value="1">有车
+                                                <input type="radio" name="network" value="1" th:field="*{param.network}">2G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="2" th:field="*{param.network}">3G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="3" th:field="*{param.network}">4G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="4" th:field="*{param.network}">5G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="5" th:field="*{param.network}">WIFI
                                             </label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">网络环境</label>
+                                    <div class="controls">
+                                        <div>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="0" th:field="*{param.operator}">不限
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="1" th:field="*{param.operator}">2G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="2" th:field="*{param.operator}">3G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="3" th:field="*{param.operator}">4G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="4" th:field="*{param.operator}">5G
+                                            </label>
+                                            <label class="checkbox inline">
+                                                <input type="radio" name="network" value="5" th:field="*{param.operator}">WIFI
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">手机品牌</label>
+                                    <input id="brand" type="hidden" th:field="*{param.brand}">
+                                    <div class="controls">
+                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                            <option value="10">苹果</option>
+                                            <option value="1">小米</option>
+                                            <option value="2">OPPO</option>
+                                            <option value="3">三星</option>
+                                            <option value="4">VIVO</option>
+                                            <option value="5">魅族</option>
+                                            <option value="6">联想</option>
+                                            <option value="7">金立</option>
+                                            <option value="8">努比亚</option>
+                                            <option value="9">其他</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">安装应用偏好</label>
+                                    <input id="app" type="hidden" th:field="*{param.app}">
+                                    <div class="controls">
+                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                            <option value="10">股票</option>
+                                            <option value="1">投资</option>
+                                            <option value="2">记账</option>
+                                            <option value="3">银行</option>
+                                            <option value="4">信用卡</option>
+                                            <option value="5">彩票</option>
+                                            <option value="6">网贷P2P</option>
+                                            <option value="7">淘宝</option>
+                                            <option value="8">天猫</option>
+                                            <option value="9">京东</option>
+                                        </select>
                                     </div>
                                 </div>
                             </fieldset>
@@ -502,9 +521,7 @@
             }
         }
 
-        $('#channelSelect').multiselect2side({
-            search: "待选区　　搜索：" ,
-            selectedPosition: 'right',
+        $('.lrSelect').multiselect2side({
             moveOptions: false,
             labelsx: '待选区',
             labeldx: '已选区'
