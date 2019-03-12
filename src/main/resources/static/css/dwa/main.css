@@ -14,3 +14,7 @@ html, body, .height100 {
 .red {
     color: #b94a48;
 }
+
+.error{
+    color: red;
+}

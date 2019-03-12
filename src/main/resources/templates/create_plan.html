@@ -12,6 +12,7 @@
     <title>广告商后台</title>
     <link rel="shortcut icon" href="/img/favicon.ico">
 
+    <link href="/css/dwa/main.css" rel="stylesheet"/>
     <link href="/css/dwa/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/dwa/bootstrap-responsive.min.css" rel="stylesheet"/>
     <link href="/css/dwa/style.min.css" rel="stylesheet"/>
@@ -45,24 +46,10 @@
                         <div class="box-content">
 
                             <fieldset>
-                                <!--<div class="control-group">-->
-                                    <!--<label class="control-label" th:for="name">计划名称</label>-->
-                                    <!--<div class="controls">-->
-                                        <!--<input class="input-xlarge focused" type="text" th:field="*{name}">-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="control-group">-->
-                                    <!--<label class="control-label" th:for="unitPrice">计划单价</label>-->
-                                    <!--<div class="controls">-->
-                                        <!--<input class="input-xlarge focused" type="text" th:field="*{unitPrice}">-->
-                                        <!--<span class="red">元（最低单价为0.5元）</span>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                                 <div class="control-group">
-                                    <label class="control-label" th:for="totalPrice">日预算</label>
+                                    <label class="control-label" th:for="name">计划名称</label>
                                     <div class="controls">
-                                        <input class="input-xlarge focused" type="text" th:field="*{totalPrice}">
-                                        <span class="red">元（最低限额为500元）</span>
+                                        <input class="input-xlarge focused" type="text" th:field="*{name}">
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -94,16 +81,9 @@
                         <div class="box-content">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label" th:for="name">计划名称</label>
-                                    <div class="controls">
-                                        <input class="input-xlarge focused" type="text" th:field="*{name}">
-                                    </div>
-                                </div>
-                                <div class="control-group">
                                     <label class="control-label">渠道</label>
-                                    <input id="channel" type="hidden" th:field="*{param.channel}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.channel}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">淘宝</option>
                                             <option value="2">京东</option>
                                             <option value="3">百度</option>
@@ -396,36 +376,10 @@
                                         </select>
                                     </div>
                                 </div>
-                            </fieldset>
-                        </div>
-                    </div><!--/span-->
-
-                </div><!--/row-->
-
-                <div class="row-fluid">
-                    <div class="box span12">
-                        <div class="box-header">
-                            <h2><i class="icon-edit"></i>设备属性</h2>
-                            <div class="box-icon">
-                                <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
-                                <a href="#" class="btn-close"><i class="icon-remove"></i></a>
-                            </div>
-                        </div>
-                        <div class="box-content">
-                            <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label">投放设备</label>
-                                    <input id="device" type="hidden" th:field="*{param.device}">
+                                    <label class="control-label" th:for="*{param.key}">自定义关键字</label>
                                     <div class="controls">
-                                        <input id="deviceCheckAll" type="checkbox" name="all">全选<br/>
-                                        <div>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="device" value="2">苹果IOS
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="device" value="3">Android
-                                            </label>
-                                        </div>
+                                        <input class="input-xlarge focused" type="text" th:field="*{param.key}">
                                     </div>
                                 </div>
                             </fieldset>
@@ -437,7 +391,7 @@
                 <div class="row-fluid">
                     <div class="box span12">
                         <div class="box-header">
-                            <h2><i class="icon-edit"></i>用户质量</h2>
+                            <h2><i class="icon-edit"></i>广告预算和出价</h2>
                             <div class="box-icon">
                                 <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
                                 <a href="#" class="btn-close"><i class="icon-remove"></i></a>
@@ -446,24 +400,51 @@
                         <div class="box-content">
                             <fieldset>
                                 <div class="control-group">
-                                    <label class="control-label">用户质量</label>
-                                    <input id="quality" type="hidden" th:field="*{param.quality}">
+                                    <label class="control-label" th:for="totalPrice">广告预算</label>
                                     <div class="controls">
-                                        <input id="qualityCheckAll" type="checkbox" name="all">全选<br/>
+                                        <input class="input-xlarge focused" type="text" th:field="*{totalPrice}">
+                                        <span class="red">元（最低为500元）</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">付费方式</label>
+                                    <div class="controls">
                                         <div>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="quality" value="0">非常活跃
+                                                <input type="radio" name="payMethod" value="0" th:field="*{param.payMethod}">CPM
                                             </label>
                                             <label class="checkbox inline">
-                                                <input type="checkbox" name="quality" value="1">活跃
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="quality" value="2">一般
-                                            </label>
-                                            <label class="checkbox inline">
-                                                <input type="checkbox" name="quality" value="3">不活跃
+                                                <input type="radio" name="payMethod" value="1" th:field="*{param.payMethod}">CPC
                                             </label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="unitPrice">出价</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{unitPrice}">
+                                        <span class="red">元（最低单价为0.5元）<small>每千次展示</small></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="*{param.zxpl}">展现频率</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{param.zxpl}">
+                                        <span class="red">元 <small>每个用户看到的时间间隔（分钟）</small></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="*{param.zxcs}">展现次数</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{param.zxcs}">
+                                        <span class="red">元 <small>每个用户看到的最多次数</small></span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" th:for="*{param.djcs}">点击次数</label>
+                                    <div class="controls">
+                                        <input class="input-xlarge focused" type="text" th:field="*{param.djcs}">
+                                        <span class="red">元 <small>每个用户点击的最多次数</small></span>
                                     </div>
                                 </div>
                             </fieldset>

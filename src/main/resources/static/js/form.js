@@ -1,21 +1,21 @@
 $(function () {
-    $("#passwordForm").validate({
-        rules: {
-            oldPassword: {
-                required: true,
-                minlength: 6
-            },
-            newPassword1: {
-                required: true,
-                minlength: 6
-            },
-            newPassword2: {
-                required: true,
-                minlength: 6,
-                equalTo: "#newPassword1"
-            }
-        }
-    });
+    // $("#passwordForm").validate({
+    //     rules: {
+    //         oldPassword: {
+    //             required: true,
+    //             minlength: 6
+    //         },
+    //         newPassword1: {
+    //             required: true,
+    //             minlength: 6
+    //         },
+    //         newPassword2: {
+    //             required: true,
+    //             minlength: 6,
+    //             equalTo: "#newPassword1"
+    //         }
+    //     }
+    // });
 
     $("#planForm").validate({
         rules: {
@@ -33,67 +33,67 @@ $(function () {
                 min: 500
             }
         }, submitHandler: function (form) {
-            var device = [];
-            $.each($("input[name=device]:checked"), function () {
-                device.push($(this).val());
-            });
-            $("#device").val(JSON.stringify(device));
-            var area = [];
-            $.each($("input[name=area]:checked"), function () {
-                area.push($(this).val());
-            });
-            $("#area").val(JSON.stringify(area));
-            var age = [];
-            $.each($("input[name=age]:checked"), function () {
-                age.push($(this).val());
-            });
-            $("#age").val(JSON.stringify(age));
-            var income = [];
-            $.each($("input[name=income]:checked"), function () {
-                income.push($(this).val());
-            });
-            $("#income").val(JSON.stringify(income));
-            var consumption = [];
-            $.each($("input[name=consumption]:checked"), function () {
-                consumption.push($(this).val());
-            });
-            $("#consumption").val(JSON.stringify(consumption));
-            var car = [];
-            $.each($("input[name=car]:checked"), function () {
-                car.push($(this).val());
-            });
-            $("#car").val(JSON.stringify(car));
-            var marry = [];
-            $.each($("input[name=marry]:checked"), function () {
-                marry.push($(this).val());
-            });
-            $("#marry").val(JSON.stringify(marry));
-            var child = [];
-            $.each($("input[name=child]:checked"), function () {
-                child.push($(this).val());
-            });
-            $("#child").val(JSON.stringify(child));
-            var quality = [];
-            $.each($("input[name=quality]:checked"), function () {
-                quality.push($(this).val());
-            });
-            $("#quality").val(JSON.stringify(quality));
-
-            for (var i = 1; i < 26; i++) {
-                var m = [];
-                $.each($("input[name=m" + i + "]:checked"), function () {
-                    m.push($(this).val());
-                });
-                $("#m" + i).val(JSON.stringify(m));
-            }
-
-            for (var i = 1; i < 8; i++) {
-                var d = [];
-                $.each($("input[name=d" + i + "]:checked"), function () {
-                    d.push($(this).val());
-                });
-                $("#d" + i).val(JSON.stringify(d));
-            }
+            // var device = [];
+            // $.each($("input[name=device]:checked"), function () {
+            //     device.push($(this).val());
+            // });
+            // $("#device").val(JSON.stringify(device));
+            // var area = [];
+            // $.each($("input[name=area]:checked"), function () {
+            //     area.push($(this).val());
+            // });
+            // $("#area").val(JSON.stringify(area));
+            // var age = [];
+            // $.each($("input[name=age]:checked"), function () {
+            //     age.push($(this).val());
+            // });
+            // $("#age").val(JSON.stringify(age));
+            // var income = [];
+            // $.each($("input[name=income]:checked"), function () {
+            //     income.push($(this).val());
+            // });
+            // $("#income").val(JSON.stringify(income));
+            // var consumption = [];
+            // $.each($("input[name=consumption]:checked"), function () {
+            //     consumption.push($(this).val());
+            // });
+            // $("#consumption").val(JSON.stringify(consumption));
+            // var car = [];
+            // $.each($("input[name=car]:checked"), function () {
+            //     car.push($(this).val());
+            // });
+            // $("#car").val(JSON.stringify(car));
+            // var marry = [];
+            // $.each($("input[name=marry]:checked"), function () {
+            //     marry.push($(this).val());
+            // });
+            // $("#marry").val(JSON.stringify(marry));
+            // var child = [];
+            // $.each($("input[name=child]:checked"), function () {
+            //     child.push($(this).val());
+            // });
+            // $("#child").val(JSON.stringify(child));
+            // var quality = [];
+            // $.each($("input[name=quality]:checked"), function () {
+            //     quality.push($(this).val());
+            // });
+            // $("#quality").val(JSON.stringify(quality));
+            //
+            // for (var i = 1; i < 26; i++) {
+            //     var m = [];
+            //     $.each($("input[name=m" + i + "]:checked"), function () {
+            //         m.push($(this).val());
+            //     });
+            //     $("#m" + i).val(JSON.stringify(m));
+            // }
+            //
+            // for (var i = 1; i < 8; i++) {
+            //     var d = [];
+            //     $.each($("input[name=d" + i + "]:checked"), function () {
+            //         d.push($(this).val());
+            //     });
+            //     $("#d" + i).val(JSON.stringify(d));
+            // }
             form.submit();
         }
     });

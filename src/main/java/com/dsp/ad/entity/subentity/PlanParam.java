@@ -127,7 +127,7 @@ public class PlanParam {
         this.adv = adv;
     }
 
-    public String xq;
+    private String xq;
 
     public String getXq() {
         return xq;
@@ -135,6 +135,66 @@ public class PlanParam {
 
     public void setXq(String xq) {
         this.xq = xq;
+    }
+
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    private int payMethod;
+
+
+    public int getPayMethod() {
+        return payMethod;
+    }
+
+    public void setPayMethod(int payMethod) {
+        this.payMethod = payMethod;
+    }
+
+    /**
+     * 展现频率
+     */
+    private int zxpl;
+
+    public int getZxpl() {
+        return zxpl;
+    }
+
+    public void setZxpl(int zxpl) {
+        this.zxpl = zxpl;
+    }
+
+    /**
+     * 展现次数
+     */
+    private int zxcs;
+
+    public int getZxcs() {
+        return zxcs;
+    }
+
+    public void setZxcs(int zxcs) {
+        this.zxcs = zxcs;
+    }
+
+    /**
+     * 点击次数
+     */
+    private int djcs;
+
+    public int getDjcs() {
+        return djcs;
+    }
+
+    public void setDjcs(int djcs) {
+        this.djcs = djcs;
     }
 
     /**
@@ -170,6 +230,16 @@ public class PlanParam {
         this.channel = channel;
     }
 
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     /**
      * 投放速率
      * 0.匀速1.加速
@@ -177,7 +247,6 @@ public class PlanParam {
     private int speed;
     private String device;
     private String area;
-    private String age;
     private String income;
     private String consumption;
     private String car;
@@ -259,14 +328,6 @@ public class PlanParam {
 
     public void setArea(String area) {
         this.area = area;
-    }
-
-    public String getAge() {
-        return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
     }
 
     public String getIncome() {
