@@ -117,6 +117,26 @@ public class PlanParam {
         this.app = app;
     }
 
+    private String adv;
+
+    public String getAdv() {
+        return adv;
+    }
+
+    public void setAdv(String adv) {
+        this.adv = adv;
+    }
+
+    public String xq;
+
+    public String getXq() {
+        return xq;
+    }
+
+    public void setXq(String xq) {
+        this.xq = xq;
+    }
+
     /**
      * 传参需要
      */
