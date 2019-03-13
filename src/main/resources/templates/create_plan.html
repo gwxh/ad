@@ -139,18 +139,17 @@
                                         <input class="input-xlarge focused" type="text" th:field="*{param.url}"/>
                                     </div>
                                 </div>
-                                <div class="control-group">
-                                    <label class="control-label" th:for="url">上传素材</label>
-                                    <div class="controls">
-                                        <input class="input-xlarge focused" type="file" th:field="*{param.imageFile}"/>
-                                        <input id="imageName" type="hidden" th:field="*{param.image}"/>
-                                    </div>
-                                </div>
+                                <!--<div class="control-group">-->
+                                    <!--<label class="control-label" th:for="url">上传素材</label>-->
+                                    <!--<div class="controls">-->
+                                        <!--<input class="input-xlarge focused" type="file" th:field="*{param.imageFile}"/>-->
+                                        <!--<input id="imageName" type="hidden" th:field="*{param.image}"/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
                                 <div class="control-group">
                                     <label class="control-label">广告分类</label>
-                                    <input id="consumption" type="hidden" th:field="*{param.consumption}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.consumption}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">家居</option>
                                             <option value="2">健康</option>
                                             <option value="3">母婴</option>
@@ -196,9 +195,8 @@
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">投放区域</label>
-                                    <input id="area" type="hidden" th:field="*{param.area}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.area}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">安徽</option>
                                             <option value="2">北京</option>
                                             <option value="3">重庆</option>
@@ -311,9 +309,8 @@
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">手机品牌</label>
-                                    <input id="brand" type="hidden" th:field="*{param.brand}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.brand}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">苹果</option>
                                             <option value="2">小米</option>
                                             <option value="3">OPPO</option>
@@ -329,9 +326,8 @@
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">安装应用偏好</label>
-                                    <input id="app" type="hidden" th:field="*{param.app}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.app}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">股票</option>
                                             <option value="2">投资</option>
                                             <option value="3">记账</option>
@@ -347,9 +343,8 @@
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">广告点击偏好</label>
-                                    <input id="adv" type="hidden" th:field="*{param.adv}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.adv}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">摄影摄像</option>
                                             <option value="2">旅行交通</option>
                                             <option value="3">游戏-休闲创意</option>
@@ -363,9 +358,8 @@
                                 </div>
                                 <div class="control-group">
                                     <label class="control-label">兴趣定向</label>
-                                    <input id="xq" type="hidden" th:field="*{param.xq}">
                                     <div class="controls">
-                                        <select class="lrSelect" name="lrSelect" multiple='multiple'>
+                                        <select th:field="*{param.xq}" class="lrSelect" name="lrSelect" multiple='multiple'>
                                             <option value="1">文化娱乐</option>
                                             <option value="2">软件应用</option>
                                             <option value="3">咨询</option>
@@ -454,7 +448,7 @@
                 </div><!--/row-->
 
                 <div class="row-fluid" style="text-align: right;">
-                    <button type="submit" class="btn btn-primary">保存计划，去创建广告</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div>

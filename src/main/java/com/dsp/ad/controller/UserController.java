@@ -97,8 +97,8 @@ public class UserController {
 
     @PostMapping("/createPlan")
     public String createPlan(ExtPlan plan, @SessionAttribute ExtUser user) {
-        int planId = userService.createPlan(user, plan);
-        return PageController.REDIRECT + "/user/createAd/" + planId;
+        userService.createPlan(user, plan);
+        return PageController.REDIRECT + "/user/plan";
     }
 
     @PostMapping("/editPlan")
