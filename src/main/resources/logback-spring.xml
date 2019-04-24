@@ -7,7 +7,7 @@
 
     <!-- 日志目录 -->
     <property name="LOG_HOME_DEV" value="app/logs"/>
-    <property name="LOG_HOME" value="app/shandian/logs"/>
+    <property name="LOG_HOME" value="/app/shandian/logs"/>
 
 
     <springProfile name="dev">
