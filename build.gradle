@@ -42,10 +42,10 @@ dependencies {
 remotes {
 
 	prodServer {
-		host = '47.99.243.192'
+		host = '39.105.144.143'
 		port = 22
 		user = 'root'
-		password = 'yunyun123!@#'
+		password = 'qwe123123!@#'
 		knownHosts = allowAnyHosts
 	}
 }
