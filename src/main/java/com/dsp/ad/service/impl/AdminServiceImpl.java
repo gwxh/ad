@@ -70,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void createUser(ExtUser userInfo) {
         User user = new User();
+        user.setCompany(userInfo.getCompany());
         user.setUsername(userInfo.getUsername());
         String encryptPwd = MD5Util.md5(userInfo.getPassword());
         int amount = (int) (userInfo.getAmount() * 100);

@@ -12,7 +12,11 @@ spring:
     static-locations: classpath:/META-INF/resources/,\
       classpath:/resources/,classpath:/static/,classpath:/public/,file:${upload-image-path}
 
-upload-image-path: C:\upload\
+upload-image-path: /Users/gwxh/Desktop/ad_img
 
+file:
+  url: http://127.0.0.1:8090/
+  image:
+    path: /Users/gwxh/Desktop/ad_img
 
 

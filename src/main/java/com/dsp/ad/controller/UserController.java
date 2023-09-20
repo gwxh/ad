@@ -76,6 +76,7 @@ public class UserController {
     @PostMapping("/saveUserInfo")
     public String saveUserInfo(Model model, ExtUser userInfo, @SessionAttribute ExtUser user) {
         User user1 = userService.selectUserByName(user.getUsername());
+        user.setCompany(user.getCompany());
         user.setMobile(userInfo.getMobile());
         user.setEmail(userInfo.getEmail());
         user.setQq(userInfo.getQq());
@@ -114,7 +115,7 @@ public class UserController {
             model.addAttribute("msg", "用户身份错误！");
             return pageController.toCreateAd(model, user, ad.getPlanId());
         }
-        ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
+        ad.getParam().setImage(uploadUtil.upload(ad.getImageFile()));
         ad.setType(ad.getParam().getType());
         userService.createAd(user, ad);
         return PageController.REDIRECT_USER_AD;
@@ -123,7 +124,7 @@ public class UserController {
     @PostMapping("/editAd")
     public String editAd(ExtAd ad, @SessionAttribute ExtUser user) throws IOException {
         if (!StringUtils.isEmpty(ad.getImageFile().getOriginalFilename())) {
-            ad.getParam().setImage(uploadUtil.uploadImage(ad.getImageFile()));
+            ad.getParam().setImage(uploadUtil.upload(ad.getImageFile()));
         }
         ad.setType(ad.getParam().getType());
         userService.editAd(user, ad);
