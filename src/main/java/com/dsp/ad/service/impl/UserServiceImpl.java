@@ -15,6 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -180,6 +182,8 @@ public class UserServiceImpl implements UserService {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Autowired
+    private PlanLogRepository planLogRepository;
+    @Autowired
     private AdLogRepository adLogRepository;
 
     @Override
@@ -205,7 +209,7 @@ public class UserServiceImpl implements UserService {
     public List<ExtAdLog> selectAdConsumeLogs(int uid) {
         long totalExec = 0, totalCpc = 0, totalAmount = 0;
 
-        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogs(uid);
+        List<ExtAdLog> extAdLogs = planLogRepository.selectUserPlanLogs(uid);
 
         for (ExtAdLog extAdLog : extAdLogs) {
             if (extAdLog.getRecordTime() == null) {
@@ -217,12 +221,14 @@ public class UserServiceImpl implements UserService {
             totalExec += extAdLog.getExec();
             totalCpc += extAdLog.getCpc();
             totalAmount += extAdLog.getAmount();
+            extAdLog.setRate(BigDecimal.valueOf(extAdLog.getCpc()).divide(BigDecimal.valueOf(extAdLog.getExec()), 2, RoundingMode.DOWN));
         }
         ExtAdLog totalLog = new ExtAdLog();
         totalLog.setDate("汇总");
         totalLog.setExec(totalExec);
         totalLog.setCpc(totalCpc);
         totalLog.setAmount(totalAmount);
+        totalLog.setRate(BigDecimal.valueOf(totalLog.getCpc()).divide(BigDecimal.valueOf(totalLog.getExec()), 2, RoundingMode.DOWN));
         extAdLogs.add(totalLog);
         Collections.reverse(extAdLogs);
         return extAdLogs;

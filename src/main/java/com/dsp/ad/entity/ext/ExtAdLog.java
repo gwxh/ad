@@ -1,5 +1,10 @@
 package com.dsp.ad.entity.ext;
 
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+@Data
 public class ExtAdLog {
 
     private String date;
@@ -7,6 +12,7 @@ public class ExtAdLog {
     private Long exec;
     private Long cpc;
     private Long amount;
+    private BigDecimal rate;
 
     public ExtAdLog() {
     }
@@ -15,46 +21,6 @@ public class ExtAdLog {
         this.recordTime = recordTime;
         this.exec = exec;
         this.cpc = cpc;
-        this.amount = amount;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public Integer getRecordTime() {
-        return recordTime;
-    }
-
-    public void setRecordTime(Integer recordTime) {
-        this.recordTime = recordTime;
-    }
-
-    public Long getExec() {
-        return exec;
-    }
-
-    public void setExec(Long exec) {
-        this.exec = exec;
-    }
-
-    public Long getCpc() {
-        return cpc;
-    }
-
-    public void setCpc(Long cpc) {
-        this.cpc = cpc;
-    }
-
-    public Long getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Long amount) {
         this.amount = amount;
     }
 }

@@ -15,9 +15,13 @@ public interface AdLogRepository extends JpaRepository<AdLog, AdLogPrimaryKey> {
     @Query("select sum(a.amount) from AdLog a where a.adLogPK.day = ?1 and a.uid=?2")
     Integer selectUserAdsLogByDay(int day, int uid);
 
+    @Query("select sum(a.exec) from AdLog a where a.adLogPK.aid = ?1")
+    Integer sumExec(int aid);
+
     @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.adLogPK.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from AdLog a where a.adLogPK.day >= ?1 and a.adLogPK.day<?2 and a.uid=?3 group by a.adLogPK.day")
     List<ExtAdLog> selectUserAdsLogByMonth(int startDay, int endDay, int uid);
 
     @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.adLogPK.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from AdLog a where a.uid=?1 group by a.adLogPK.day order by a.adLogPK.day desc")
     List<ExtAdLog> selectUserAdsLogs(int uid);
+
 }

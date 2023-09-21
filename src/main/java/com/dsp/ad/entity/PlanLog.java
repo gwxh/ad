@@ -1,10 +1,14 @@
 package com.dsp.ad.entity;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
+@Data
 @Entity
 @Table(name="plan_log")
 public class PlanLog {
@@ -18,27 +22,14 @@ public class PlanLog {
     @Column(nullable = false)
     private boolean complete;
 
-    public boolean isComplete() {
-        return complete;
-    }
+    @Column(nullable = false)
+    private int uid;
 
-    public void setComplete(boolean complete) {
-        this.complete = complete;
-    }
+    @Column(nullable = false)
+    private int exec;
+    @Column(nullable = false)
+    private int cpc;
+    @Column(nullable = false)
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public PlanLogPrimaryKey getPlanLogPk() {
-        return planLogPk;
-    }
-
-    public void setPlanLogPk(PlanLogPrimaryKey planLogPk) {
-        this.planLogPk = planLogPk;
-    }
+    private BigDecimal rate;
 }

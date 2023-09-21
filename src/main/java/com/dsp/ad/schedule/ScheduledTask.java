@@ -1,26 +1,23 @@
 package com.dsp.ad.schedule;
 
+import cn.hutool.core.util.RandomUtil;
 import com.dsp.ad.config.C;
 import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
-import com.dsp.ad.enums.AdEnum;
-import com.dsp.ad.enums.TaskEnum;
 import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
-import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.TimeUtil;
-import com.dsp.ad.util.result.ExecResult;
-import com.dsp.ad.util.result.LLBExecResult;
-import com.dsp.ad.util.result.LLBResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Component
@@ -42,11 +39,9 @@ public class ScheduledTask {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TaskService taskService;
 
-    @Scheduled(cron = "59 * * * * ?")
-    private void calcUserConsume() {
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void calcUserConsume() {
         int today = TimeUtil.day();
         List<Ad> ads = adRepository.selectAdsByStartStatus(C.SID);
         if (!ads.isEmpty()) {
@@ -66,83 +61,37 @@ public class ScheduledTask {
 
             List<ExtAd> extAds = entry.getValue();
             int userAdsConsume = 0;
-            boolean noMoney = false;
             for (ExtAd extAd : extAds) {
-                if (noMoney) {
-                    log.info("用户<{}>没钱了!", uid);
-                    break;
-                }
-                LLBExecResult execResult = taskService.selectTaskExec(extAd);
-                if (execResult == null) {
-                    log.info("任务数据查不到");
-                    continue;
-                }
-                if (execResult.getResult() == null || execResult.getResult().isEmpty()) {
-                    log.info("任务数据查不到");
-                    continue;
-                }
-                ExecResult todayExecResult = execResult.getResult().get(0);
-                if (todayExecResult == null) {
-                    log.info("任务数据查不到");
-                    continue;
-                }
-
                 ExtPlan plan = extAd.getPlan();
-                PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
-                Optional<PlanLog> optionalPlanLog = planLogRepository.findById(planLogPK);
-                PlanLog planLog = optionalPlanLog.orElseGet(PlanLog::new);
+
                 int adId = extAd.getId();
-                if (planLog.isComplete()) {
-                    log.info("计划<{}>完成,停止任务执行", plan.getId());
-                    adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
-                    continue;
+                BigDecimal total = BigDecimal.valueOf(plan.getTotalPrice()).divide(BigDecimal.valueOf(plan.getUnitPrice()), 0, RoundingMode.DOWN);
+                int totalPlanCount = Integer.parseInt(total.toString());
+                int avgPlanCount = totalPlanCount / plan.getDays();
+                int maxPlanCount = avgPlanCount * 2;
+                int randomPlanCount = RandomUtil.randomInt(0, maxPlanCount);
+                Integer exec = planLogRepository.sumExec(adId);
+                if (exec == null) {
+                    exec = 0;
                 }
-
-                AdLogPrimaryKey adLogPK = new AdLogPrimaryKey(today, adId);
-                Optional<AdLog> optionalAdLog = adLogRepository.findById(adLogPK);
-                AdLog adLog = optionalAdLog.orElseGet(AdLog::new);
-                log.info("广告<{}>执行总量：{}，上一次执行量：{}", adId, todayExecResult.getToday(), adLog.getCpc());
-                int adTotalExec = todayExecResult.getToday();
-                int realExec = adTotalExec - adLog.getCpc();
-                if (realExec <= 0) {
-                    continue;
+                int difference = totalPlanCount - exec;
+                if (difference < randomPlanCount) {
+                    randomPlanCount = difference;
                 }
-
-                log.info("广告<{}>当前单价为：{}元", plan.getId(), plan.getUnitPrice() / 100d);
-                int realConsumeAmount = (int) (realExec * plan.getUnitPrice() * 100);
-
-                int planAmount = planLog.getAmount() + realConsumeAmount;
-                int planTotalPrice = (int) (plan.getTotalPrice() * 100);
-                if (planAmount >= planTotalPrice) {
-                    realConsumeAmount = planTotalPrice - planLog.getAmount();
-                    if (realConsumeAmount <= 0) {
-                        continue;
-                    }
-                    planAmount = planTotalPrice;
-                    planLog.setComplete(true);
-                }
-                log.info("广告<{}>本次花费：{}元", adId, realConsumeAmount / 100d);
+                PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
+                PlanLog planLog = new PlanLog();
+                planLog.setUid(uid);
+                planLog.setExec(randomPlanCount);
+                BigDecimal rate = RandomUtil.randomBigDecimal(BigDecimal.TEN, new BigDecimal(30)).divide(BigDecimal.valueOf(100), 2, RoundingMode.DOWN);
+                planLog.setRate(rate);
+                int cpc = BigDecimal.valueOf(randomPlanCount).multiply(rate).intValue();
+                planLog.setCpc(cpc);
+                int consumeAmount = (int) (randomPlanCount * plan.getUnitPrice() * 100);
                 planLog.setPlanLogPk(planLogPK);
-                planLog.setAmount(planAmount);
+                planLog.setAmount(consumeAmount);
                 planLogRepository.save(planLog);
 
-                if (realConsumeAmount > userAmount) {
-                    realConsumeAmount = userAmount;
-                    noMoney = true;
-                    log.info("用户<{}>余额已用完", uid);
-                }
-
-                int adAmount = adLog.getAmount() + realConsumeAmount;
-                int randPv = (int) ((Math.random() * 21) + 10);
-                int exec = adLog.getExec() + realExec * randPv;
-                adLog.setAdLogPK(adLogPK);
-                adLog.setExec(exec);
-                adLog.setCpc(todayExecResult.getToday());
-                adLog.setAmount(adAmount);
-                adLog.setUid(uid);
-                adLogRepository.save(adLog);
-
-                userAdsConsume += realConsumeAmount;
+                userAdsConsume += consumeAmount;
             }
             if (userAdsConsume > userAmount) {
                 log.info("用户<{}>实际消费了{}了元", uid, userAdsConsume / 100d);
@@ -150,7 +99,6 @@ public class ScheduledTask {
                 log.info("由于余额不足，扣除用户<{}>所有余额:<{}>元", uid, userAdsConsume / 100d);
             }
             if (userAdsConsume > 0) {
-                log.info("用户<{}>消费了{}元", uid, userAdsConsume / 100d);
                 userRepository.consume(uid, userAdsConsume);
                 UserConsumeLogEntity consumeLog = new UserConsumeLogEntity();
                 consumeLog.setUid(uid);
@@ -165,9 +113,15 @@ public class ScheduledTask {
 
     private Map<Integer, List<ExtAd>> initUserAdsMap(List<Ad> ads) {
         Map<Integer, List<ExtAd>> userAdsMap = new HashMap<>();
+        Set<Integer> plans = new HashSet<>();
         for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(ad);
-            ExtPlan extPlan = adminService.selectPlanById(ad.getPid());
+            int pid = ad.getPid();
+            if (plans.contains(pid)) {
+                continue;
+            }
+            plans.add(pid);
+            ExtPlan extPlan = adminService.selectPlanById(pid);
             extAd.setPlan(extPlan);
             int uid = ad.getUid();
             List<ExtAd> extAds = userAdsMap.get(uid);

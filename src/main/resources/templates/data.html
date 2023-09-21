@@ -43,16 +43,18 @@
                                     <thead>
                                     <tr>
                                         <th>日期</th>
-                                        <th>网页浏览量</th>
-                                        <th>cpc有效</th>
-                                        <th>支付</th>
+                                        <th>浏览量</th>
+                                        <th>点击量</th>
+                                        <th>点击率</th>
+                                        <th>当日消耗金额</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="log : ${logs}">
                                         <td th:text="${log.date}"></td>
                                         <td th:text="${#numbers.formatInteger(log.exec,3,'COMMA')}"></td>
-                                        <td th:text="${#numbers.formatInteger(log.cpc,3,'COMMA')}"></td>
+                                        <td th:text="${#numbers.formatInteger(log.cpc,1,'COMMA')}"></td>
+                                        <td th:text="${log.rate*100}+'%'"></td>
                                         <td th:include="util/currency::format(${log.amount/100})"></td>
                                     </tr>
                                     </tbody>
