@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
         plan.setName(extPlan.getName());
         plan.setUnitPrice((int) (extPlan.getUnitPrice() * 100));
         plan.setTotalPrice((int) (extPlan.getTotalPrice() * 100));
+        plan.setDays(extPlan.getDays());
         plan.setParam(extPlan.getParam().toJson());
         plan.setCreateTime(TimeUtil.now());
         plan.setStatus(PlanEnum.Status.CREATE_CHECK.value);
@@ -95,7 +96,6 @@ public class UserServiceImpl implements UserService {
             ExtAd extAd = new ExtAd(ad);
             if (extAd.getStatus() == AdEnum.Status.RUNNING.value) {
                 adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
-                taskService.stopTask(extAd);
             }
         }
     }
@@ -132,7 +132,6 @@ public class UserServiceImpl implements UserService {
         ad.setType(extAd.getType());
         ad.setStatus(AdEnum.Status.EDIT_CHECK.value);
         adRepository.save(ad);
-        taskService.stopTask(new ExtAd(ad));
     }
 
     @Override

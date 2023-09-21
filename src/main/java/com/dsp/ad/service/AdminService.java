@@ -46,13 +46,13 @@ public interface AdminService {
 
     ExtAd selectAdById(int adId);
 
-    LLBResult enableAd(ExtAd extAd);
+    void enableAd(ExtAd extAd);
 
     void disableAd(ExtAd extAd);
 
     void deleteAd(ExtAd extAd);
 
-    LLBResult startAd(ExtAd extAd, int start);
+    void startAd(ExtAd extAd, int start);
 
-    LLBResult stopAd(ExtAd extAd);
+    void stopAd(ExtAd extAd);
 }

@@ -15,6 +15,7 @@ import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.MD5Util;
 import com.dsp.ad.util.TimeUtil;
 import com.dsp.ad.util.result.LLBResult;
+import com.dsp.ad.util.result.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -211,37 +212,9 @@ public class AdminServiceImpl implements AdminService {
         return adOptional.map(this::newExtAd).orElse(null);
     }
 
-    @Autowired
-    private TaskRepository taskRepository;
-
     @Override
-    public LLBResult enableAd(ExtAd extAd) {
-        LLBResult result = null;
-        switch (AdEnum.Status.valueOf(extAd.getStatus())) {
-            case CREATE_CHECK:
-                result = taskService.createTask(extAd);
-                if (result.isSuccess()) {
-                    adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
-                }
-                break;
-            case EDIT_CHECK:
-                Optional<Task> taskOptional = taskRepository.findById(extAd.getId());
-                if (taskOptional.isPresent() && taskOptional.get().getTid() > 0) {
-                    result = taskService.modifyTask(extAd);
-                } else {
-                    result = taskService.createTask(extAd);
-                }
-                if (result.isSuccess()) {
-                    adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
-                }
-                break;
-            case DISABLE:
-                adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
-                result = new LLBResult();
-                result.getStatus().setDetail("操作成功");
-                break;
-        }
-        return result;
+    public void enableAd(ExtAd extAd) {
+        adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
     }
 
     @Override
@@ -255,21 +228,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public LLBResult startAd(ExtAd extAd, int start) {
-        LLBResult result = taskService.startTask(extAd, start);
-        if (result.isSuccess()) {
-            adRepository.updateStatus(extAd.getId(), AdEnum.Status.RUNNING.value);
-        }
-        return result;
+    public void startAd(ExtAd extAd, int start) {
+        adRepository.updateStatus(extAd.getId(), AdEnum.Status.RUNNING.value);
     }
 
     @Override
-    public LLBResult stopAd(ExtAd extAd) {
-        LLBResult result = taskService.stopTask(extAd);
-        if (result.isSuccess()) {
-            adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
-        }
-        return result;
+    public void stopAd(ExtAd extAd) {
+        adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
     }
 
 }

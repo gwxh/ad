@@ -147,12 +147,8 @@ public class AdminController {
             attributes.addFlashAttribute("msg", "广告计划没有被激活");
             return PageController.REDIRECT_AUDIT_ADS;
         }
-        LLBResult result = adminService.enableAd(ad);
-        if (result == null) {
-            attributes.addFlashAttribute("msg", "广告激活失败");
-            return PageController.REDIRECT_AUDIT_ADS;
-        }
-        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+        adminService.enableAd(ad);
+        attributes.addFlashAttribute("msg", "激活成功");
         return PageController.REDIRECT_AUDIT_ADS;
     }
 
@@ -204,12 +200,8 @@ public class AdminController {
             attributes.addFlashAttribute("msg", "广告商余额不足");
             return PageController.REDIRECT_MGR_ADS;
         }
-        LLBResult result = adminService.startAd(ad, start);
-        if (result == null) {
-            attributes.addFlashAttribute("msg", "广告开启失败");
-            return PageController.REDIRECT_MGR_ADS;
-        }
-        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+        adminService.startAd(ad, start);
+        attributes.addFlashAttribute("msg", "广告开启成功");
         return PageController.REDIRECT_MGR_ADS;
     }
 
@@ -220,12 +212,8 @@ public class AdminController {
             attributes.addFlashAttribute("msg", "广告不存在");
             return PageController.REDIRECT_AUDIT_ADS;
         }
-        LLBResult result = adminService.stopAd(ad);
-        if (result == null) {
-            attributes.addFlashAttribute("msg", "广告开启失败");
-            return PageController.REDIRECT_AUDIT_ADS;
-        }
-        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+        adminService.stopAd(ad);
+        attributes.addFlashAttribute("msg", "广告关闭成功");
         return PageController.REDIRECT_MGR_ADS;
     }
 
@@ -245,7 +233,7 @@ public class AdminController {
         if (plan == null) {
             return PageController.REDIRECT_MGR_INDEX;
         }
-        ExtUser user = adminService.selectUserById(plan.getUserId());
+        ExtUser user = adminService.selectUserById(plan.getUid());
         if (user == null) {
             return PageController.REDIRECT_MGR_INDEX;
         }

@@ -167,12 +167,8 @@ public class UserController {
             attributes.addFlashAttribute("msg", "广告不存在");
             return PageController.REDIRECT_USER_AD;
         }
-        LLBResult result = adminService.stopAd(ad);
-        if (result == null) {
-            attributes.addFlashAttribute("msg", "广告开启失败");
-            return PageController.REDIRECT_USER_AD;
-        }
-        attributes.addFlashAttribute("msg", result.getStatus().getDetail());
+        adminService.stopAd(ad);
+        attributes.addFlashAttribute("msg", "广告关闭成功");
         return PageController.REDIRECT_USER_AD;
     }
 }

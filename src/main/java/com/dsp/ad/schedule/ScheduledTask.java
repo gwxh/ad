@@ -94,7 +94,6 @@ public class ScheduledTask {
                 int adId = extAd.getId();
                 if (planLog.isComplete()) {
                     log.info("计划<{}>完成,停止任务执行", plan.getId());
-                    taskService.stopTask(extAd);
                     adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
                     continue;
                 }
@@ -168,7 +167,6 @@ public class ScheduledTask {
         Map<Integer, List<ExtAd>> userAdsMap = new HashMap<>();
         for (Ad ad : ads) {
             ExtAd extAd = new ExtAd(ad);
-            needStopTask(extAd);
             ExtPlan extPlan = adminService.selectPlanById(ad.getPid());
             extAd.setPlan(extPlan);
             int uid = ad.getUid();
@@ -183,15 +181,5 @@ public class ScheduledTask {
             log.info("共{}个用户", userAdsMap.size());
         }
         return userAdsMap;
-    }
-
-    private void needStopTask(ExtAd extAd) {
-        LLBResult result = taskService.viewTask(extAd);
-        if (result != null && result.getResult() != null) {
-            if (result.getResult().getStatus() == TaskEnum.Status.TASK_STOP.value) {
-                extAd.setStatus(AdEnum.Status.ENABLE.value);
-                adRepository.updateStatus(extAd.getId(), extAd.getStatus());
-            }
-        }
     }
 }
