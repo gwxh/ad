@@ -221,16 +221,16 @@ public class UserServiceImpl implements UserService {
             totalExec += extAdLog.getExec();
             totalCpc += extAdLog.getCpc();
             totalAmount += extAdLog.getAmount();
-            extAdLog.setRate(BigDecimal.valueOf(extAdLog.getCpc()).divide(BigDecimal.valueOf(extAdLog.getExec()), 2, RoundingMode.DOWN));
+            extAdLog.setRate(BigDecimal.valueOf(extAdLog.getCpc()).divide(BigDecimal.valueOf(extAdLog.getExec()), 4, RoundingMode.DOWN));
         }
-        ExtAdLog totalLog = new ExtAdLog();
-        totalLog.setDate("汇总");
-        totalLog.setExec(totalExec);
-        totalLog.setCpc(totalCpc);
-        totalLog.setAmount(totalAmount);
-        totalLog.setRate(BigDecimal.valueOf(totalLog.getCpc()).divide(BigDecimal.valueOf(totalLog.getExec()), 2, RoundingMode.DOWN));
-        extAdLogs.add(totalLog);
-        Collections.reverse(extAdLogs);
+//        ExtAdLog totalLog = new ExtAdLog();
+//        totalLog.setDate("汇总");
+//        totalLog.setExec(totalExec);
+//        totalLog.setCpc(totalCpc);
+//        totalLog.setAmount(totalAmount);
+//        totalLog.setRate(BigDecimal.valueOf(totalLog.getCpc()).divide(BigDecimal.valueOf(totalLog.getExec()), 2, RoundingMode.DOWN));
+//        extAdLogs.add(totalLog);
+//        Collections.reverse(extAdLogs);
         return extAdLogs;
     }
 

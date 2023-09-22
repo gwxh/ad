@@ -1,0 +1,22 @@
+spring:
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://1.116.138.252:3306/ad?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: BT2QjD.m{UOY
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  resources:
+    static-locations: classpath:/META-INF/resources/,\
+      classpath:/resources/,classpath:/static/,classpath:/public/,file:${upload-image-path}
+
+upload-image-path: /Users/gwxh/Desktop/ad_img
+
+file:
+  url: http://1.116.138.252:8100/ad/
+  image:
+    path: /file/ad/
+
+

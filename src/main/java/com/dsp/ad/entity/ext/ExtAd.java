@@ -2,8 +2,10 @@ package com.dsp.ad.entity.ext;
 
 import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.subentity.AdParam;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+@Data
 public class ExtAd {
 
     private int id;
@@ -39,101 +41,5 @@ public class ExtAd {
         this.url = ad.getUrl();
         this.param = AdParam.fromJson(ad.getParam());
         this.status = ad.getStatus();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
-        return uid;
-    }
-
-    public void setUserId(int uid) {
-        this.uid = uid;
-    }
-
-    public int getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(int planId) {
-        this.planId = planId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public AdParam getParam() {
-        return param;
-    }
-
-    public void setParam(AdParam param) {
-        this.param = param;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public MultipartFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
-    }
-
-    public ExtPlan getPlan() {
-        return plan;
-    }
-
-    public void setPlan(ExtPlan plan) {
-        this.plan = plan;
-    }
-
-    public ExtUser getUser() {
-        return user;
-    }
-
-    public void setUser(ExtUser user) {
-        this.user = user;
     }
 }

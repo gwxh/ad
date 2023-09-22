@@ -190,7 +190,7 @@ public class AdminController {
             attributes.addFlashAttribute("msg", "广告不存在");
             return PageController.REDIRECT_MGR_ADS;
         }
-        ExtUser user = adminService.selectUserById(ad.getUserId());
+        ExtUser user = adminService.selectUserById(ad.getUid());
         if (user == null) {
             attributes.addFlashAttribute("msg", "广告商不存在");
             return PageController.REDIRECT_MGR_ADS;
@@ -247,7 +247,7 @@ public class AdminController {
         if (ad == null) {
             return PageController.REDIRECT_MGR_INDEX;
         }
-        ExtUser user = adminService.selectUserById(ad.getUserId());
+        ExtUser user = adminService.selectUserById(ad.getUid());
         if (user == null) {
             return PageController.REDIRECT_MGR_INDEX;
         }

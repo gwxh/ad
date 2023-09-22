@@ -37,7 +37,7 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private UserConsumeLogRepository userConsumeLogRepository;
     @Autowired
-    private TaskService taskService;
+    private AdTypeRepository adTypeRepository;
 
     @Override
     public Admin selectAdminByName(String username) {
@@ -199,6 +199,8 @@ public class AdminServiceImpl implements AdminService {
 
     private ExtAd newExtAd(Ad ad) {
         ExtAd extAd = new ExtAd(ad);
+        Optional<AdTypeEntity> optional = adTypeRepository.findById(extAd.getType());
+        optional.ifPresent(adTypeEntity -> extAd.setTypeName(adTypeEntity.getName()));
         ExtPlan extPlan = selectPlanById(ad.getPid());
         extAd.setPlan(extPlan);
         ExtUser extUser = selectUserById(ad.getUid());

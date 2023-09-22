@@ -116,7 +116,7 @@ public class UserController {
             return pageController.toCreateAd(model, user, ad.getPlanId());
         }
         ad.getParam().setImage(uploadUtil.upload(ad.getImageFile()));
-        ad.setType(ad.getParam().getType());
+        ad.setType(ad.getType());
         userService.createAd(user, ad);
         return PageController.REDIRECT_USER_AD;
     }
