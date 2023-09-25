@@ -17,11 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,6 +86,12 @@ public class PageController {
         List<ExtAdLog> logs = userService.selectAdConsumeLogs(user.getId());
         model.addAttribute("logs", logs);
         return "data";
+    }
+
+    @PostMapping(value = "/export", produces = "application/octet-stream")
+    @ResponseBody
+    public void export(@SessionAttribute ExtUser user) {
+        userService.export(user.getId());
     }
 
     @RequestMapping("/user/consumeLog")

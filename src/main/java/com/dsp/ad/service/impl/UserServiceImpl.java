@@ -1,7 +1,11 @@
 package com.dsp.ad.service.impl;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.enums.CellDataTypeEnum;
+import com.alibaba.excel.metadata.data.WriteCellData;
 import com.dsp.ad.config.C;
 import com.dsp.ad.entity.*;
+import com.dsp.ad.entity.dto.UserConsumeLogDTO;
 import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
@@ -15,8 +19,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URLEncoder;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -39,6 +46,8 @@ public class UserServiceImpl implements UserService {
     private AdTypeRepository adTypeRepository;
     @Autowired
     private UserConsumeLogRepository userConsumeLogRepository;
+    @Autowired
+    private HttpServletResponse response;
 
     @Override
     public User selectUserByName(String username) {
@@ -248,5 +257,49 @@ public class UserServiceImpl implements UserService {
             extLogs.add(extLog);
         }
         return extLogs;
+    }
+
+    @Override
+    public void export(int uid) {
+        try {
+            List<UserConsumeLogDTO> exportList = new ArrayList<>();
+            List<ExtAdLog> adLogs = selectAdConsumeLogs(uid);
+            for (ExtAdLog adLog : adLogs) {
+                UserConsumeLogDTO logDTO = new UserConsumeLogDTO();
+
+                WriteCellData<String> dateCellData = new WriteCellData<>(adLog.getDate());
+                dateCellData.setType(CellDataTypeEnum.STRING);
+                logDTO.setDate(dateCellData);
+
+                WriteCellData<BigDecimal> execCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getExec()));
+                execCellData.setType(CellDataTypeEnum.NUMBER);
+                logDTO.setExec(execCellData);
+
+                WriteCellData<BigDecimal> cpcCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getCpc()));
+                cpcCellData.setType(CellDataTypeEnum.NUMBER);
+                logDTO.setCpc(cpcCellData);
+
+                WriteCellData<BigDecimal> rateCellData = new WriteCellData<>(adLog.getRate());
+                rateCellData.setType(CellDataTypeEnum.NUMBER);
+                logDTO.setRate(rateCellData);
+
+                WriteCellData<BigDecimal> amountCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getAmount()).divide(BigDecimal.valueOf(100L), 2, RoundingMode.DOWN));
+                amountCellData.setType(CellDataTypeEnum.NUMBER);
+                logDTO.setAmount(amountCellData);
+
+                exportList.add(logDTO);
+            }
+
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            String fileName = URLEncoder.encode("数据", "UTF-8").replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+            // 这里需要设置不关闭流
+            EasyExcel.write(response.getOutputStream(), UserConsumeLogDTO.class).inMemory(true).autoCloseStream(Boolean.FALSE).sheet("数据")
+                    .doWrite(exportList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

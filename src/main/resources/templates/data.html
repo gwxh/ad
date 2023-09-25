@@ -39,6 +39,13 @@
                         <header class="panel-heading">数据报告</header>
                         <div class="panel-body">
                             <section id="unseen">
+                                <div class="clearfix">
+                                    <div class="btn-group">
+                                        <button id="export" class="btn btn-primary">
+                                            导出
+                                        </button>
+                                    </div>
+                                </div>
                                 <table class="table table-hover general-table" id="logList">
                                     <thead>
                                     <tr>
@@ -88,6 +95,63 @@
 
 <!--common scripts for all pages-->
 <script src="/js/scripts.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let currentProtocol = window.location.protocol;
+        let currentHostname = window.location.hostname;
+        let currentPort = window.location.port;
+        let currentURL;
+        // 如果端口为空或为80（HTTP）或443（HTTPS），则可以省略端口
+        if (currentPort === "" || currentPort === "80" || currentPort === "443") {
+            currentURL = currentProtocol + "//" + currentHostname;
+        } else {
+            currentURL = currentProtocol + "//" + currentHostname + ":" + currentPort;
+        }
+        // 当按钮被点击时
+        $("#export").click(function () {
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = "blob"; // Set responseType to "blob" for binary data
+            xhr.open("POST", currentURL + "/export");
+            xhr.send();
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    var blobData = xhr.response; // Access the blob data
+                    // 创建一个临时 URL 对象并将 Blob 数据绑定到该 URL 上
+                    var blobURL = window.URL.createObjectURL(blobData);
+
+                    // 创建一个链接元素用于下载
+                    var a = document.createElement("a");
+                    a.href = blobURL;
+                    a.download = "日志.xlsx"; // 设置下载文件的名称
+
+                    // 模拟用户点击链接来触发下载
+                    a.click();
+
+                    // 释放 Blob URL 对象
+                    window.URL.revokeObjectURL(blobURL);
+                }
+            };
+            // // 发送GET请求到Excel文件下载接口
+            // $.ajax({
+            //     type: "POST",
+            //     url: currentURL + "/export",
+            //     xhrFields: {
+            //         responseType: 'blob' // 设置响应数据类型为blob
+            //     },
+            //     success: function(data) {
+            //        console.log(data);
+            //     },
+            //     error: function (xhr, status, error) {
+            //         console.log("下载文件失败！");
+            //         console.log("XHR状态码：" + xhr.status);
+            //         console.log("错误信息：" + error);
+            //     }
+            // });
+        });
+    });
+</script>
 
 </body>
 </html>

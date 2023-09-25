@@ -39,16 +39,17 @@ dependencies {
 	compile 'org.apache.httpcomponents:httpclient:4.5.5'
 	compile 'cn.hutool:hutool-all:5.8.5'
 	compile 'org.apache.tika:tika-core:2.6.0'
+	compile 'com.alibaba:easyexcel:3.2.1'
     compileOnly("org.projectlombok:lombok:1.18.28")
 }
 
 remotes {
 
 	prodServer {
-		host = '39.105.144.143'
+		host = '1.116.138.252'
 		port = 22
 		user = 'root'
-		password = 'qwe123123!@#'
+		password = 'F5ElZ14FyA&F'
 		knownHosts = allowAnyHosts
 	}
 }
@@ -56,7 +57,7 @@ remotes {
 task upgrade(dependsOn: bootJar) {
 	doLast {
 		String localFile = "build/libs/${project.name}.jar"
-		String remoteFile = "/app/shandian/new-sd.jar"
+		String remoteFile = "/home/webapp/ad/new-ad.jar"
 
 		ant.checksum property: 'md5', file: localFile
 		println "local |$ant.md5  $localFile"
@@ -75,7 +76,7 @@ task upgrade(dependsOn: bootJar) {
 
 		ssh.run {
 			session(remotes.prodServer) {
-				execute "/app/shandian/restart.sh"
+				execute "/home/webapp/ad/restart.sh"
 			}
 		}
 	}

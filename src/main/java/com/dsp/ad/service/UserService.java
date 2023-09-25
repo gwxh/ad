@@ -42,4 +42,6 @@ public interface UserService {
     List<ExtAdLog> selectAdConsumeLogs(int uid);
 
     List<ExtConsumeLog> selectUserConsumeLogs(int uid);
+
+    void export(int uid);
 }

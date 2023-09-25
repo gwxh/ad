@@ -126,7 +126,7 @@ public class UserController {
         if (!StringUtils.isEmpty(ad.getImageFile().getOriginalFilename())) {
             ad.getParam().setImage(uploadUtil.upload(ad.getImageFile()));
         }
-        ad.setType(ad.getParam().getType());
+        ad.setType(ad.getType());
         userService.editAd(user, ad);
         return PageController.REDIRECT_USER_AD;
     }
