@@ -27,8 +27,8 @@ import java.net.URLEncoder;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
     public String selectUserMonthConsumeLogJson(int uid) throws JsonProcessingException {
         int month = TimeUtil.month();
         int nextMonth = TimeUtil.month(1);
-        List<ExtAdLog> extAdLogs = adLogRepository.selectUserAdsLogByMonth(month, nextMonth, uid);
+        List<ExtAdLog> extAdLogs = planLogRepository.selectUserPlanLogByMonth(month, nextMonth, uid);
         return OBJECT_MAPPER.writeValueAsString(extAdLogs);
     }
 
@@ -250,10 +250,27 @@ public class UserServiceImpl implements UserService {
         for (UserConsumeLogEntity log : logs) {
             ExtConsumeLog extLog = new ExtConsumeLog();
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
-            extLog.setDate(TimeUtil.toDate(localDateTime, "YYYY-MM-DD HH:mm:SS"));
+            extLog.setDate(TimeUtil.toDate(localDateTime, "YYYY-MM-DD HH:mm:ss"));
             extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
             extLog.setAmount(log.getAmount() / 100d);
             extLog.setNote(log.getNote());
+            extLogs.add(extLog);
+        }
+        return extLogs;
+    }
+
+    @Override
+    public List<ExtConsumeLog> selectUserRechargeLogs(int uid) {
+        List<UserConsumeLogEntity> logs = userConsumeLogRepository.findByUidAndTypeOrderByTimeDesc(uid, UserConsumeLogEnum.Type.RECHARGE.value);
+        List<ExtConsumeLog> extLogs = new ArrayList<>();
+        for (UserConsumeLogEntity log : logs) {
+            ExtConsumeLog extLog = new ExtConsumeLog();
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
+            extLog.setDate(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")));
+            extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
+            extLog.setAmount(log.getAmount() / 100d);
+            extLog.setNote(log.getNote());
+            extLog.setFile(log.getFile());
             extLogs.add(extLog);
         }
         return extLogs;
@@ -271,7 +288,8 @@ public class UserServiceImpl implements UserService {
                 dateCellData.setType(CellDataTypeEnum.STRING);
                 logDTO.setDate(dateCellData);
 
-                WriteCellData<BigDecimal> execCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getExec()));
+                BigDecimal exec = BigDecimal.valueOf(adLog.getExec());
+                WriteCellData<BigDecimal> execCellData = new WriteCellData<>(exec);
                 execCellData.setType(CellDataTypeEnum.NUMBER);
                 logDTO.setExec(execCellData);
 
@@ -286,6 +304,10 @@ public class UserServiceImpl implements UserService {
                 WriteCellData<BigDecimal> amountCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getAmount()).divide(BigDecimal.valueOf(100L), 2, RoundingMode.DOWN));
                 amountCellData.setType(CellDataTypeEnum.NUMBER);
                 logDTO.setAmount(amountCellData);
+
+                WriteCellData<BigDecimal> unitPriceCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getAmount()).divide(exec, 0, RoundingMode.DOWN).divide(BigDecimal.valueOf(100L), 2, RoundingMode.DOWN));
+                unitPriceCellData.setType(CellDataTypeEnum.NUMBER);
+                logDTO.setUnitPrice(unitPriceCellData);
 
                 exportList.add(logDTO);
             }

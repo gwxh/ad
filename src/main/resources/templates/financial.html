@@ -36,35 +36,22 @@
             <div class="row">
                 <div class="col-sm-12">
                     <section class="panel">
-                        <header class="panel-heading">数据报告</header>
+                        <header class="panel-heading">财务报表</header>
                         <div class="panel-body">
                             <section id="unseen">
-                                <div class="clearfix">
-                                    <div class="btn-group">
-                                        <button id="export" class="btn btn-primary">
-                                            导出
-                                        </button>
-                                    </div>
-                                </div>
                                 <table class="table table-hover general-table" id="logList">
                                     <thead>
                                     <tr>
-                                        <th>日期</th>
-                                        <th>浏览量</th>
-                                        <th>点击量</th>
-                                        <th>点击率</th>
-                                        <th>当日消耗金额</th>
-                                        <th>单价</th>
+                                        <th>充值日期</th>
+                                        <th>充值金额</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="log : ${logs}">
                                         <td th:text="${log.date}"></td>
-                                        <td th:text="${#numbers.formatInteger(log.exec,3,'COMMA')}"></td>
-                                        <td th:text="${#numbers.formatInteger(log.cpc,1,'COMMA')}"></td>
-                                        <td th:text="${#numbers.formatDecimal(log.rate*100, 0, 2)}+'%'"></td>
-                                        <td th:include="util/currency::format(${log.amount/100.0})"></td>
-                                        <td th:include="util/currency::format(${log.amount/log.exec/100.0})"></td>
+                                        <td th:include="util/currency::format(${log.amount})"></td>
+                                        <td><a th:href="${log.file}">下载</a></td>
                                     </tr>
                                     </tbody>
                                 </table>

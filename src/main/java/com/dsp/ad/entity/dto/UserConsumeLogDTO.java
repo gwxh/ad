@@ -23,5 +23,7 @@ public class UserConsumeLogDTO {
     private WriteCellData<BigDecimal> rate;
     @ExcelProperty("消耗金额")
     private WriteCellData<BigDecimal> amount;
+    @ExcelProperty("单价")
+    private WriteCellData<BigDecimal> unitPrice;
 
 }

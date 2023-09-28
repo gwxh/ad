@@ -165,7 +165,7 @@
                 </h4>
             </div>
             <form id="rechargeForm" th:action="@{/mgr/userRecharge}"
-                  th:method="post" role="form">
+                  th:method="post" role="form" enctype="multipart/form-data">
                 <input id="uid" name="uid" type="hidden"/>
                 <div class="modal-body">
                     <div class="box-body">
@@ -176,6 +176,10 @@
                         <div class="form-group">
                             <label for="rechargeNote">备注</label>
                             <textarea id="rechargeNote" name="note" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="rechargeNote">上传文件</label>
+                            <input type="file" name="file"/>
                         </div>
                     </div><!-- /.box-body -->
                 </div>

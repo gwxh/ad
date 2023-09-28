@@ -6,6 +6,7 @@ import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
+import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
@@ -43,6 +44,10 @@ public class ScheduledTask {
     @Scheduled(cron = "0 0 0 * * ?")
     public void calcUserConsume() {
         int today = TimeUtil.day();
+        process(today);
+    }
+
+    public void process(int today) {
         List<Ad> ads = adRepository.selectAdsByStartStatus(C.SID);
         if (!ads.isEmpty()) {
             log.info("获取到{}条任务", ads.size());
@@ -69,7 +74,8 @@ public class ScheduledTask {
                 int totalPlanCount = Integer.parseInt(total.toString());
                 int avgPlanCount = totalPlanCount / plan.getDays();
                 int maxPlanCount = avgPlanCount * 2;
-                int randomPlanCount = RandomUtil.randomInt(0, maxPlanCount);
+                int minPlanCount = avgPlanCount / 2;
+                int randomPlanCount = RandomUtil.randomInt(minPlanCount, maxPlanCount);
                 Integer exec = planLogRepository.sumExec(adId);
                 if (exec == null) {
                     exec = 0;
@@ -77,12 +83,13 @@ public class ScheduledTask {
                 int difference = totalPlanCount - exec;
                 if (difference < randomPlanCount) {
                     randomPlanCount = difference;
+                    adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
                 }
                 PlanLogPrimaryKey planLogPK = new PlanLogPrimaryKey(today, plan.getId());
                 PlanLog planLog = new PlanLog();
                 planLog.setUid(uid);
                 planLog.setExec(randomPlanCount);
-                BigDecimal rate = RandomUtil.randomBigDecimal(BigDecimal.TEN, new BigDecimal(30)).divide(BigDecimal.valueOf(100), 2, RoundingMode.DOWN);
+                BigDecimal rate = RandomUtil.randomBigDecimal(new BigDecimal(2), new BigDecimal(3)).divide(BigDecimal.valueOf(100), 4, RoundingMode.DOWN);
                 planLog.setRate(rate);
                 int cpc = BigDecimal.valueOf(randomPlanCount).multiply(rate).intValue();
                 planLog.setCpc(cpc);
@@ -135,5 +142,11 @@ public class ScheduledTask {
             log.info("共{}个用户", userAdsMap.size());
         }
         return userAdsMap;
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 100; i++) {
+            System.out.println(RandomUtil.randomBigDecimal(new BigDecimal(2), new BigDecimal(3)));
+        }
     }
 }

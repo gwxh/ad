@@ -4,7 +4,6 @@ import com.dsp.ad.entity.Admin;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
-import com.dsp.ad.util.result.LLBResult;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface AdminService {
 
     ExtUser selectUserById(int uid);
 
-    void userRecharge(ExtUser user, int amount, String note);
+    void userRecharge(ExtUser user, int amount, String note, String fileUrl);
 
     void createUser(ExtUser user);
 

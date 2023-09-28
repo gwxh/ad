@@ -11,6 +11,7 @@ import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.MD5Util;
 import com.dsp.ad.util.TimeUtil;
+import com.dsp.ad.util.UploadUtil;
 import com.dsp.ad.util.result.LLBResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
@@ -37,6 +40,9 @@ public class AdminController {
 
     @Autowired
     PageController pageController;
+
+    @Resource
+    UploadUtil uploadUtil;
 
     @PostMapping("/login")
     public String login(Model model, @RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
@@ -80,13 +86,14 @@ public class AdminController {
     }
 
     @PostMapping("/userRecharge")
-    public String userRecharge(int uid, int amount, String note, RedirectAttributes attributes) {
+    public String userRecharge(int uid, int amount, MultipartFile file, String note, RedirectAttributes attributes) {
         ExtUser u = adminService.selectUserById(uid);
         if (u == null) {
             attributes.addFlashAttribute("msg", "广告商不存在！");
             return PageController.REDIRECT_MGR_INDEX;
         }
-        adminService.userRecharge(u, amount * 100, note);
+        String fileUrl = uploadUtil.upload(file);
+        adminService.userRecharge(u, amount * 100, note, fileUrl);
         return PageController.REDIRECT_MGR_INDEX;
     }
 

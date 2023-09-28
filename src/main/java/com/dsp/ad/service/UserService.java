@@ -43,5 +43,7 @@ public interface UserService {
 
     List<ExtConsumeLog> selectUserConsumeLogs(int uid);
 
+    List<ExtConsumeLog> selectUserRechargeLogs(int uid);
+
     void export(int uid);
 }

@@ -11,11 +11,8 @@ import com.dsp.ad.enums.UserConsumeLogEnum;
 import com.dsp.ad.enums.UserEnum;
 import com.dsp.ad.repository.*;
 import com.dsp.ad.service.AdminService;
-import com.dsp.ad.service.TaskService;
 import com.dsp.ad.util.MD5Util;
 import com.dsp.ad.util.TimeUtil;
-import com.dsp.ad.util.result.LLBResult;
-import com.dsp.ad.util.result.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void userRecharge(ExtUser user, int amount, String note) {
+    public void userRecharge(ExtUser user, int amount, String note, String fileUrl) {
         userRepository.recharge(user.getId(), amount);
         UserConsumeLogEntity consumeLog = new UserConsumeLogEntity();
         consumeLog.setUid(user.getId());
@@ -65,6 +62,7 @@ public class AdminServiceImpl implements AdminService {
         consumeLog.setAmount(amount);
         consumeLog.setTime(TimeUtil.now());
         consumeLog.setNote(note);
+        consumeLog.setFile(fileUrl);
         userConsumeLogRepository.save(consumeLog);
     }
 

@@ -88,6 +88,13 @@ public class PageController {
         return "data";
     }
 
+    @RequestMapping("/user/financial")
+    public String toFinancialPage(Model model, @SessionAttribute ExtUser user) {
+        List<ExtConsumeLog> logs = userService.selectUserRechargeLogs(user.getId());
+        model.addAttribute("logs", logs);
+        return "financial";
+    }
+
     @PostMapping(value = "/export", produces = "application/octet-stream")
     @ResponseBody
     public void export(@SessionAttribute ExtUser user) {
