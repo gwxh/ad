@@ -13,6 +13,12 @@
                     <span>会员管理</span>
                 </a>
             </li>
+            <li th:class="${flag=='rechargeList'?'active':''}">
+                <a href="/mgr/rechargeList">
+                    <i class="fa fa-book"></i>
+                    <span>充值记录</span>
+                </a>
+            </li>
             <li th:class="${flag=='planList'?'active':''}">
                 <a href="/mgr/plans">
                     <i class="fa fa-book"></i>

@@ -1,7 +1,9 @@
 package com.dsp.ad.service;
 
 import com.dsp.ad.entity.Admin;
+import com.dsp.ad.entity.UserConsumeLogEntity;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtConsumeLog;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 
@@ -15,7 +17,7 @@ public interface AdminService {
 
     ExtUser selectUserById(int uid);
 
-    void userRecharge(ExtUser user, int amount, String note, String fileUrl);
+    void userRecharge(ExtUser user, int amount, String note);
 
     void createUser(ExtUser user);
 
@@ -26,6 +28,8 @@ public interface AdminService {
     void enableUser(int uid);
 
     void deleteUser(int uid);
+
+    List<ExtConsumeLog> selectRechargeLogs();
 
     List<ExtPlan> selectAllPlans();
 
@@ -54,4 +58,6 @@ public interface AdminService {
     void startAd(ExtAd extAd, int start);
 
     void stopAd(ExtAd extAd);
+
+    void uploadRechargeFile(UserConsumeLogEntity userConsumeLogEntity, String fileUrl);
 }

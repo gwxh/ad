@@ -1,12 +1,15 @@
 package com.dsp.ad.controller;
 
+import com.dsp.ad.entity.Ad;
 import com.dsp.ad.entity.Admin;
 import com.dsp.ad.entity.User;
+import com.dsp.ad.entity.UserConsumeLogEntity;
 import com.dsp.ad.entity.ext.ExtAd;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
 import com.dsp.ad.enums.PlanEnum;
+import com.dsp.ad.repository.UserConsumeLogRepository;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.UserService;
 import com.dsp.ad.util.MD5Util;
@@ -28,6 +31,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
+
+import static com.dsp.ad.controller.PageController.REDIRECT;
 
 @Controller
 @RequestMapping("/mgr")
@@ -38,6 +44,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserConsumeLogRepository userConsumeLogRepository;
 
     @Autowired
     PageController pageController;
@@ -87,15 +96,29 @@ public class AdminController {
     }
 
     @PostMapping("/userRecharge")
-    public String userRecharge(int uid, BigDecimal amount, MultipartFile file, String note, RedirectAttributes attributes) {
+    public String userRecharge(int uid, BigDecimal amount, String note, RedirectAttributes attributes) {
         ExtUser u = adminService.selectUserById(uid);
         if (u == null) {
             attributes.addFlashAttribute("msg", "广告商不存在！");
             return PageController.REDIRECT_MGR_INDEX;
         }
-        String fileUrl = uploadUtil.upload(file);
-        adminService.userRecharge(u, amount.multiply(new BigDecimal(100)).intValue(), note, fileUrl);
+        adminService.userRecharge(u, amount.multiply(new BigDecimal(100)).intValue(), note);
         return PageController.REDIRECT_MGR_INDEX;
+    }
+
+    public static final String MGR_RECHARGE_LIST = "/mgr/rechargeList";
+    public static final String REDIRECT_MGR_RECHARGE_LIST = REDIRECT + MGR_RECHARGE_LIST;
+
+    @PostMapping("/uploadRechargeFile")
+    public String uploadRechargeFile(int id, MultipartFile file, RedirectAttributes attributes) {
+        Optional<UserConsumeLogEntity> optional = userConsumeLogRepository.findById(id);
+        if (!optional.isPresent()) {
+            attributes.addFlashAttribute("msg", "充值记录不存在！");
+            return REDIRECT_MGR_RECHARGE_LIST;
+        }
+        String fileUrl = uploadUtil.upload(file);
+        adminService.uploadRechargeFile(optional.get(), fileUrl);
+        return REDIRECT_MGR_RECHARGE_LIST;
     }
 
     @PostMapping("/editUser")
@@ -232,7 +255,7 @@ public class AdminController {
             return PageController.REDIRECT_MGR_INDEX;
         }
         session.setAttribute("user", user);
-        return PageController.REDIRECT + "/";
+        return REDIRECT + "/";
     }
 
     @RequestMapping("/toPlan/{planId}")
@@ -246,7 +269,7 @@ public class AdminController {
             return PageController.REDIRECT_MGR_INDEX;
         }
         session.setAttribute("user", user);
-        return PageController.REDIRECT + "/user/editPlan/" + planId;
+        return REDIRECT + "/user/editPlan/" + planId;
     }
 
     @RequestMapping("/toAd/{adId}")
@@ -260,6 +283,6 @@ public class AdminController {
             return PageController.REDIRECT_MGR_INDEX;
         }
         session.setAttribute("user", user);
-        return PageController.REDIRECT + "/user/editAd/" + adId;
+        return REDIRECT + "/user/editAd/" + adId;
     }
 }

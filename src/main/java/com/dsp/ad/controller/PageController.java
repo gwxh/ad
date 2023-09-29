@@ -179,6 +179,13 @@ public class PageController {
         return "mgr/index";
     }
 
+    @RequestMapping("/mgr/rechargeList")
+    public String toMgrRechargeListPage(Model model) {
+        List<ExtConsumeLog> logs = adminService.selectRechargeLogs();
+        model.addAttribute("logs", logs);
+        return "mgr/recharge_list";
+    }
+
     private final static String MGR_LOGIN = "/mgr/login";
     public final static String REDIRECT_MGR_LOGIN = REDIRECT + MGR_LOGIN;
 

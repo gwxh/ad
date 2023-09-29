@@ -9,7 +9,9 @@ import lombok.Data;
 @Data
 public class ExtConsumeLog {
 
+    private int id;
     private String date;
+    private String username;
     private Integer time;
     private String typeName;
     private double amount;

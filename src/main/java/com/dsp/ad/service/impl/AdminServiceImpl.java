@@ -3,6 +3,7 @@ package com.dsp.ad.service.impl;
 import com.dsp.ad.config.C;
 import com.dsp.ad.entity.*;
 import com.dsp.ad.entity.ext.ExtAd;
+import com.dsp.ad.entity.ext.ExtConsumeLog;
 import com.dsp.ad.entity.ext.ExtPlan;
 import com.dsp.ad.entity.ext.ExtUser;
 import com.dsp.ad.enums.AdEnum;
@@ -16,6 +17,11 @@ import com.dsp.ad.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void userRecharge(ExtUser user, int amount, String note, String fileUrl) {
+    public void userRecharge(ExtUser user, int amount, String note) {
         userRepository.recharge(user.getId(), amount);
         UserConsumeLogEntity consumeLog = new UserConsumeLogEntity();
         consumeLog.setUid(user.getId());
@@ -62,7 +68,6 @@ public class AdminServiceImpl implements AdminService {
         consumeLog.setAmount(amount);
         consumeLog.setTime(TimeUtil.now());
         consumeLog.setNote(note);
-        consumeLog.setFile(fileUrl);
         userConsumeLogRepository.save(consumeLog);
     }
 
@@ -127,6 +132,25 @@ public class AdminServiceImpl implements AdminService {
         if (user != null) {
             userRepository.updateStatus(uid, UserEnum.Status.DELETE.value);
         }
+    }
+
+    @Override
+    public List<ExtConsumeLog> selectRechargeLogs() {
+        List<UserConsumeLogEntity> logs = userConsumeLogRepository.findByTypeOrderByTimeDesc(UserConsumeLogEnum.Type.RECHARGE.value);
+        List<ExtConsumeLog> extLogs = new ArrayList<>();
+        for (UserConsumeLogEntity log : logs) {
+            ExtConsumeLog extLog = new ExtConsumeLog();
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(log.getTime()), ZoneId.systemDefault());
+            extLog.setId(log.getId());
+            extLog.setDate(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")));
+            extLog.setUsername(userRepository.getOne(log.getUid()).getUsername());
+            extLog.setTypeName(UserConsumeLogEnum.Type.valueOf(log.getType()).text);
+            extLog.setAmount(log.getAmount() / 100d);
+            extLog.setNote(log.getNote());
+            extLog.setFile(log.getFile());
+            extLogs.add(extLog);
+        }
+        return extLogs;
     }
 
     @Override
@@ -235,6 +259,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void stopAd(ExtAd extAd) {
         adRepository.updateStatus(extAd.getId(), AdEnum.Status.ENABLE.value);
+    }
+
+    @Override
+    public void uploadRechargeFile(UserConsumeLogEntity userConsumeLogEntity, String fileUrl) {
+        userConsumeLogEntity.setFile(fileUrl);
+        userConsumeLogRepository.save(userConsumeLogEntity);
     }
 
 }

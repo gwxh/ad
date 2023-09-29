@@ -12,6 +12,8 @@ public interface UserConsumeLogRepository extends JpaRepository<UserConsumeLogEn
 
     List<UserConsumeLogEntity> findByUid(int uid);
 
+    List<UserConsumeLogEntity> findByTypeOrderByTimeDesc(int type);
+
     List<UserConsumeLogEntity> findByUidAndTypeOrderByTimeDesc(int uid,int type);
 
     @Query("select sum(amount) from UserConsumeLogEntity where time>=?1  and time<=?2 and uid=?3 and type = ?4")
