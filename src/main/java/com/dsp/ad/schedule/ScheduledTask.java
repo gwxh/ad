@@ -100,7 +100,12 @@ public class ScheduledTask {
 
                 userAdsConsume += consumeAmount;
             }
+            //广告消耗大于用户余额，停止广告
             if (userAdsConsume > userAmount) {
+                for (ExtAd extAd : extAds) {
+                    int adId = extAd.getId();
+                    adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
+                }
                 log.info("用户<{}>实际消费了{}了元", uid, userAdsConsume / 100d);
                 userAdsConsume = userAmount;
                 log.info("由于余额不足，扣除用户<{}>所有余额:<{}>元", uid, userAdsConsume / 100d);

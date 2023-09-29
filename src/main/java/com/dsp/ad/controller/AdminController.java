@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Controller
@@ -86,14 +87,14 @@ public class AdminController {
     }
 
     @PostMapping("/userRecharge")
-    public String userRecharge(int uid, int amount, MultipartFile file, String note, RedirectAttributes attributes) {
+    public String userRecharge(int uid, BigDecimal amount, MultipartFile file, String note, RedirectAttributes attributes) {
         ExtUser u = adminService.selectUserById(uid);
         if (u == null) {
             attributes.addFlashAttribute("msg", "广告商不存在！");
             return PageController.REDIRECT_MGR_INDEX;
         }
         String fileUrl = uploadUtil.upload(file);
-        adminService.userRecharge(u, amount * 100, note, fileUrl);
+        adminService.userRecharge(u, amount.multiply(new BigDecimal(100)).intValue(), note, fileUrl);
         return PageController.REDIRECT_MGR_INDEX;
     }
 

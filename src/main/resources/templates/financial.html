@@ -25,7 +25,7 @@
 <body class="sticky-header">
 
 <section>
-    <div th:replace="component/left_nav::left-nav('data')"></div>
+    <div th:replace="component/left_nav::left-nav('financial')"></div>
 
     <!-- main content start-->
     <div class="main-content">
@@ -51,7 +51,9 @@
                                     <tr th:each="log : ${logs}">
                                         <td th:text="${log.date}"></td>
                                         <td th:include="util/currency::format(${log.amount})"></td>
-                                        <td><a th:href="${log.file}">下载</a></td>
+                                        <td>
+                                            <Button class="btn btn-primary" th:onclick="'downloadFile(\'' + ${log.file} + '\')'">下载</Button>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -86,60 +88,31 @@
 <script src="/js/scripts.js"></script>
 
 <script>
-    $(document).ready(function () {
-        let currentProtocol = window.location.protocol;
-        let currentHostname = window.location.hostname;
-        let currentPort = window.location.port;
-        let currentURL;
-        // 如果端口为空或为80（HTTP）或443（HTTPS），则可以省略端口
-        if (currentPort === "" || currentPort === "80" || currentPort === "443") {
-            currentURL = currentProtocol + "//" + currentHostname;
-        } else {
-            currentURL = currentProtocol + "//" + currentHostname + ":" + currentPort;
-        }
-        // 当按钮被点击时
-        $("#export").click(function () {
-            var xhr = new XMLHttpRequest();
-            xhr.responseType = "blob"; // Set responseType to "blob" for binary data
-            xhr.open("POST", currentURL + "/export");
-            xhr.send();
+    function downloadFile(fileUrl) {
 
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    var blobData = xhr.response; // Access the blob data
-                    // 创建一个临时 URL 对象并将 Blob 数据绑定到该 URL 上
-                    var blobURL = window.URL.createObjectURL(blobData);
+        // 要保存的文件名
+        const extension = getFileExtension(fileUrl);
+        const fileName = '充值记录.' + extension;
 
-                    // 创建一个链接元素用于下载
-                    var a = document.createElement("a");
-                    a.href = blobURL;
-                    a.download = "日志.xlsx"; // 设置下载文件的名称
+        // 创建一个链接
+        const a = document.createElement('a');
+        a.href = fileUrl;
+        a.download = fileName;
 
-                    // 模拟用户点击链接来触发下载
-                    a.click();
+        // 模拟点击链接以触发下载
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
 
-                    // 释放 Blob URL 对象
-                    window.URL.revokeObjectURL(blobURL);
-                }
-            };
-            // // 发送GET请求到Excel文件下载接口
-            // $.ajax({
-            //     type: "POST",
-            //     url: currentURL + "/export",
-            //     xhrFields: {
-            //         responseType: 'blob' // 设置响应数据类型为blob
-            //     },
-            //     success: function(data) {
-            //        console.log(data);
-            //     },
-            //     error: function (xhr, status, error) {
-            //         console.log("下载文件失败！");
-            //         console.log("XHR状态码：" + xhr.status);
-            //         console.log("错误信息：" + error);
-            //     }
-            // });
-        });
-    });
+    function getFileExtension(url) {
+        // 使用正则表达式从URL中提取文件名和后缀
+        const match = url.match(/\.([a-zA-Z0-9]+)(?:\?.*)?$/);
+
+        // 如果匹配成功，返回后缀；否则，返回空字符串
+        return match ? match[1] : '';
+    }
 </script>
 
 </body>
