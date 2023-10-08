@@ -59,7 +59,7 @@ hr {
 }
 
 .login-body {
-    background: #65cea7 url("/sys/login-bg.png") no-repeat fixed;
+    background: #08284f url("/sys/login-bg.png") no-repeat fixed;
     background-size: cover;
     width: 100%;
     height: 100%;
