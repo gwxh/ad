@@ -45,13 +45,21 @@ dependencies {
 
 remotes {
 
-	prodServer {
+	testServer {
 		host = '1.116.138.252'
 		port = 22
 		user = 'root'
 		password = 'F5ElZ14FyA&F'
 		knownHosts = allowAnyHosts
 	}
+
+    prodServer {
+        host = '121.40.229.92'
+        port = 22
+        user = 'root'
+        password = 'Liangxu1'
+        knownHosts = allowAnyHosts
+    }
 }
 
 task upgrade(dependsOn: bootJar) {
@@ -64,7 +72,7 @@ task upgrade(dependsOn: bootJar) {
 		String remoteMD5 = null
 
 		ssh.run {
-			session(remotes.prodServer) {
+			session(remotes.testServer) {
 				put from: localFile, into: remoteFile
 				remoteMD5 = execute "md5sum ${remoteFile}"
 			}
@@ -80,4 +88,32 @@ task upgrade(dependsOn: bootJar) {
 			}
 		}
 	}
+}
+
+task upgradeProd(dependsOn: bootJar) {
+    doLast {
+        String localFile = "build/libs/${project.name}.jar"
+        String remoteFile = "/home/webapp/ad/new-ad.jar"
+
+        ant.checksum property: 'md5', file: localFile
+        println "local |$ant.md5  $localFile"
+        String remoteMD5 = null
+
+        ssh.run {
+            session(remotes.prodServer) {
+                put from: localFile, into: remoteFile
+                remoteMD5 = execute "md5sum ${remoteFile}"
+            }
+        }
+
+        if (ant.md5 != remoteMD5.substring(0, 32)) {
+            throw new AssertionError("file upload failed!!!!")
+        }
+
+        ssh.run {
+            session(remotes.prodServer) {
+                execute "/home/webapp/ad/restart.sh"
+            }
+        }
+    }
 }

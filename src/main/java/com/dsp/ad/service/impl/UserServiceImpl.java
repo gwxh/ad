@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
         plan.setParam(extPlan.getParam().toJson());
         plan.setUpdateTime(TimeUtil.now());
         plan.setStatus(PlanEnum.Status.EDIT_CHECK.value);
+        plan.setDays(extPlan.getDays());
         planRepository.save(plan);
         List<Ad> ads = adRepository.selectAdsByPlan(extPlan.getId());
         for (Ad ad : ads) {

@@ -1,20 +1,24 @@
 server:
-  port: 8001
+  port: 10000
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.105.144.143:3306/ad?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://121.40.229.92:3306/ad?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
-    password: 135246
+    password: 3kiV34xHnzNF4TR.
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
   resources:
     static-locations: classpath:/META-INF/resources/,\
-      classpath:/resources/,classpath:/static/,classpath:/public/,file:${upload-image-path}
-upload-image-path: /app/shandian/upload/
-server.tomcat.basedir: /data/apps/temp
+      classpath:/resources/,classpath:/static/,classpath:/public/
+
+file:
+  url: http://file.moreeffect.cn/ad/
+  image:
+    path: /file/ad/
+
 
 
 

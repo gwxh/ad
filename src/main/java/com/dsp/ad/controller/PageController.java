@@ -32,9 +32,6 @@ public class PageController {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Logger LOGGER = LoggerFactory.getLogger(PageController.class);
 
-    @Value("${upload-image-path}")
-    private String uploadImagePath;
-
     @Autowired
     private UserService userService;
     @Autowired
