@@ -18,7 +18,7 @@ public class ExtAdLog {
     @ExcelProperty("消耗金额")
     private Long amount;
     @ExcelProperty("点击率")
-    private BigDecimal rate;
+    private BigDecimal rate = BigDecimal.ZERO;
 
     public ExtAdLog(Integer recordTime, Long exec, Long cpc, Long amount) {
         this.recordTime = recordTime;
