@@ -308,7 +308,11 @@ public class UserServiceImpl implements UserService {
                 amountCellData.setType(CellDataTypeEnum.NUMBER);
                 logDTO.setAmount(amountCellData);
 
-                WriteCellData<BigDecimal> unitPriceCellData = new WriteCellData<>(BigDecimal.valueOf(adLog.getAmount()).divide(exec, 0, RoundingMode.DOWN).divide(BigDecimal.valueOf(100L), 2, RoundingMode.DOWN));
+                BigDecimal unitPrice = BigDecimal.ZERO;
+                if (exec.compareTo(BigDecimal.ZERO) > 0) {
+                    unitPrice = BigDecimal.valueOf(adLog.getAmount()).divide(exec, 0, RoundingMode.DOWN).divide(BigDecimal.valueOf(100L), 2, RoundingMode.DOWN);
+                }
+                WriteCellData<BigDecimal> unitPriceCellData = new WriteCellData<>(unitPrice);
                 unitPriceCellData.setType(CellDataTypeEnum.NUMBER);
                 logDTO.setUnitPrice(unitPriceCellData);
 
