@@ -73,15 +73,22 @@ public class ScheduledTask {
                 BigDecimal total = BigDecimal.valueOf(plan.getTotalPrice()).divide(BigDecimal.valueOf(plan.getUnitPrice()), 0, RoundingMode.DOWN);
                 int totalPlanCount = Integer.parseInt(total.toString());
                 int avgPlanCount = totalPlanCount / plan.getDays();
-                int maxPlanCount = avgPlanCount * 2;
-                int minPlanCount = avgPlanCount / 2;
-                int randomPlanCount = RandomUtil.randomInt(minPlanCount, maxPlanCount);
+                int maxPlanCount, minPlanCount, randomPlanCount;
+                if (plan.getDays() > 1) {
+                    maxPlanCount = avgPlanCount * 2;
+                    minPlanCount = avgPlanCount / 2;
+                    randomPlanCount = RandomUtil.randomInt(minPlanCount, maxPlanCount);
+                } else {
+                    randomPlanCount = totalPlanCount;
+                }
                 Integer exec = planLogRepository.sumExec(adId);
                 if (exec == null) {
                     exec = 0;
                 }
                 int difference = totalPlanCount - exec;
-                if (difference < randomPlanCount) {
+                if (difference <= 0) {
+                    adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
+                } else if (difference < randomPlanCount) {
                     randomPlanCount = difference;
                     adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
                 }
@@ -147,11 +154,5 @@ public class ScheduledTask {
             log.info("共{}个用户", userAdsMap.size());
         }
         return userAdsMap;
-    }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
-            System.out.println(RandomUtil.randomBigDecimal(new BigDecimal(2), new BigDecimal(3)));
-        }
     }
 }
