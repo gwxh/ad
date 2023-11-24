@@ -19,6 +19,6 @@ public interface PlanLogRepository extends JpaRepository<PlanLog, PlanLogPrimary
     @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.planLogPk.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from PlanLog a where a.uid=?1 group by a.planLogPk.day order by a.planLogPk.day desc")
     List<ExtAdLog> selectUserPlanLogs(int uid);
 
-    @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.planLogPk.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from PlanLog a where a.planLogPk.day >= ?1 and a.planLogPk.day<?2 and a.uid=?3 group by a.planLogPk.day")
+    @Query("select new com.dsp.ad.entity.ext.ExtAdLog(a.planLogPk.day,sum(a.exec),sum(a.cpc),sum(a.amount)) from PlanLog a where a.planLogPk.day >= ?1 and a.planLogPk.day<=?2 and a.uid=?3 group by a.planLogPk.day")
     List<ExtAdLog> selectUserPlanLogByMonth(int startDay, int endDay, int uid);
 }

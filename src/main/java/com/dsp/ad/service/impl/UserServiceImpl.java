@@ -341,11 +341,4 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        System.out.println(TimeUtil.day(-2));
-        System.out.println(TimeUtil.day(-3));
-        System.out.println(TimeUtil.day(-5));
-        System.out.println(TimeUtil.day(-7));
-    }
 }
