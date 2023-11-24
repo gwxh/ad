@@ -20,6 +20,8 @@ public class ExtAdLog {
     @ExcelProperty("点击率")
     private BigDecimal rate = BigDecimal.ZERO;
 
+    public ExtAdLog(){}
+
     public ExtAdLog(Integer recordTime, Long exec, Long cpc, Long amount) {
         this.recordTime = recordTime;
         this.exec = exec;

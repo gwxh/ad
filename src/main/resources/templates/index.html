@@ -90,9 +90,9 @@
                     <section class="panel">
                         <header class="panel-heading">
                             数据报告
-                            <span class="tools pull-right">
-                                <a href="">更多数据</a>
-                            </span>
+<!--                            <span class="tools pull-right">-->
+<!--                                <a href="">更多数据</a>-->
+<!--                            </span>-->
                         </header>
                         <div class="panel-body">
                             <input id="logJson" type="hidden" th:value="${logJson}">
@@ -139,7 +139,7 @@
         }
         var chart = Highcharts.chart('container', {
             title: {
-                text: '当月效果报表'
+                text: '近30天效果报表'
             },
             xAxis: {
                 categories: xArray
