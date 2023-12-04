@@ -1,6 +1,5 @@
 package com.dsp.ad.service.impl;
 
-import cn.hutool.core.stream.CollectorUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.data.WriteCellData;
@@ -29,7 +28,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -192,25 +193,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PlanLogRepository planLogRepository;
+    @Autowired
+    private AdLogRepository adLogRepository;
 
     @Override
     public String selectUserMonthConsumeLogJson(int uid) throws JsonProcessingException {
-        int start = TimeUtil.day(-30);
-        int end = TimeUtil.day();
-        List<ExtAdLog> extAdLogs = planLogRepository.selectUserPlanLogByMonth(start, end, uid);
-        Map<Integer, ExtAdLog> logMap = extAdLogs.stream().collect(Collectors.toMap(ExtAdLog::getRecordTime, log -> log, (log1, log2) -> log1));
-        while (start < end) {
-            ExtAdLog extAdLog = logMap.get(start);
-            if (extAdLog == null) {
-                ExtAdLog log = new ExtAdLog();
-                log.setRecordTime(start);
-                log.setCpc(0L);
-                log.setExec(0L);
-                extAdLogs.add(log);
-            }
-            start += 24 * 60 * 60;
-        }
-        extAdLogs.sort(Comparator.comparing(ExtAdLog::getRecordTime));
+        int month = TimeUtil.month();
+        int nextMonth = TimeUtil.month(1);
+        List<ExtAdLog> extAdLogs = planLogRepository.selectUserPlanLogByMonth(month, nextMonth, uid);
         return OBJECT_MAPPER.writeValueAsString(extAdLogs);
     }
 
