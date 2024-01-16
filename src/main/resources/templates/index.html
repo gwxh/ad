@@ -98,6 +98,7 @@
                             <input id="logJson" type="hidden" th:value="${logJson}">
                             <div class="chart">
                                 <div id="container"></div>
+                                <div id="container2" style="margin-top: 50px;margin-bottom: 80px;"></div>
                             </div>
                         </div>
                     </section>
@@ -137,9 +138,13 @@
             execArray.push(log[i].exec);
             cpcArray.push(log[i].cpc);
         }
-        var chart = Highcharts.chart('container', {
+        Highcharts.chart('container', {
+            chart:{
+                borderWidth: 1,
+                borderColor: 'black',
+            },
             title: {
-                text: '近30天效果报表'
+                text: '近30天的浏览量'
             },
             xAxis: {
                 categories: xArray
@@ -164,10 +169,43 @@
             },
             series: [{
                 name: '浏览量',
-                data: execArray
-            }, {
+                data: execArray,
+                color: '#ff6f00',
+            }]
+        });
+        Highcharts.chart('container2', {
+            chart:{
+                borderWidth: 1,
+                borderColor: 'black',
+            },
+            title: {
+                text: '近30天的点击量'
+            },
+            xAxis: {
+                categories: xArray
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            tooltip: {
+                crosshairs: true,
+                shared: true
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        radius: 4,
+                        lineColor: '#666666',
+                        lineWidth: 1
+                    }
+                }
+            },
+            series: [{
                 name: '点击量',
-                data: cpcArray
+                data: cpcArray,
+                color: '#e8f592',
             }]
         });
     });
