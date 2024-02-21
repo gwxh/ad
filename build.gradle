@@ -41,6 +41,7 @@ dependencies {
 	compile 'org.apache.tika:tika-core:2.6.0'
 	compile 'com.alibaba:easyexcel:3.2.1'
     compileOnly("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.28")
 }
 
 remotes {

@@ -144,7 +144,7 @@
                 borderColor: 'black',
             },
             title: {
-                text: '近30天的浏览量'
+                text: '近30天曝光量'
             },
             xAxis: {
                 categories: xArray
@@ -168,18 +168,19 @@
                 }
             },
             series: [{
-                name: '浏览量',
+                name: '曝光量',
                 data: execArray,
                 color: '#ff6f00',
             }]
         });
         Highcharts.chart('container2', {
             chart:{
+                type: 'column',
                 borderWidth: 1,
                 borderColor: 'black',
             },
             title: {
-                text: '近30天的点击量'
+                text: '近30天点击量'
             },
             xAxis: {
                 categories: xArray
@@ -205,7 +206,7 @@
             series: [{
                 name: '点击量',
                 data: cpcArray,
-                color: '#e8f592',
+                color: '#82bcea',
             }]
         });
     });

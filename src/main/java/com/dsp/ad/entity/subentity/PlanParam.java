@@ -34,7 +34,7 @@ public class PlanParam {
      * 媒体选择
      * 0.随机 1.定向选择
      */
-    private int media;
+    private int media = 1;
     private String m1;
     private String m2;
     private String m3;
