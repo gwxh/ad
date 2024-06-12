@@ -18,7 +18,25 @@
     <script src="/js/html5shiv.js"></script>
     <script src="/js/respond.min.js"></script>
     <![endif]-->
+    <style>
+        table {
+            width: 92%;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
+
 <body class="sticky-header">
 
 <section>
@@ -100,6 +118,30 @@
                                 <div id="container"></div>
                                 <div id="container2" style="margin-top: 50px;margin-bottom: 80px;"></div>
                             </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!--body wrapper end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                <div class="col-sm-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            平台流量
+                        </header>
+                        <div class="panel-body">
+                            <input id="platformPVJson" type="hidden" th:value="${platformPVJson}">
+                            <div class="chart">
+                                <div id="platformPVContainer"></div>
+                            </div>
+
+                            <table id="data-table">
+                                <!-- Rows will be inserted here by JavaScript -->
+                            </table>
                         </div>
                     </section>
                 </div>
@@ -207,6 +249,115 @@
                 name: '点击量',
                 data: cpcArray,
                 color: '#82bcea',
+            }]
+        });
+        var platformPVJson =$("#platformPVJson").val();
+        var platformPV = JSON.parse(platformPVJson);
+        var itemArray = [];
+        var pvArray = [];
+        var rateArray = [];
+
+        const table = document.getElementById('data-table');
+        // Create table headers
+        const headerRow = document.createElement('tr');
+        const th = document.createElement('th');
+        th.textContent = "类目";
+        headerRow.appendChild(th);
+
+        // Create table rows
+        const row1 = document.createElement('tr');
+        const cell1 = document.createElement('td');
+        cell1.textContent = "流量/万人次";
+        row1.appendChild(cell1);
+        const row2 = document.createElement('tr');
+        const cell2 = document.createElement('td');
+        cell2.textContent = "占比";
+        row2.appendChild(cell2);
+
+        for (var i in platformPV) {
+            const th = document.createElement('th');
+            th.textContent = platformPV[i].name;
+            headerRow.appendChild(th);
+            const pvCell = document.createElement('td');
+            pvCell.textContent = platformPV[i].pv;
+            row1.appendChild(pvCell);
+            const rateCell = document.createElement('td');
+            rateCell.textContent = platformPV[i].rate+'%';
+            row2.appendChild(rateCell);
+
+            var itemName = platformPV[i].name;
+            itemArray.push(itemName);
+            pvArray.push(platformPV[i].pv);
+            rateArray.push(platformPV[i].rate);
+        }
+        table.appendChild(headerRow);
+        table.appendChild(row1);
+        table.appendChild(row2);
+
+        Highcharts.chart('platformPVContainer', {
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: '平台流量及占比'
+            },
+            xAxis: [{
+                categories: itemArray,
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: '流量/万人次',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }, { // Secondary yAxis
+                title: {
+                    text: '占比',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                labels: {
+                    format: '{value}%',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                opposite: true
+            }],
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                x: 120,
+                verticalAlign: 'top',
+                y: 100,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+            },
+            series: [{
+                name: '占比',
+                type: 'column',
+                yAxis: 1,
+                data: rateArray,
+                tooltip: {
+                    valueSuffix: '%'
+                },
+                color: '#82bcea',
+            }, {
+                name: '流量/万人次',
+                type: 'spline',
+                data: pvArray,
+                color: '#e10c0c',
             }]
         });
     });

@@ -3,9 +3,11 @@ package com.dsp.ad.controller;
 import com.dsp.ad.config.C;
 import com.dsp.ad.entity.AdTypeEntity;
 import com.dsp.ad.entity.PlanAttributeEntity;
+import com.dsp.ad.entity.PlatformFlow;
 import com.dsp.ad.entity.User;
 import com.dsp.ad.entity.ext.*;
 import com.dsp.ad.enums.AdEnum;
+import com.dsp.ad.repository.PlatformFlowRepository;
 import com.dsp.ad.service.AdminService;
 import com.dsp.ad.service.SiteService;
 import com.dsp.ad.service.UserService;
@@ -14,12 +16,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,8 @@ public class PageController {
     private AdminService adminService;
     @Autowired
     private SiteService siteService;
+    @Autowired
+    private PlatformFlowRepository platformFlowRepository;
 
     @RequestMapping("/")
     public String index(Model model, @SessionAttribute ExtUser user) throws JsonProcessingException {
@@ -47,11 +49,14 @@ public class PageController {
         double yesterdayConsumeAmount = userService.selectUserYesterdayConsumeAmount(uid);
         String logJson = userService.selectUserMonthConsumeLogJson(uid);
         double monthConsumeAmount = userService.selectUserMonthConsumeAmount(uid);
+        List<ExtPlatformFlow> list = platformFlowRepository.selectPlatformFlowList();
+        String platformPVJson = OBJECT_MAPPER.writeValueAsString(list);
         model.addAttribute("userAmount", user.getAmount());
         model.addAttribute("todayConsumeAmount", todayConsumeAmount);
         model.addAttribute("yesterdayConsumeAmount", yesterdayConsumeAmount);
         model.addAttribute("monthConsumeAmount", monthConsumeAmount);
         model.addAttribute("logJson", logJson);
+        model.addAttribute("platformPVJson", platformPVJson);
         return "index";
     }
 

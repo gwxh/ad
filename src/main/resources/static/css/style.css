@@ -933,10 +933,6 @@ h5.left-nav-title {
     color: #65CEA7;
 }
 
-.wrapper {
-    padding: 15px;
-}
-
 .wrapper::after {
     clear: both;
     display: block;
@@ -1095,7 +1091,6 @@ footer {
 }
 
 footer.sticky-footer {
-    position: fixed;
     bottom: 0;
     width: 100%;
     z-index: 99;
