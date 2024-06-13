@@ -12,6 +12,6 @@ import java.math.BigDecimal;
 public class ExtPlatformFlow {
 
     private String name;
-    private int pv;
+    private BigDecimal pv;
     private BigDecimal rate;
 }

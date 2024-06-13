@@ -16,8 +16,6 @@ public class PlatformFlow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private int pv;
+    private BigDecimal pv;
     private BigDecimal rate;
-    private int createTime;
-    private int updateTime;
 }

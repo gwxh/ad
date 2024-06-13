@@ -26,6 +26,7 @@ public class UserFilter implements Filter {
                     ".*/login",
                     ".*/logout",
                     "/mgr.*",
+                    "/test.*",
                     "/ad.*",
                     ".*.png",
                     ".*.jpg",
