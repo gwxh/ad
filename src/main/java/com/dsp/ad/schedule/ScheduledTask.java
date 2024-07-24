@@ -88,6 +88,7 @@ public class ScheduledTask {
                 int difference = totalPlanCount - exec;
                 if (difference <= 0) {
                     adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
+                    continue;
                 } else if (difference < randomPlanCount) {
                     randomPlanCount = difference;
                     adRepository.updateStatus(adId, AdEnum.Status.ENABLE.value);
