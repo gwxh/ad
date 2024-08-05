@@ -9,6 +9,6 @@ import com.dsp.ad.util.MD5Util;
 public class Test {
 
     public static void main(String[] args) {
-        System.out.println(MD5Util.md5("juxiao1008"));
+        System.out.println(MD5Util.md5("zhonghg2024"));
     }
 }
